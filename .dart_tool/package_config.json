@@ -27,7 +27,7 @@
     },
     {
       "name": "carousel_slider",
-      "rootUri": "file:///C:/Flutter%20SDK/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-2.2.1",
+      "rootUri": "file:///C:/Flutter%20SDK/flutter/.pub-cache/hosted/pub.dartlang.org/carousel_slider-2.3.1",
       "packageUri": "lib/",
       "languageVersion": "2.6"
     },
@@ -111,7 +111,7 @@
     },
     {
       "name": "path_drawing",
-      "rootUri": "file:///C:/Flutter%20SDK/flutter/.pub-cache/hosted/pub.dartlang.org/path_drawing-0.4.1",
+      "rootUri": "file:///C:/Flutter%20SDK/flutter/.pub-cache/hosted/pub.dartlang.org/path_drawing-0.4.1+1",
       "packageUri": "lib/",
       "languageVersion": "1.19"
     },
@@ -200,13 +200,13 @@
       "languageVersion": "2.6"
     },
     {
-      "name": "soul_mate",
+      "name": "Soulmate_App",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2020-09-12T09:36:06.109250Z",
+  "generated": "2020-10-28T22:39:25.887148Z",
   "generator": "pub",
   "generatorVersion": "2.8.4"
 }

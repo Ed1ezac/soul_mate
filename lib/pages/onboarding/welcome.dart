@@ -1,6 +1,7 @@
+import 'package:Soulmate_App/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:soul_mate/pages/onboarding/animated_image.dart';
-import 'package:soul_mate/styles.dart';
+import 'package:Soulmate_App/pages/onboarding/animated_image.dart';
+import 'package:Soulmate_App/styles.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Welcome extends StatelessWidget {
@@ -14,7 +15,7 @@ class Welcome extends StatelessWidget {
       backgroundColor: AppColors.soulPrimaryLight,
       //body
       body: Padding(
-        padding: EdgeInsets.only(bottom: 32.0),
+        padding: EdgeInsets.only(bottom: screenAwareSizeV(32.0, context)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -24,7 +25,8 @@ class Welcome extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 child: SafeArea(
                   child: Container(
-                    width: (MediaQuery.of(context).size.width - 32),
+                    width: (MediaQuery.of(context).size.width -
+                        screenAwareSizeH(32.0, context)),
                     child: Text(
                       'Soulmate',
                       textAlign: TextAlign.center,
@@ -47,7 +49,7 @@ class Welcome extends StatelessWidget {
                     child: _AnimatedHeartWidget(),
                   ),
                   Positioned(
-                    top: 5.0,
+                    top: screenAwareSizeV(5.0, context),
                     child: AnimatedImage(
                         'assets/images/couple_intro.svg'), //const _CoupleImage(),
                   )
@@ -57,7 +59,9 @@ class Welcome extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenAwareSizeH(16.0, context),
+                    vertical: screenAwareSizeV(8.0, context)),
                 child: Text(
                   "Welcome to Soulmate. Your journey to find love begins here, we hope it ends here.",
                   style: TextStyle(
@@ -75,7 +79,7 @@ class Welcome extends StatelessWidget {
   }
 }
 
-class _CoupleImage extends StatelessWidget {
+/**class _CoupleImage extends StatelessWidget {
   const _CoupleImage({
     Key key,
   }) : super(key: key);
@@ -91,7 +95,7 @@ class _CoupleImage extends StatelessWidget {
       semanticsLabel: 'couple image',
     );
   }
-}
+}*/
 
 class _AnimatedHeartWidget extends StatefulWidget {
   @override
@@ -114,13 +118,6 @@ class _AnimatedHeartState extends State<_AnimatedHeartWidget>
         AnimationController(duration: Duration(seconds: 4), vsync: this);
     _controllerGrowSize =
         AnimationController(duration: Duration(seconds: 3), vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _controllerFloatUp.dispose();
-    _controllerGrowSize.dispose();
-    super.dispose();
   }
 
   @override
@@ -154,5 +151,12 @@ class _AnimatedHeartState extends State<_AnimatedHeartWidget>
         width: _heartWidth,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controllerFloatUp.dispose();
+    _controllerGrowSize.dispose();
+    super.dispose();
   }
 }

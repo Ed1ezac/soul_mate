@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="260.922mm"
-   height="214.45834mm"
-   viewBox="0 0 260.92199 214.45834"
+   width="211.05525mm"
+   height="237.60971mm"
+   viewBox="0 0 211.05525 237.60971"
    version="1.1"
    id="svg71"
    inkscape:version="0.92.0 r15299"
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="412.67962"
-     inkscape:cy="410.50689"
+     inkscape:zoom="0.35"
+     inkscape:cx="32.921039"
+     inkscape:cy="335.62518"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -35,10 +35,7 @@
      inkscape:window-height="739"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
-     inkscape:window-maximized="1"
-     inkscape:snap-global="false"
-     inkscape:measure-start="-408.102,624.274"
-     inkscape:measure-end="0,0" />
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata68">
     <rdf:RDF>
@@ -47,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -55,10 +52,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0.67756731,-15.496242)">
+     transform="translate(0.01690584,-0.02444687)">
     <g
        id="g239"
-       transform="matrix(1.8175291,0,0,1.8175291,-39.982265,-135.43914)">
+       transform="matrix(1.4432024,0,0,1.4432024,-29.094237,-60.960593)">
       <g
          transform="matrix(-0.27676274,0,0,0.28866843,145.91086,81.586025)"
          style="display:inline;fill:none;fill-rule:evenodd;stroke:none;stroke-width:1"
@@ -86,7 +83,7 @@
         <polygon
            style="fill:#997659"
            id="Leg-8"
-           points="216.0009,229.25029 229,229.25029 178.67369,5.090379e-013 134,0 183.08164,124.22691 " />
+           points="178.67369,5.090379e-013 134,0 183.08164,124.22691 216.0009,229.25029 229,229.25029 " />
         <path
            style="fill:#b28b67"
            inkscape:connector-curvature="0"
@@ -149,7 +146,7 @@
     </g>
     <g
        id="g219"
-       transform="matrix(1.8826975,0,0,1.8826975,-48.939414,-149.41607)">
+       transform="matrix(1.4949491,0,0,1.4949491,-38.307544,-72.058924)">
       <g
          id="Head/Front/Short-Beard"
          transform="matrix(0.3171209,0.00118417,-0.00113477,0.30389047,39.225757,80.628111)"
@@ -176,7 +173,7 @@
         <polygon
            style="fill:#373e48;fill-rule:evenodd;stroke:none;stroke-width:1"
            id="Leg-0"
-           points="176.08164,127.22691 209.78333,221 229,221 182.67369,9.8143715e-014 128,0 "
+           points="229,221 182.67369,9.8143715e-014 128,0 176.08164,127.22691 209.78333,221 "
            transform="translate(-643.66586,72.841113)" />
         <path
            style="fill:#535d6c;fill-rule:evenodd;stroke:none;stroke-width:1"
@@ -251,11 +248,11 @@
       </g>
     </g>
     <rect
-       style="opacity:1;fill:#d10000;fill-opacity:0;fill-rule:nonzero;stroke:#000000;stroke-width:0.11201132;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;paint-order:fill markers stroke"
+       style="opacity:1;fill:#d10000;fill-opacity:0;fill-rule:nonzero;stroke:#000000;stroke-width:0.10603908;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0;paint-order:fill markers stroke"
        id="rect244"
-       width="260.81"
-       height="214.34633"
-       x="-0.62156165"
-       y="15.552248" />
+       width="210.94922"
+       height="237.50368"
+       x="0.036113694"
+       y="0.077466413" />
   </g>
 </svg>

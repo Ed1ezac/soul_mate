@@ -27,7 +27,6 @@ class BasicDetailsState extends State<BasicDetails> {
   void initState() {
     super.initState();
     if (widget.details != null && !widget.details.isEmpty()) {
-      //print(widget.details.toString());
       _height = widget.details.height.toString();
       _gender = widget.details.gender;
       _sexuality = widget.details.sexuality;
@@ -233,11 +232,11 @@ class BasicDetailsState extends State<BasicDetails> {
                           items: <DropdownMenuItem<Sexuality>>[
                             DropdownMenuItem(
                               value: Sexuality.Heterosexual,
-                              child: Text("Heterosexual/Straight"),
+                              child: Text("Heterosexual"),
                             ),
                             DropdownMenuItem(
                               value: Sexuality.Homosexual,
-                              child: Text("Homosexual/Gay"),
+                              child: Text("Homosexual"),
                             ),
                             DropdownMenuItem(
                               value: Sexuality.Bisexual,

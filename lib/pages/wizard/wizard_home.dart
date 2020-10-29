@@ -13,68 +13,33 @@ class ProfileWizard extends StatefulWidget {
   WizardState createState() => WizardState();
 }
 
-class WizardState extends State<ProfileWizard> {
+class WizardState extends State<ProfileWizard>
+    with SingleTickerProviderStateMixin {
   UserBasicDetails details = UserBasicDetails();
   UserPersonality personality = UserPersonality();
   UserHabitsAndInterests habitsAndInterests = UserHabitsAndInterests();
   FormProgressObserver _observer;
+  AnimationController _fabFloatUpController;
+  Animation<Offset> _fabFloatUpAnimation;
   OptionState basicsState = OptionState.ACTIVE,
       personalityState = OptionState.INACTIVE,
       interestsState = OptionState.INACTIVE;
+  bool _isWizardComplete = false;
 
   @override
   initState() {
     super.initState();
     _observer = FormProgressObserver();
-  }
+    _fabFloatUpController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    _fabFloatUpAnimation = Tween<Offset>(
+      begin: const Offset(0.0, 2.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(parent: _fabFloatUpController, curve: Curves.bounceIn),
+    );
 
-  void updateParent(int updaterPosition) {
-    switch (updaterPosition) {
-      case 1:
-        updateNextChild(updaterPosition);
-        break;
-      case 2:
-        updateNextChild(updaterPosition);
-        break;
-      case 3:
-        _showNextFab();
-        break;
-      default:
-        throw Exception(
-            "Invalid child index/position attempted to update parent.");
-    }
-  }
-
-  void updateNextChild(int currentPosition) {
-    int nextPosition = currentPosition + 1;
-    switch (nextPosition) {
-      case 2:
-        if (personalityState != OptionState.COMPLETE) {
-          personalityState = OptionState.ACTIVE;
-          _observer.registerProgess();
-        }
-        break;
-      case 3:
-        if (interestsState != OptionState.COMPLETE) {
-          interestsState = OptionState.ACTIVE;
-          _observer.registerProgess();
-        }
-        break;
-      default:
-        throw Exception("Attempt to update child at invalid index/position.");
-    }
-  }
-
-  void _showNextFab() {
-    //onclick
-    createUserProfile();
-  }
-
-  void createUserProfile() {
-    //to create a profile we need to:
-
-    //persistDataLocally();
-    //createRecordOnFirebase();
+    _fabFloatUpController.forward();
   }
 
   @override
@@ -136,7 +101,6 @@ class WizardState extends State<ProfileWizard> {
                 padding: EdgeInsets.symmetric(
                     vertical: screenAwareSizeV(8.0, context)),
                 child: ListView(
-                  //shrinkWrap: true,
                   padding: EdgeInsets.symmetric(
                       horizontal: screenAwareSizeH(8.0, context)),
                   children: <Widget>[
@@ -170,8 +134,10 @@ class WizardState extends State<ProfileWizard> {
                             position: 3,
                             state: interestsState,
                             notifyParent: updateParent,
+                            thisObject: habitsAndInterests,
                             onStateChange: (state) => interestsState = state,
-                            onObjectChange: (result) => personality = result);
+                            onObjectChange: (result) =>
+                                habitsAndInterests = result);
                       },
                     ),
                   ],
@@ -180,7 +146,81 @@ class WizardState extends State<ProfileWizard> {
             ),
           ],
         ),
+        floatingActionButton: _isWizardComplete ? _showFab() : null,
       ),
     );
+  }
+
+  void updateParent(int updaterPosition) {
+    switch (updaterPosition) {
+      case 1:
+        updateNextChild(updaterPosition);
+        break;
+      case 2:
+        updateNextChild(updaterPosition);
+        break;
+      case 3:
+        _flagProfileCreationComplete();
+        break;
+      default:
+        throw Exception(
+            "Invalid child index/position attempted to update parent.");
+    }
+  }
+
+  void updateNextChild(int currentPosition) {
+    int nextPosition = currentPosition + 1;
+    switch (nextPosition) {
+      case 2:
+        if (personalityState != OptionState.COMPLETE) {
+          personalityState = OptionState.ACTIVE;
+          _observer.registerProgess();
+        }
+        break;
+      case 3:
+        if (interestsState != OptionState.COMPLETE) {
+          interestsState = OptionState.ACTIVE;
+          _observer.registerProgess();
+        }
+        break;
+      default:
+        throw Exception("Attempt to update child at invalid index/position.");
+    }
+  }
+
+  void _flagProfileCreationComplete() {
+    _isWizardComplete = true;
+    interestsState = OptionState.COMPLETE;
+    _observer.registerProgess();
+  }
+
+  Widget _showFab() {
+    //onclick
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        return SlideTransition(
+          position: _fabFloatUpAnimation,
+          child: FloatingActionButton.extended(
+            label: Text('Create'),
+            onPressed: () {
+              //createOrFail();
+            },
+          ),
+        );
+      });
+    });
+  }
+
+  void createUserProfile() {
+    //to create a profile we need to:
+
+    //persistDataLocally();
+    //createRecordOnFirebase();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _fabFloatUpController.dispose();
   }
 }

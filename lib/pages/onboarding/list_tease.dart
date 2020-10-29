@@ -29,7 +29,7 @@ class ListTease extends StatelessWidget {
                     width: (MediaQuery.of(context).size.width -
                         screenAwareSizeH(32.0, context)),
                     child: Text(
-                      'Discover',
+                      'Match',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: "Delafield",

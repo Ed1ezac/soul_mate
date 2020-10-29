@@ -123,7 +123,7 @@ class _AnimatedHeartState extends State<_AnimatedHeartWidget>
   @override
   Widget build(BuildContext context) {
     double _heartHeight = MediaQuery.of(context).size.height / 3;
-    double _heartWidth = MediaQuery.of(context).size.width / 1.5;
+    double _heartWidth = MediaQuery.of(context).size.width / 1.8;
     double _heartStartLocation = MediaQuery.of(context).size.height / 5;
 
     _animationFloatUp = Tween(begin: _heartStartLocation, end: 0.0).animate(

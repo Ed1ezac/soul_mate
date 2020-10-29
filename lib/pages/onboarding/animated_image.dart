@@ -64,9 +64,9 @@ class _EnlargeAndFadeIn extends State<AnimatedImage>
     return SvgPicture.asset(
       widget._assetPath,
       height:
-          MediaQuery.of(context).size.height - screenAwareSizeV(232.0, context),
+          MediaQuery.of(context).size.height - screenAwareSizeV(280.0, context),
       width:
-          MediaQuery.of(context).size.width - screenAwareSizeH(16.0, context),
+          MediaQuery.of(context).size.width - screenAwareSizeH(40.0, context),
       semanticsLabel: 'vector asset image',
     );
   }

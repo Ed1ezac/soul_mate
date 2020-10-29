@@ -7,11 +7,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="793.7007866666665"
-   height="1122.5196799999999"
+   width="463.22165"
+   height="431.83105"
    version="1.1"
    id="svg10"
-   sodipodi:docname="thick-line-heart.svg"
+   sodipodi:docname="heart.svg"
    inkscape:version="0.92.0 r15299">
   <metadata
      id="metadata16">
@@ -39,9 +39,9 @@
      inkscape:window-height="739"
      id="namedview12"
      showgrid="false"
-     inkscape:zoom="0.29732611"
-     inkscape:cx="163.35121"
-     inkscape:cy="813.76447"
+     inkscape:zoom="0.84096523"
+     inkscape:cx="154.50161"
+     inkscape:cy="197.26901"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -51,7 +51,7 @@
   <g
      id="g8"
      style="fill:#ff0000;fill-opacity:1;stroke:#c70000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(16.816552,121.07918)">
+     transform="translate(-139.43674,-229.71718)">
     <title
        id="title4">Layer 1</title>
     <g
@@ -65,4 +65,12 @@
          inkscape:connector-curvature="0" />
     </g>
   </g>
+  <rect
+     style="opacity:0;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:1.2162832;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:fill markers stroke"
+     id="rect3681"
+     width="462.00537"
+     height="430.61478"
+     x="0.6081416"
+     y="0.6081416"
+     ry="7.6057167" />
 </svg>

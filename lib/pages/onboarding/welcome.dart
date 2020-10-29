@@ -45,11 +45,11 @@ class Welcome extends StatelessWidget {
                 alignment: Alignment.center,
                 children: <Widget>[
                   Positioned(
-                    top: 0.0,
+                    top: 5.0,
                     child: _AnimatedHeartWidget(),
                   ),
                   Positioned(
-                    top: screenAwareSizeV(5.0, context),
+                    top: 0.0, //screenAwareSizeV(0.0, context),
                     child: AnimatedImage(
                         'assets/images/couple_intro.svg'), //const _CoupleImage(),
                   )
@@ -122,7 +122,7 @@ class _AnimatedHeartState extends State<_AnimatedHeartWidget>
 
   @override
   Widget build(BuildContext context) {
-    double _heartHeight = MediaQuery.of(context).size.height / 2;
+    double _heartHeight = MediaQuery.of(context).size.height / 3;
     double _heartWidth = MediaQuery.of(context).size.width / 1.5;
     double _heartStartLocation = MediaQuery.of(context).size.height / 5;
 

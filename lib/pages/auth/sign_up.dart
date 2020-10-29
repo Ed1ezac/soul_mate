@@ -1,7 +1,8 @@
+import 'package:Soulmate_App/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:soul_mate/pages/auth/sign_in.dart';
-import 'package:soul_mate/custom_icons_icons.dart';
-import 'package:soul_mate/pages/wizard/wizard_home.dart';
+import 'package:Soulmate_App/pages/auth/sign_in.dart';
+import 'package:Soulmate_App/custom_icons_icons.dart';
+import 'package:Soulmate_App/pages/wizard/wizard_home.dart';
 import '../../styles.dart';
 
 class SignUp extends StatefulWidget {
@@ -44,9 +45,8 @@ class UserSignUp extends State<SignUp> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
+            padding: EdgeInsets.symmetric(
+              horizontal: screenAwareSizeH(8.0, context),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,9 +61,12 @@ class UserSignUp extends State<SignUp> {
                     children: <Widget>[
                       //email
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 32.0),
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenAwareSizeH(32.0, context),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeH(8.0, context),
+                        ),
                         height: formWidgetHeight,
                         child: TextFormField(
                           autofocus: false,
@@ -83,9 +86,12 @@ class UserSignUp extends State<SignUp> {
                       ),
 
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 32.0),
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenAwareSizeH(32.0, context),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         height: formWidgetHeight,
                         //password
                         child: TextFormField(
@@ -104,9 +110,12 @@ class UserSignUp extends State<SignUp> {
                       ),
 
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 32.0),
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenAwareSizeH(32.0, context),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         height: formWidgetHeight,
                         //password confirm
                         child: TextFormField(
@@ -125,11 +134,15 @@ class UserSignUp extends State<SignUp> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32.0, vertical: 0.0),
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenAwareSizeH(32.0, context),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         height: MediaQuery.of(context).size.height / 18,
-                        width: MediaQuery.of(context).size.width - 16,
+                        width: MediaQuery.of(context).size.width -
+                            screenAwareSizeH(16.0, context),
                         child: RaisedButton(
                           color: AppColors.soulPrimaryLight,
                           child: Text(
@@ -143,14 +156,18 @@ class UserSignUp extends State<SignUp> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         child: Text(
                           "~ OR ~",
                           style: TextStyle(color: Colors.white, fontSize: 14.0),
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         child: Text(
                           "Register with",
                           style: TextStyle(
@@ -160,7 +177,9 @@ class UserSignUp extends State<SignUp> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -168,10 +187,12 @@ class UserSignUp extends State<SignUp> {
                               customBorder: CircleBorder(),
                               onTap: () {},
                               child: Container(
-                                width: 55.0,
-                                height: 55.0,
+                                width: screenAwareSizeH(55.0, context),
+                                height: screenAwareSizeV(55.0, context),
                                 margin: EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 8.0),
+                                  vertical: screenAwareSizeV(12.0, context),
+                                  horizontal: screenAwareSizeH(8.0, context),
+                                ),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: AppColors.soulPrimaryLight),
@@ -185,10 +206,12 @@ class UserSignUp extends State<SignUp> {
                               customBorder: CircleBorder(),
                               onTap: () {},
                               child: Container(
-                                width: 55.0,
-                                height: 55.0,
+                                width: screenAwareSizeH(55.0, context),
+                                height: screenAwareSizeV(55.0, context),
                                 margin: EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 8.0),
+                                  vertical: screenAwareSizeV(12.0, context),
+                                  horizontal: screenAwareSizeH(8.0, context),
+                                ),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: AppColors.soulPrimaryLight),
@@ -208,7 +231,10 @@ class UserSignUp extends State<SignUp> {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    margin: const EdgeInsets.only(top: 48.0, bottom: 8.0),
+                    margin: EdgeInsets.only(
+                      top: screenAwareSizeV(20.0, context),
+                      bottom: screenAwareSizeH(8.0, context),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -223,7 +249,9 @@ class UserSignUp extends State<SignUp> {
                           onTap: () => navigateToLogin(),
                           child: Container(
                             padding: EdgeInsets.symmetric(
-                                vertical: 6.0, horizontal: 6.0),
+                              vertical: screenAwareSizeV(6.0, context),
+                              horizontal: screenAwareSizeH(6.0, context),
+                            ),
                             child: Text(
                               "LOGIN",
                               style: TextStyle(
@@ -275,8 +303,14 @@ class UserSignUp extends State<SignUp> {
   Widget headerText(BuildContext context) {
     return SafeArea(
       child: Container(
-        width: MediaQuery.of(context).size.width - 16,
-        margin: EdgeInsets.fromLTRB(8.0, 64.0, 8.0, 42.0),
+        width:
+            MediaQuery.of(context).size.width - screenAwareSizeH(16.0, context),
+        margin: EdgeInsets.fromLTRB(
+          screenAwareSizeH(8.0, context),
+          screenAwareSizeV(64.0, context),
+          screenAwareSizeH(8.0, context),
+          screenAwareSizeV(42.0, context),
+        ),
         child: Text(
           'Sign Up',
           textAlign: TextAlign.center,

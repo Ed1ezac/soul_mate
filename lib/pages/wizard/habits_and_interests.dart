@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
-import 'package:soul_mate/widgets/habit_picker.dart';
-import 'package:soul_mate/widgets/interests_picker.dart';
-
+import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:Soulmate_App/widgets/habit_picker.dart';
+import 'package:Soulmate_App/widgets/interests_picker.dart';
 import '../../styles.dart';
 
 class HabitsAndInterests extends StatefulWidget {
@@ -17,11 +16,9 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
       _interestsIsEmpty = true,
       _habitsHasError = false,
       _interestsHasError = false;
-  RangeValues _currentRangeValues = const RangeValues(20, 40);
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = (MediaQuery.of(context).size.height);
     final EdgeInsets _formFieldPadding = EdgeInsets.symmetric(
         vertical: 0.0, horizontal: screenAwareSizeH(32.0, context));
     final EdgeInsets _formFieldMargin = EdgeInsets.only(
@@ -80,76 +77,6 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
                           showInterestsPicker(context);
                         },
                         child: buildInterestsWidget(),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(),
-              Container(
-                padding: _formFieldPadding,
-                margin: _formFieldMargin,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Age Range",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                          style: TextStyle(
-                            color: Theme.of(context).hintColor,
-                          ),
-                          text: "I want to date people aged:",
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: _currentRangeValues.start.toString() +
-                                  ' to ' +
-                                  _currentRangeValues.end.toString(),
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                //fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ]),
-                    ),
-                    Container(
-                      child: RangeSlider(
-                        values: _currentRangeValues,
-                        min: 18,
-                        max: 100,
-                        divisions: 82,
-                        labels: RangeLabels(
-                          _currentRangeValues.start.round().toString() + " yrs",
-                          _currentRangeValues.end.round().toString() + " yrs",
-                        ),
-                        onChanged: (RangeValues values) {
-                          setState(() {
-                            _currentRangeValues = values;
-                          });
-                        },
-                        onChangeEnd: (values) {
-                          if (values.end - values.start > 30) {
-                            setState(() {
-                              values = new RangeValues(
-                                  values.start, values.start + 30);
-                              _currentRangeValues = values;
-                            });
-                          }
-                        },
-                      ),
-                    ),
-                    Text(
-                      "max range is 30 years.",
-                      style: TextStyle(
-                        color: Theme.of(context).hintColor,
-                        fontSize: 13.0,
-                        //fontWeight: FontWeight.w700,
                       ),
                     ),
                   ],

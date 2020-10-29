@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
-import 'package:soul_mate/widgets/height_picker.dart';
-import 'package:soul_mate/widgets/wizard_option_drawing.dart';
-
+import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:Soulmate_App/widgets/height_picker.dart';
+import 'package:Soulmate_App/widgets/wizard_option_drawing.dart';
 import '../styles.dart';
 
 class DrawingArea extends StatefulWidget {

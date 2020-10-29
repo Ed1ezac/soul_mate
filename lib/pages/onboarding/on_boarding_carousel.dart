@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:soul_mate/pages/onboarding/welcome.dart';
+import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:Soulmate_App/pages/onboarding/welcome.dart';
 import 'package:carousel_slider/carousel_controller.dart';
-import 'package:soul_mate/pages/onboarding/list_tease.dart';
-import 'package:soul_mate/pages/onboarding/chat_tease.dart';
+import 'package:Soulmate_App/pages/onboarding/list_tease.dart';
+import 'package:Soulmate_App/pages/onboarding/chat_tease.dart';
 //import 'package:soul_mate/styles.dart';
 
 class OnBoardingCarousel extends StatefulWidget {
@@ -57,10 +58,11 @@ class _CarouselState extends State<OnBoardingCarousel> {
                   children: _pageList.map((page) {
                     int index = _pageList.indexOf(page);
                     return Container(
-                      width: 12.0,
-                      height: 12.0,
-                      margin:
-                          EdgeInsets.symmetric(vertical: 12.0, horizontal: 3.0),
+                      width: screenAwareSizeH(12.0, context),
+                      height: screenAwareSizeV(12.0, context),
+                      margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(12.0, context),
+                          horizontal: screenAwareSizeH(3.0, context)),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _current == index
@@ -78,8 +80,11 @@ class _CarouselState extends State<OnBoardingCarousel> {
               alignment: Alignment.bottomRight,
               child: SafeArea(
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 8.0, bottom: 16.0, right: 24.0),
+                  padding: EdgeInsets.only(
+                    left: screenAwareSizeH(8.0, context),
+                    bottom: screenAwareSizeV(16.0, context),
+                    right: screenAwareSizeH(24.0, context),
+                  ),
                   child: FlatButton(
                     onPressed: () => _controller.nextPage(),
                     child: Text(

@@ -1,4 +1,4 @@
-com.example.soul_mate
+com.example.app
 attr alpha
 attr font
 attr fontProviderAuthority

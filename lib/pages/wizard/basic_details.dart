@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:soul_mate/styles.dart';
+import 'package:Soulmate_App/styles.dart';
 import '../../custom_icons_icons.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
-import 'package:soul_mate/models/user_basic_details.dart';
-import 'package:soul_mate/widgets/height_picker_dialog.dart';
+import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:Soulmate_App/models/user_basic_details.dart';
+import 'package:Soulmate_App/widgets/height_picker_dialog.dart';
 
 class BasicDetails extends StatefulWidget {
   final UserBasicDetails details;

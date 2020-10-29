@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:soul_mate/models/user_personality.dart';
-import 'package:soul_mate/utils/user_personality_utils.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
-
+import 'package:Soulmate_App/models/user_personality.dart';
+import 'package:Soulmate_App/utils/user_personality_utils.dart';
+import 'package:Soulmate_App/utils/widget_utils.dart';
 import '../../styles.dart';
 
 class PersonalityDetails extends StatefulWidget {

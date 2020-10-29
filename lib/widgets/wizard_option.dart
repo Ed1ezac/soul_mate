@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:soul_mate/styles.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
-import 'package:soul_mate/pages/wizard/basic_details.dart';
-import 'package:soul_mate/widgets/wizard_option_drawing.dart';
-import 'package:soul_mate/pages/wizard/personality_details.dart';
-import 'package:soul_mate/pages/wizard/habits_and_interests.dart';
+import 'package:Soulmate_App/styles.dart';
+import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:Soulmate_App/pages/wizard/basic_details.dart';
+import 'package:Soulmate_App/widgets/wizard_option_drawing.dart';
+import 'package:Soulmate_App/pages/wizard/personality_details.dart';
+import 'package:Soulmate_App/pages/wizard/habits_and_interests.dart';
 
 class WizardOption extends StatefulWidget {
   final int position;

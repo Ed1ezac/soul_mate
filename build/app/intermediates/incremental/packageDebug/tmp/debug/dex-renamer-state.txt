@@ -1,4 +1,4 @@
-#Thu Oct 29 00:51:49 CAT 2020
+#Thu Oct 29 15:27:30 CAT 2020
 base.0=C\:\\Users\\Edgar Kealeboga\\Development\\Flutter Projects\\soulmate-app-clean\\soulmate\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

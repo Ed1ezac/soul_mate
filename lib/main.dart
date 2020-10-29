@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:soul_mate/styles.dart';
+import 'package:Soulmate_App/styles.dart';
 import 'package:flutter/rendering.dart';
-import 'package:soul_mate/pages/onboarding/on_boarding_carousel.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
+import 'package:Soulmate_App/pages/onboarding/on_boarding_carousel.dart';
+import 'package:Soulmate_App/utils/widget_utils.dart';
 
 void main() {
   runApp(MyApp());
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: OnBoardingCarousel(), //MyHomePage(title: 'Soul'),
+      home: OnBoardingCarousel(),
     );
   }
 }

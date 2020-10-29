@@ -1,7 +1,7 @@
+import 'package:Soulmate_App/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:soul_mate/custom_icons_icons.dart';
-import 'package:soul_mate/pages/app/home.dart';
-import 'package:soul_mate/widgets/DRAWING_AREA.dart';
+import 'package:Soulmate_App/custom_icons_icons.dart';
+import 'package:Soulmate_App/pages/app/home.dart';
 import '../../styles.dart';
 
 class SignIn extends StatefulWidget {
@@ -40,9 +40,8 @@ class UserSignIn extends State<SignIn> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
+            padding: EdgeInsets.symmetric(
+              horizontal: screenAwareSizeH(8.0, context),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,9 +54,12 @@ class UserSignIn extends State<SignIn> {
                   child: Column(
                     children: <Widget>[
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 32.0),
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenAwareSizeH(32.0, context),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         height: formWidgetHeight,
                         child: TextFormField(
                           autofocus: false,
@@ -77,9 +79,12 @@ class UserSignIn extends State<SignIn> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 32.0),
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenAwareSizeH(32.0, context),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         height: formWidgetHeight,
                         //password
                         child: TextFormField(
@@ -98,9 +103,12 @@ class UserSignIn extends State<SignIn> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32.0, vertical: 0.0),
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenAwareSizeH(32.0, context),
+                        ),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         height: MediaQuery.of(context).size.height / 18,
                         width: MediaQuery.of(context).size.width - 16,
                         child: RaisedButton(
@@ -116,14 +124,18 @@ class UserSignIn extends State<SignIn> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         child: Text(
                           "~ OR ~",
                           style: TextStyle(color: Colors.white, fontSize: 14.0),
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         child: Text(
                           "Login with",
                           style: TextStyle(
@@ -133,7 +145,9 @@ class UserSignIn extends State<SignIn> {
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        margin: EdgeInsets.symmetric(
+                          vertical: screenAwareSizeV(8.0, context),
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -141,10 +155,12 @@ class UserSignIn extends State<SignIn> {
                               customBorder: CircleBorder(),
                               onTap: () {},
                               child: Container(
-                                width: 55.0,
-                                height: 55.0,
+                                width: screenAwareSizeH(55.0, context),
+                                height: screenAwareSizeV(55.0, context),
                                 margin: EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 8.0),
+                                  vertical: screenAwareSizeV(12.0, context),
+                                  horizontal: screenAwareSizeH(8.0, context),
+                                ),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: AppColors.soulPrimaryLight),
@@ -158,10 +174,12 @@ class UserSignIn extends State<SignIn> {
                               customBorder: CircleBorder(),
                               onTap: () {},
                               child: Container(
-                                width: 55.0,
-                                height: 55.0,
+                                width: screenAwareSizeH(55.0, context),
+                                height: screenAwareSizeV(55.0, context),
                                 margin: EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 8.0),
+                                  vertical: screenAwareSizeV(12.0, context),
+                                  horizontal: screenAwareSizeH(8.0, context),
+                                ),
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     color: AppColors.soulPrimaryLight),
@@ -177,33 +195,40 @@ class UserSignIn extends State<SignIn> {
                     ],
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 136.0, bottom: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "don't have an Account?",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        InkWell(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          onTap: () => navigateToSignUp(context),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 6.0, horizontal: 6.0),
-                            child: Text(
-                              "REGISTER",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800,
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        bottom: screenAwareSizeV(8.0, context),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "don't have an Account?",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          InkWell(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0)),
+                            onTap: () => navigateToSignUp(context),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: screenAwareSizeV(6.0, context),
+                                horizontal: screenAwareSizeH(6.0, context),
+                              ),
+                              child: Text(
+                                "REGISTER",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -231,8 +256,14 @@ class UserSignIn extends State<SignIn> {
   Widget headerText(BuildContext context) {
     return SafeArea(
       child: Container(
-        width: MediaQuery.of(context).size.width - 16,
-        margin: EdgeInsets.fromLTRB(8.0, 80.0, 8.0, 42.0),
+        width:
+            MediaQuery.of(context).size.width - screenAwareSizeH(16.0, context),
+        margin: EdgeInsets.fromLTRB(
+          screenAwareSizeH(8.0, context),
+          screenAwareSizeV(80.0, context),
+          screenAwareSizeH(8.0, context),
+          screenAwareSizeH(40.0, context),
+        ),
         child: Text(
           'Sign In',
           textAlign: TextAlign.center,

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:soul_mate/models/user_basic_details.dart';
-import 'package:soul_mate/models/form_progress_observer.dart';
-import 'package:soul_mate/models/user_personality.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
-import 'package:soul_mate/widgets/wizard_option.dart';
-
+import 'package:Soulmate_App/models/user_basic_details.dart';
+import 'package:Soulmate_App/models/form_progress_observer.dart';
+import 'package:Soulmate_App/models/user_habits_and_interests.dart';
+import 'package:Soulmate_App/models/user_personality.dart';
+import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:Soulmate_App/widgets/wizard_option.dart';
 import '../../styles.dart';
 
 class ProfileWizard extends StatefulWidget {
@@ -16,6 +16,7 @@ class ProfileWizard extends StatefulWidget {
 class WizardState extends State<ProfileWizard> {
   UserBasicDetails details = UserBasicDetails();
   UserPersonality personality = UserPersonality();
+  UserHabitsAndInterests habitsAndInterests = UserHabitsAndInterests();
   FormProgressObserver _observer;
   OptionState basicsState = OptionState.ACTIVE,
       personalityState = OptionState.INACTIVE,
@@ -166,11 +167,11 @@ class WizardState extends State<ProfileWizard> {
                     Consumer<FormProgressObserver>(
                       builder: (context, progressObserver, child) {
                         return WizardOption(
-                          position: 3,
-                          state: interestsState,
-                          notifyParent: updateParent,
-                          onStateChange: (state) => interestsState = state,
-                        );
+                            position: 3,
+                            state: interestsState,
+                            notifyParent: updateParent,
+                            onStateChange: (state) => interestsState = state,
+                            onObjectChange: (result) => personality = result);
                       },
                     ),
                   ],

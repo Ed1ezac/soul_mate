@@ -1,6 +1,6 @@
 import '../styles.dart';
 import 'package:flutter/material.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
+import 'package:Soulmate_App/utils/widget_utils.dart';
 
 class HabitPicker extends StatefulWidget {
   //collection of habits

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:Soulmate_App/utils/widget_utils.dart';
 
 class AnimatedImage extends StatefulWidget {
-  String _assetPath;
+  final String _assetPath;
   AnimatedImage(this._assetPath);
 
   @override
   State<StatefulWidget> createState() {
-    return _EnlargeAndFadeIn(_assetPath);
+    return _EnlargeAndFadeIn();
   }
 }
 
@@ -17,11 +18,6 @@ class _EnlargeAndFadeIn extends State<AnimatedImage>
   AnimationController _controllerEnlarge;
   Animation _fadeIn;
   Animation _enlarge;
-  String path;
-
-  _EnlargeAndFadeIn(String path) {
-    this.path = path;
-  }
 
   @override
   initState() {
@@ -37,12 +33,15 @@ class _EnlargeAndFadeIn extends State<AnimatedImage>
   @override
   Widget build(BuildContext context) {
     double startOpacity = 0.3;
-    double startWidth = MediaQuery.of(context).size.width - 30;
+    double startWidth =
+        MediaQuery.of(context).size.width - screenAwareSizeH(40.0, context);
 
     _fadeIn = Tween(begin: startOpacity, end: 1.0).animate(
         CurvedAnimation(parent: _controllerFadeIn, curve: Curves.ease));
     _enlarge = Tween(
-            begin: startWidth, end: (MediaQuery.of(context).size.width - 8))
+            begin: startWidth,
+            end: (MediaQuery.of(context).size.width -
+                screenAwareSizeH(16.0, context)))
         .animate(
             CurvedAnimation(parent: _controllerEnlarge, curve: Curves.ease));
 
@@ -63,9 +62,11 @@ class _EnlargeAndFadeIn extends State<AnimatedImage>
 
   Widget svgImage(BuildContext context) {
     return SvgPicture.asset(
-      path,
-      height: MediaQuery.of(context).size.height - 200,
-      width: MediaQuery.of(context).size.width - 8,
+      widget._assetPath,
+      height:
+          MediaQuery.of(context).size.height - screenAwareSizeV(232.0, context),
+      width:
+          MediaQuery.of(context).size.width - screenAwareSizeH(16.0, context),
       semanticsLabel: 'vector asset image',
     );
   }

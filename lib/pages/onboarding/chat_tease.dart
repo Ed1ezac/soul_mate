@@ -1,7 +1,8 @@
+import 'package:Soulmate_App/utils/widget_utils.dart';
 import "package:flutter/material.dart";
-import 'package:soul_mate/pages/auth/sign_up.dart';
-import 'package:soul_mate/pages/onboarding/animated_image.dart';
-import 'package:soul_mate/styles.dart';
+import 'package:Soulmate_App/pages/auth/sign_up.dart';
+import 'package:Soulmate_App/pages/onboarding/animated_image.dart';
+import 'package:Soulmate_App/styles.dart';
 
 class ChatTease extends StatelessWidget {
   ChatTease({Key key}) : super(key: key);
@@ -11,7 +12,7 @@ class ChatTease extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.soulPrimary,
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 32.0),
+        padding: EdgeInsets.only(bottom: screenAwareSizeV(32.0, context)),
         child: chatTeaseColumn(context),
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -45,7 +46,8 @@ class ChatTease extends StatelessWidget {
             child: SafeArea(
               bottom: false,
               child: Container(
-                width: (MediaQuery.of(context).size.width - 32),
+                width: (MediaQuery.of(context).size.width -
+                    screenAwareSizeH(32.0, context)),
                 child: Text(
                   'Chat',
                   textAlign: TextAlign.center,
@@ -65,7 +67,10 @@ class ChatTease extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Padding(
-            padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+            padding: EdgeInsets.symmetric(
+              horizontal: screenAwareSizeH(16.0, context),
+              vertical: screenAwareSizeV(8.0, context),
+            ),
             child: Text(
               "Once you are matched, you can get to know your matched partner better by chatting with them.",
               style: TextStyle(

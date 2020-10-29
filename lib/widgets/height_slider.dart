@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
+import 'package:Soulmate_App/utils/widget_utils.dart';
 import '../styles.dart';
 
 class HeightSlider extends StatelessWidget {

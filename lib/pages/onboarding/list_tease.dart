@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:soul_mate/pages/onboarding/animated_image.dart';
-import 'package:soul_mate/styles.dart';
+import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:Soulmate_App/pages/onboarding/animated_image.dart';
+import 'package:Soulmate_App/styles.dart';
 
 class ListTease extends StatelessWidget {
   ListTease({Key key}) : super(key: key);
@@ -14,7 +15,7 @@ class ListTease extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.soulAccentLight,
       body: Padding(
-        padding: const EdgeInsets.only(bottom: 32.0),
+        padding: EdgeInsets.only(bottom: screenAwareSizeV(32.0, context)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -25,9 +26,10 @@ class ListTease extends StatelessWidget {
                 child: SafeArea(
                   bottom: false,
                   child: Container(
-                    width: (MediaQuery.of(context).size.width - 32),
+                    width: (MediaQuery.of(context).size.width -
+                        screenAwareSizeH(32.0, context)),
                     child: Text(
-                      'Timeline',
+                      'Discover',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: "Delafield",
@@ -45,11 +47,13 @@ class ListTease extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenAwareSizeH(16.0, context),
+                  vertical: screenAwareSizeV(8.0, context),
+                ),
                 child: Text(
                   "Potential dates are suggested to you based on your " +
-                      "interests and personality. You can show interest on someone by swiping up or to the right. " +
-                      "It's a match when you swipe someone who swiped you!",
+                      "interests and personality. It's a match when you like someone who liked you!",
                   style: TextStyle(
                     fontSize: 18,
                     decoration: TextDecoration.none,

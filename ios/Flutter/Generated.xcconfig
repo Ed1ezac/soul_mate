@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
 FLUTTER_ROOT=C:\Flutter SDK\flutter
-FLUTTER_APPLICATION_PATH=C:\Users\Edgar Kealeboga\Development\Flutter Projects\basics_tutorial\soul_mate_app\soul_mate
+FLUTTER_APPLICATION_PATH=C:\Users\Edgar Kealeboga\Development\Flutter Projects\soulmate-app-clean\soulmate
 FLUTTER_TARGET=lib\main.dart
 FLUTTER_BUILD_DIR=build
 SYMROOT=${SOURCE_ROOT}/../build\ios

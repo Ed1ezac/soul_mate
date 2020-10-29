@@ -190,7 +190,6 @@ class WizardState extends State<ProfileWizard>
 
   void _flagProfileCreationComplete() {
     _isWizardComplete = true;
-    interestsState = OptionState.COMPLETE;
     _observer.registerProgess();
   }
 

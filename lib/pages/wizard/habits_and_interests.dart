@@ -1,3 +1,4 @@
+import 'package:Soulmate_App/models/user_habits_and_interests.dart';
 import 'package:flutter/material.dart';
 import 'package:Soulmate_App/utils/widget_utils.dart';
 import 'package:Soulmate_App/widgets/habit_picker.dart';
@@ -5,6 +6,10 @@ import 'package:Soulmate_App/widgets/interests_picker.dart';
 import '../../styles.dart';
 
 class HabitsAndInterests extends StatefulWidget {
+  final UserHabitsAndInterests habitsAndInterests;
+
+  HabitsAndInterests(this.habitsAndInterests);
+
   @override
   _HabitsAndInterestsState createState() => _HabitsAndInterestsState();
 }
@@ -16,6 +21,19 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
       _interestsIsEmpty = true,
       _habitsHasError = false,
       _interestsHasError = false;
+  String habitsErrorText, interestsErrorText;
+
+  @override
+  initState() {
+    super.initState();
+    if (widget.habitsAndInterests != null &&
+        !widget.habitsAndInterests.isEmpty()) {
+      _pickedHabits.addAll(widget.habitsAndInterests.habits);
+      _pickedInterests.addAll(widget.habitsAndInterests.interests);
+      _interestsIsEmpty = false;
+      _habitsIsEmpty = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +48,9 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
         title: Text("Habits and Interests"),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.check), onPressed: () => Navigator.pop(context)),
+            icon: Icon(Icons.check),
+            onPressed: () => _popOrFail(),
+          ),
         ],
       ),
       body: SafeArea(
@@ -89,13 +109,53 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
     );
   }
 
+  void _popOrFail() {
+    if (_formIsValid()) {
+      //pop!
+      widget.habitsAndInterests.habits.clear();
+      widget.habitsAndInterests.interests.clear();
+      widget.habitsAndInterests.habits.addAll(_pickedHabits);
+      widget.habitsAndInterests.interests.addAll(_pickedInterests);
+      Navigator.pop(context, widget.habitsAndInterests);
+    } else {
+      //display errors
+      setState(() {});
+    }
+  }
+
+  bool _formIsValid() {
+    bool isValid = true;
+
+    if (_pickedHabits.isEmpty) {
+      isValid = false;
+      _habitsHasError = true;
+      habitsErrorText = "you need to pick some habits.";
+    } else if (_pickedHabits.length != 3) {
+      isValid = false;
+      _habitsHasError = true;
+      habitsErrorText = "you must pick 3 habits.";
+    }
+
+    if (_pickedInterests.isEmpty) {
+      isValid = false;
+      _interestsHasError = false;
+      interestsErrorText = "you need to pick some interests.";
+    } else if (_pickedInterests.length != 6) {
+      isValid = false;
+      _interestsHasError = false;
+      interestsErrorText = "you must pick 6 interests.";
+    }
+
+    return isValid;
+  }
+
   Widget buildHabitsWidget() {
     if (_habitsHasError) {
       return InputDecorator(
         isEmpty: _habitsIsEmpty,
         child: _getHabitsText(),
         decoration: InputDecoration(
-          errorText: "something aint right..",
+          errorText: habitsErrorText,
           labelText: "Habits",
           prefixIcon: Icon(
             Icons.beenhere,
@@ -142,7 +202,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
         isEmpty: _interestsIsEmpty,
         child: _getInterestsText(),
         decoration: InputDecoration(
-          errorText: "something aint right..",
+          errorText: interestsErrorText,
           labelText: "Interests",
           prefixIcon: Icon(
             Icons.beach_access,

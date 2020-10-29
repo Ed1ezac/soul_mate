@@ -354,9 +354,7 @@ class WizardOptionState extends State<WizardOption>
     );
 
     if (result != null) {
-      widget.onObjectChange(result);
-      widget.onStateChange(OptionState.COMPLETE);
-      widget.notifyParent(widget.position);
+      _markWidgetAsCompleted(result);
     }
   }
 
@@ -372,20 +370,28 @@ class WizardOptionState extends State<WizardOption>
     );
 
     if (result != null) {
-      widget.onObjectChange(result);
-      widget.onStateChange(OptionState.COMPLETE);
-      widget.notifyParent(widget.position);
+      _markWidgetAsCompleted(result);
     }
   }
 
-  void openInterestsForm() {
-    Navigator.push(
+  void openInterestsForm() async {
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => HabitsAndInterests(),
+        builder: (context) => HabitsAndInterests(widget.thisObject),
       ),
     );
+
+    if (result != null) {
+      _markWidgetAsCompleted(result);
+    }
+  }
+
+  void _markWidgetAsCompleted(dynamic result) {
+    widget.onObjectChange(result);
+    widget.onStateChange(OptionState.COMPLETE);
+    widget.notifyParent(widget.position);
   }
 }
 

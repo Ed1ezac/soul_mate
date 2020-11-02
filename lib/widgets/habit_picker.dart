@@ -101,6 +101,7 @@ class HabitPickerState extends State<HabitPicker> {
     "Gambling",
     "Hugging",
     "Reading",
+    "Swearing",
     "Spitting",
     "Laughing",
     "Cuddling",

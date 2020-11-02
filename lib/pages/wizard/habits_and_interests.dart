@@ -111,11 +111,9 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
 
   void _popOrFail() {
     if (_formIsValid()) {
+      widget.habitsAndInterests.habits = _pickedHabits;
+      widget.habitsAndInterests.interests = _pickedInterests;
       //pop!
-      widget.habitsAndInterests.habits.clear();
-      widget.habitsAndInterests.interests.clear();
-      widget.habitsAndInterests.habits.addAll(_pickedHabits);
-      widget.habitsAndInterests.interests.addAll(_pickedInterests);
       Navigator.pop(context, widget.habitsAndInterests);
     } else {
       //display errors
@@ -125,6 +123,8 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
 
   bool _formIsValid() {
     bool isValid = true;
+    _habitsHasError = false;
+    _interestsHasError = false;
 
     if (_pickedHabits.isEmpty) {
       isValid = false;
@@ -138,11 +138,11 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
 
     if (_pickedInterests.isEmpty) {
       isValid = false;
-      _interestsHasError = false;
+      _interestsHasError = true;
       interestsErrorText = "you need to pick some interests.";
     } else if (_pickedInterests.length != 6) {
       isValid = false;
-      _interestsHasError = false;
+      _interestsHasError = true;
       interestsErrorText = "you must pick 6 interests.";
     }
 
@@ -250,9 +250,9 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
         context: context,
         builder: (context) => HabitPicker(pickedHabits: _pickedHabits));
 
-    if (hasItems != null && hasItems) {
+    if (hasItems != null) {
       setState(() {
-        _habitsIsEmpty = false;
+        _habitsIsEmpty = !hasItems;
       });
     }
   }
@@ -263,9 +263,9 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
         builder: (context) =>
             InterestsPicker(pickedInterests: _pickedInterests));
 
-    if (hasItems != null && hasItems) {
+    if (hasItems != null) {
       setState(() {
-        _interestsIsEmpty = false;
+        _interestsIsEmpty = !hasItems;
       });
     }
   }

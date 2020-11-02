@@ -20,24 +20,20 @@ class WizardState extends State<ProfileWizard>
   UserHabitsAndInterests habitsAndInterests = UserHabitsAndInterests();
   FormProgressObserver _observer;
   AnimationController _fabFloatUpController;
-  Animation<Offset> _fabFloatUpAnimation;
-  OptionState basicsState = OptionState.ACTIVE,
-      personalityState = OptionState.INACTIVE,
-      interestsState = OptionState.INACTIVE;
+  Animation<double> _fabFloatUpAnimation;
+  OptionState basicsState = OptionState.COMPLETE, //OptionState.ACTIVE
+      personalityState = OptionState.COMPLETE, //OptionState.INACTIVE
+      interestsState = OptionState.ACTIVE;
   bool _isWizardComplete = false;
+
+  FloatingActionButton advanceButton;
 
   @override
   initState() {
     super.initState();
     _observer = FormProgressObserver();
     _fabFloatUpController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2));
-    _fabFloatUpAnimation = Tween<Offset>(
-      begin: const Offset(0.0, 2.0),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(parent: _fabFloatUpController, curve: Curves.bounceIn),
-    );
+        AnimationController(vsync: this, duration: const Duration(seconds: 3));
 
     _fabFloatUpController.forward();
   }
@@ -146,7 +142,7 @@ class WizardState extends State<ProfileWizard>
             ),
           ],
         ),
-        floatingActionButton: _isWizardComplete ? _showFab() : null,
+        floatingActionButton: _isWizardComplete ? _showFab(context) : null,
       ),
     );
   }
@@ -189,25 +185,48 @@ class WizardState extends State<ProfileWizard>
   }
 
   void _flagProfileCreationComplete() {
-    _isWizardComplete = true;
     _observer.registerProgess();
-  }
 
-  Widget _showFab() {
-    //onclick
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        return SlideTransition(
-          position: _fabFloatUpAnimation,
-          child: FloatingActionButton.extended(
-            label: Text('Create'),
-            onPressed: () {
-              //createOrFail();
-            },
-          ),
-        );
+        _isWizardComplete = true;
       });
     });
+  }
+
+  Widget _showFab(BuildContext context) {
+    _fabFloatUpAnimation = Tween<double>(
+      begin:
+          MediaQuery.of(context).size.height + screenAwareSizeV(56.0, context),
+      end: 0.0,
+    ).animate(
+      CurvedAnimation(parent: _fabFloatUpController, curve: Curves.bounceInOut),
+    );
+
+    // return SlideTransition(
+    //   position: Offset(0.0, _fabFloatUpAnimation.value),
+    //   child: advanceFab(),
+    // );
+
+    // return Transform.translate(
+    //   offset: _fabFloatUpAnimation.value,
+    //   child: advanceButton,
+    // );
+
+    return Transform(
+      transform:
+          Matrix4.translationValues(0.0, _fabFloatUpAnimation.value, 0.0),
+      child: advanceFab(),
+    );
+  }
+
+  Widget advanceFab() {
+    return Container(
+      child: FloatingActionButton.extended(
+        onPressed: () {},
+        label: Text("Create"),
+      ),
+    );
   }
 
   void createUserProfile() {

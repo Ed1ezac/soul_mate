@@ -1,3 +1,4 @@
+import 'package:Soulmate_App/widgets/explore_card.dart';
 import 'package:flutter/material.dart';
 
 class Explore extends StatefulWidget {
@@ -10,8 +11,8 @@ class Explore extends StatefulWidget {
 class ExploreState extends State<Explore> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.blue,
+    return Center(
+      child: ExploreCard(),
     );
   }
 }

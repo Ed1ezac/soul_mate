@@ -27,11 +27,20 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Soulmate"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.filter_list),
+            onPressed: () => {},
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: screenAwareSizeH(16.0, context),
-            vertical: screenAwareSizeV(16.0, context),
+            horizontal: screenAwareSizeH(8.0, context),
+            vertical: screenAwareSizeV(8.0, context),
           ),
           child: _currentPage,
         ),

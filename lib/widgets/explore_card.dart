@@ -23,9 +23,6 @@ class ExploreCardState extends State<ExploreCard> {
       shape:
           RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
       child: Container(
-        padding: EdgeInsets.symmetric(
-            horizontal: screenAwareSizeH(16.0, context),
-            vertical: screenAwareSizeV(16.0, context)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -33,6 +30,9 @@ class ExploreCardState extends State<ExploreCard> {
               child: imageArea(context),
             ),
             Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: screenAwareSizeH(16.0, context),
+              ),
               margin: EdgeInsets.only(top: screenAwareSizeV(8.0, context)),
               child: Text(
                 'Jessica, 23',
@@ -40,6 +40,9 @@ class ExploreCardState extends State<ExploreCard> {
               ),
             ),
             Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: screenAwareSizeH(16.0, context),
+              ),
               margin: EdgeInsets.only(top: screenAwareSizeV(8.0, context)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,10 +53,18 @@ class ExploreCardState extends State<ExploreCard> {
                 ],
               ),
             ),
-            Divider(),
-            Text(
-              'Swiming, music, partying',
-              style: Theme.of(context).textTheme.caption,
+            Divider(
+              indent: 4.0,
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: screenAwareSizeV(8.0, context)),
+              padding: EdgeInsets.symmetric(
+                horizontal: screenAwareSizeH(16.0, context),
+              ),
+              child: Text(
+                'Swiming, music, partying',
+                style: Theme.of(context).textTheme.caption,
+              ),
             ),
           ],
         ),
@@ -67,10 +78,12 @@ class ExploreCardState extends State<ExploreCard> {
       children: <Widget>[
         //image
         Container(
-          color: Colors.blue[50],
-          child: Image(
-            image: AssetImage("assets/images/girl_avatar.jpg"),
-            fit: BoxFit.cover,
+          child: AspectRatio(
+            aspectRatio: 5 / 6,
+            child: Image(
+              image: AssetImage("assets/images/girl_avatar.jpg"),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         //scrim

@@ -31,11 +31,12 @@ class _HomeState extends State<Home> {
         title: Text("Soulmate"),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.filter_list),
+            icon: Icon(Icons.tune),
             onPressed: () => {},
           ),
         ],
       ),
+      backgroundColor: Color(0xfafafaff),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(

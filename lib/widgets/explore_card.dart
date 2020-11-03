@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 import 'package:Soulmate_App/utils/widget_utils.dart';
 
 class ExploreCard extends StatefulWidget {
+  final String imageURI;
+  final String name;
+  final int age, height;
+
+  ExploreCard({this.imageURI, this.name, this.age, this.height});
+
   @override
   createState() => ExploreCardState();
 }
@@ -10,85 +15,82 @@ class ExploreCard extends StatefulWidget {
 class ExploreCardState extends State<ExploreCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height / 1.5,
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.6,
       width:
-          (MediaQuery.of(context).size.width - screenAwareSizeH(16.0, context)),
+          (MediaQuery.of(context).size.width - screenAwareSizeH(32.0, context)),
       child: exploreCard(context),
     );
   }
 
   Widget exploreCard(BuildContext context) {
     return Card(
-      shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.zero)),
-      child: Container(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: imageArea(context),
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
+            child: imageArea(context),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: screenAwareSizeH(16.0, context),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: screenAwareSizeH(16.0, context),
-              ),
-              margin: EdgeInsets.only(top: screenAwareSizeV(8.0, context)),
-              child: Text(
-                'Jessica, 23',
-                style: Theme.of(context).textTheme.headline6,
-              ),
+            margin: EdgeInsets.only(top: screenAwareSizeV(8.0, context)),
+            child: Text(
+              widget.name +
+                  (widget.age == null ? '' : ', ' + widget.age.toString()),
+              style: Theme.of(context).textTheme.headline6,
             ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: screenAwareSizeH(16.0, context),
-              ),
-              margin: EdgeInsets.only(top: screenAwareSizeV(8.0, context)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text('Social Introvert',
-                      style: Theme.of(context).textTheme.bodyText2),
-                  Text('158cm', style: Theme.of(context).textTheme.bodyText2),
-                ],
-              ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: screenAwareSizeH(16.0, context),
             ),
-            Divider(
-              indent: 4.0,
+            margin: EdgeInsets.only(top: screenAwareSizeV(8.0, context)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text('Social Introvert',
+                    style: Theme.of(context).textTheme.bodyText2),
+                Text(widget.height.toString() + 'cm',
+                    style: Theme.of(context).textTheme.bodyText2),
+              ],
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: screenAwareSizeV(8.0, context)),
-              padding: EdgeInsets.symmetric(
-                horizontal: screenAwareSizeH(16.0, context),
-              ),
-              child: Text(
-                'Swiming, music, partying',
-                style: Theme.of(context).textTheme.caption,
-              ),
+          ),
+          Divider(
+            indent: 4.0,
+          ),
+          Container(
+            margin: EdgeInsets.only(bottom: screenAwareSizeV(8.0, context)),
+            padding: EdgeInsets.symmetric(
+              horizontal: screenAwareSizeH(16.0, context),
             ),
-          ],
-        ),
+            child: Text(
+              'Swiming, music, partying',
+              style: Theme.of(context).textTheme.caption,
+            ),
+          ),
+        ],
       ),
     );
   }
 
   Widget imageArea(BuildContext context) {
     return Stack(
-      alignment: Alignment.center,
+      alignment: Alignment.bottomCenter,
       children: <Widget>[
         //image
-        Container(
-          child: AspectRatio(
-            aspectRatio: 5 / 6,
-            child: Image(
-              image: AssetImage("assets/images/girl_avatar.jpg"),
-              fit: BoxFit.cover,
-            ),
-          ),
+        Image.asset(
+          widget.imageURI,
+          height: MediaQuery.of(context).size.height * 0.45,
+          fit: BoxFit.cover,
         ),
         //scrim
         Align(
-          alignment: Alignment.bottomRight,
+          alignment: Alignment.bottomCenter,
           child: Container(
             height: screenAwareSizeV(100.0, context),
             decoration: BoxDecoration(
@@ -112,18 +114,15 @@ class ExploreCardState extends State<ExploreCard> {
                 right: screenAwareSizeH(8.0, context),
                 bottom: screenAwareSizeV(8.0, context)),
             alignment: Alignment.bottomRight,
-            //height: screenAwareSizeV(50.0, context),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Transform.rotate(
-                    angle: math.pi / 4,
-                    child: Icon(
-                      Icons.navigation,
-                      color: Colors.white,
-                      size: 16.0,
-                    )),
+                Icon(
+                  Icons.near_me,
+                  color: Colors.white,
+                  size: 16.0,
+                ),
                 Text(
                   "200m",
                   style: TextStyle(color: Colors.white, fontSize: 11.0),

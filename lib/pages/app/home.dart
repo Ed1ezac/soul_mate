@@ -1,3 +1,4 @@
+import 'package:Soulmate_App/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:Soulmate_App/utils/widget_utils.dart';
 
@@ -28,10 +29,19 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Soulmate"),
+        automaticallyImplyLeading: false,
+        title: Text(
+          "Soulmate",
+          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24.0),
+        ),
         actions: <Widget>[
+          if (_currentIndex == 1)
+            IconButton(
+              icon: Icon(Icons.tune),
+              onPressed: () => _openFilterDialog(),
+            ),
           IconButton(
-            icon: Icon(Icons.tune),
+            icon: Icon(Icons.more_vert),
             onPressed: () => {},
           ),
         ],
@@ -76,5 +86,30 @@ class _HomeState extends State<Home> {
       _currentIndex = selectedIndex;
       _currentPage = _pagesList[selectedIndex];
     });
+  }
+
+  void _openFilterDialog() {
+    showGeneralDialog(
+        transitionBuilder: (context, anim1, anim2, widget) {
+          final curvedValue = Curves.easeInOutBack.transform(anim1.value) - 1.0;
+          return Transform(
+            transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
+            child: Opacity(
+              opacity: anim1.value,
+              child: AlertDialog(
+                shape: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(16.0)),
+                title: Text('Hello!!'),
+                content: Text('Filter data loading...'),
+              ),
+            ),
+          );
+        },
+        transitionDuration: Duration(milliseconds: 900),
+        barrierDismissible: true,
+        context: context,
+        barrierLabel: '',
+        barrierColor: Colors.black87,
+        pageBuilder: (context, animation1, animation2) {});
   }
 }

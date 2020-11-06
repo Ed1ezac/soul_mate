@@ -225,7 +225,6 @@ class ExploreState extends State<Explore> with TickerProviderStateMixin {
     } on TickerCanceled {}
   }
 
-  //TODO--make
   dismissPotential(PotentialMatch match) {
     setState(() {
       items.remove(match);
@@ -236,7 +235,6 @@ class ExploreState extends State<Explore> with TickerProviderStateMixin {
     setState(() {
       items.remove(match);
       selectedItems.add(match);
-      //items.insert(items.length - 1, null);
     });
   }
 

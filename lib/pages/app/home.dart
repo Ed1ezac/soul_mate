@@ -1,4 +1,5 @@
 import 'package:Soulmate_App/styles.dart';
+import 'package:Soulmate_App/widgets/filter_dialog_content.dart';
 import 'package:flutter/material.dart';
 import 'package:Soulmate_App/utils/widget_utils.dart';
 
@@ -96,11 +97,11 @@ class _HomeState extends State<Home> {
             transform: Matrix4.translationValues(0.0, curvedValue * 200, 0.0),
             child: Opacity(
               opacity: anim1.value,
-              child: AlertDialog(
-                shape: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(16.0)),
-                title: Text('Hello!!'),
-                content: Text('Filter data loading...'),
+              child: Dialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(20.0)), //this right here,
+                child: FilterDialog(),
               ),
             ),
           );
@@ -108,7 +109,7 @@ class _HomeState extends State<Home> {
         transitionDuration: Duration(milliseconds: 900),
         barrierDismissible: true,
         context: context,
-        barrierLabel: '',
+        barrierLabel: 'filter',
         barrierColor: Colors.black87,
         pageBuilder: (context, animation1, animation2) {});
   }

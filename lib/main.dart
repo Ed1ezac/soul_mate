@@ -1,8 +1,10 @@
+import 'package:Soulmate_App/widgets/custom_range_slider_thumb.dart';
+import 'package:Soulmate_App/widgets/custom_slider_thumb.dart';
 import 'package:flutter/material.dart';
 import 'package:Soulmate_App/styles.dart';
 import 'package:flutter/rendering.dart';
-import 'package:Soulmate_App/pages/onboarding/on_boarding_carousel.dart';
 import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:Soulmate_App/pages/onboarding/on_boarding_carousel.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,10 +28,12 @@ class MyApp extends StatelessWidget {
         textSelectionColor: AppColors.soulAccentLight,
         textSelectionHandleColor: AppColors.soulAccentDark,
         sliderTheme: SliderThemeData(
-          overlayColor: AppColors.soulAccentLight.withOpacity(0.2),
-          inactiveTrackColor: AppColors.soulAccentLight,
-          activeTrackColor: AppColors.soulAccentDark,
+          overlayColor: AppColors.soulPrimaryLight.withOpacity(0.2),
+          inactiveTrackColor: Colors.grey,
+          activeTrackColor: AppColors.soulPrimary,
           trackHeight: 3.0,
+          thumbShape: CustomSliderThumb(),
+          rangeThumbShape: CustomRangeSliderThumb(),
           thumbColor: AppColors.soulAccentDark,
           valueIndicatorColor: AppColors.soulAccentDark,
         ),

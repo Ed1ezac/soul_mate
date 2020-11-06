@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../styles.dart';
 
-class CustomSliderThumb extends SliderComponentShape {
+class CustomRangeSliderThumb extends RangeSliderThumbShape {
   final double thumbRadius;
 
-  const CustomSliderThumb({
-    this.thumbRadius = 8.0,
-  });
+  CustomRangeSliderThumb({this.thumbRadius = 8.0});
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) {
@@ -18,19 +16,18 @@ class CustomSliderThumb extends SliderComponentShape {
   void paint(
     PaintingContext context,
     Offset center, {
-    double value,
+    Thumb thumb,
+    bool isOnTop,
+    bool isEnabled,
     bool isDiscrete,
-    RenderBox parentBox,
-    TextPainter labelPainter,
     TextDirection textDirection,
     SliderThemeData sliderTheme,
-    Animation<double> activationAnimation,
     Animation<double> enableAnimation,
+    Animation<double> activationAnimation,
   }) {
-    // final Tween<double> radiusTween =
-    //     Tween<double>(begin: 4.0, end: thumbRadius);
+    // TODO: implement paint
     final Canvas canvas = context.canvas;
-    //final rect = Rect.fromCircle(center: center, radius: radiusTween.evaluate(activationAnimation));
+
     final rect = Rect.fromCircle(center: center, radius: thumbRadius);
     final sliderGrip = Paint()
       ..color = Colors.white
@@ -49,10 +46,9 @@ class CustomSliderThumb extends SliderComponentShape {
       ..style = PaintingStyle.fill;
 
     final borderPaint = Paint()
-      ..color = Colors.white24
-      ..strokeWidth = 0.1
+      ..color = isOnTop ? Colors.white70 : Colors.white24
+      ..strokeWidth = isOnTop ? 1.0 : 0.1
       ..style = PaintingStyle.stroke;
-
     //---fill
     canvas.drawRRect(rrect, fillPaint);
     //handles

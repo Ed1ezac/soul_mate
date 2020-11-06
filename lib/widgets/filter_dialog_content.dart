@@ -8,6 +8,9 @@ class FilterDialog extends StatefulWidget {
 class _FilterDialogState extends State<FilterDialog> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.75,
+      width: MediaQuery.of(context).size.width * 0.75,
+    );
   }
 }

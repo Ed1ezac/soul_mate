@@ -29,34 +29,7 @@ class DrawingAreaState extends State<DrawingArea> {
       backgroundColor: Colors.grey[100],
       body: SafeArea(
         child: Center(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.75,
-            width: MediaQuery.of(context).size.width * 0.75,
-            child: Card(
-              color: Colors.grey[200],
-              child: Padding(
-                padding: EdgeInsets.only(top: screenAwareSizeV(16.0, context)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text("HEIGHT (cm)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                        )),
-                    Expanded(
-                      child: LayoutBuilder(builder: (context, constraints) {
-                        return HeightPicker(
-                          widgetHeight: constraints.maxHeight,
-                          height: height,
-                          onChange: (val) => setState(() => height = val),
-                        );
-                      }),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          child: Container(),
         ),
       ),
     );

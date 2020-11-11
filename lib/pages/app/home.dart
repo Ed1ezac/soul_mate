@@ -98,9 +98,15 @@ class _HomeState extends State<Home> {
             child: Opacity(
               opacity: anim1.value,
               child: Dialog(
+                insetPadding: EdgeInsets.fromLTRB(
+                  screenAwareSizeH(16.0, context), //left
+                  screenAwareSizeV(16.0, context), //top
+                  screenAwareSizeH(16.0, context), //right
+                  screenAwareSizeV(24.0, context), //bottom
+                ),
                 shape: RoundedRectangleBorder(
                     borderRadius:
-                        BorderRadius.circular(20.0)), //this right here,
+                        BorderRadius.circular(16.0)), //this right here,
                 child: FilterDialog(),
               ),
             ),

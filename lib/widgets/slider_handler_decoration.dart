@@ -5,7 +5,7 @@ import '../styles.dart';
 class SliderHandlerDecoration extends Decoration {
   final double handlerRadius;
 
-  SliderHandlerDecoration({this.handlerRadius = 9.0});
+  SliderHandlerDecoration({this.handlerRadius = 8.0});
 
   @override
   BoxPainter createBoxPainter([onChanged]) {
@@ -29,7 +29,7 @@ class _SliderHandlerDecorationPainter extends BoxPainter {
         Offset(rect.left - (mRadius * 0.5), rect.top),
         Offset(rect.right + (mRadius * 0.5), rect.bottom),
       ),
-      Radius.circular(mRadius * 0.6),
+      Radius.circular(mRadius * 0.8),
     );
 
     final fillPaint = Paint()

@@ -11,10 +11,10 @@ class FilterDialog extends StatefulWidget {
 }
 
 class _FilterDialogState extends State<FilterDialog> {
-  double _mDistance = 5000;
+  double _mDistance = 3000;
   int _mSelectedGender = 1;
   double minAge = 18, minHeight = 80;
-  double maxAge = 60, maxHeight = 210, maxDistance = 10000;
+  double maxAge = 48, maxHeight = 210, maxDistance = 10000;
   RangeValues _mAgeRange = RangeValues(20, 30);
   RangeValues _mHeightRange = RangeValues(140, 170);
   double ageDisplayMin, ageDisplayMax;
@@ -32,16 +32,20 @@ class _FilterDialogState extends State<FilterDialog> {
         TextStyle(fontSize: 13.0, color: AppColors.soulPrimaryDark);
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(16.0)),
-          color: Colors.grey[50]), //AppColors.soulPrimaryLight),
-      height: MediaQuery.of(context).size.height * 0.75,
+        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+        color: Colors.grey[50], //.withOpacity(0.2), //Color(0xFFAAA9AD)
+      ), //AppColors.soulPrimaryLight),
+      height: MediaQuery.of(context).size.height * 0.74,
       padding: EdgeInsets.symmetric(vertical: screenAwareSizeV(8.0, context)),
       child: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(
-                vertical: screenAwareSizeV(8.0, context),
-                horizontal: screenAwareSizeH(8.0, context)),
+            //color: AppColors.soulPrimary,
+            padding: EdgeInsets.only(
+              top: screenAwareSizeV(8.0, context),
+              left: screenAwareSizeH(8.0, context),
+              right: screenAwareSizeH(8.0, context),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -49,7 +53,7 @@ class _FilterDialogState extends State<FilterDialog> {
                   "Filter",
                   style: TextStyle(
                     fontSize: 18.0,
-                    color: AppColors.soulAccentDark,
+                    color: Colors.grey[700], //AppColors.soulAccentDark,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
@@ -61,7 +65,7 @@ class _FilterDialogState extends State<FilterDialog> {
           ),
           Container(
             padding: EdgeInsets.symmetric(
-                vertical: screenAwareSizeV(8.0, context),
+                //vertical: screenAwareSizeV(8.0, context),
                 horizontal: screenAwareSizeH(16.0, context)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,7 +79,7 @@ class _FilterDialogState extends State<FilterDialog> {
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w800,
-                        color: AppColors.soulAccentDark,
+                        color: Colors.grey[700], //AppColors.soulAccentDark,
                       ),
                     ),
                   ],
@@ -95,7 +99,7 @@ class _FilterDialogState extends State<FilterDialog> {
                       alwaysShowTooltip: true,
                       textStyle: labelStyle,
                       positionOffset:
-                          FlutterSliderTooltipPositionOffset(top: 2.0),
+                          FlutterSliderTooltipPositionOffset(top: 8.0),
                       boxStyle: FlutterSliderTooltipBox(
                         decoration: BoxDecoration(
                           color: Colors.transparent,
@@ -120,8 +124,8 @@ class _FilterDialogState extends State<FilterDialog> {
                       step: 500,
                     ),
                     trackBar: FlutterSliderTrackBar(
-                      activeTrackBarHeight: 4.0,
-                      inactiveTrackBarHeight: 3.0,
+                      activeTrackBarHeight: 3.0,
+                      inactiveTrackBarHeight: 2.0,
                       activeTrackBar: BoxDecoration(
                         color: AppColors.soulPrimary,
                       ),
@@ -168,57 +172,109 @@ class _FilterDialogState extends State<FilterDialog> {
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w800,
-                    color: AppColors.soulAccentDark,
+                    color: Colors.grey[700], //AppColors.soulAccentDark,
                   ),
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    Radio(
-                      value: 0,
-                      groupValue: _mSelectedGender,
-                      activeColor: AppColors.soulPrimary,
-                      onChanged: (val) {
-                        setSelectedGender(val);
-                      },
-                    ),
-                    Text(
-                      "Men",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey[600],
-                        fontWeight: FontWeight.w600,
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      margin: EdgeInsets.symmetric(
+                        vertical: screenAwareSizeV(16.0, context),
+                      ),
+                      child: FlatButton(
+                        color: _mSelectedGender == 0
+                            ? AppColors.soulPrimary
+                            : Colors.transparent,
+                        child: Text(
+                          "Men",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: _mSelectedGender == 0
+                                ? Colors.white
+                                : Colors.grey[600],
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1.0,
+                            color: Colors.grey[700],
+                            style: BorderStyle.solid,
+                          ),
+                          borderRadius: BorderRadius.circular(6.0),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _mSelectedGender = 0;
+                          });
+                        },
                       ),
                     ),
-                    Radio(
-                      value: 1,
-                      groupValue: _mSelectedGender,
-                      activeColor: AppColors.soulPrimary,
-                      onChanged: (val) {
-                        setSelectedGender(val);
-                      },
-                    ),
-                    Text(
-                      "Women",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey[600],
-                        fontWeight: FontWeight.w600,
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      child: FlatButton(
+                        color: _mSelectedGender == 1
+                            ? AppColors.soulPrimary
+                            : Colors.transparent,
+                        child: Text(
+                          "Women",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: _mSelectedGender == 1
+                                ? Colors.white
+                                : Colors.grey[600],
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1.0,
+                            color: Colors.grey[700],
+                            style: BorderStyle.solid,
+                          ),
+                          borderRadius: BorderRadius.circular(6.0),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _mSelectedGender = 1;
+                          });
+                        },
                       ),
                     ),
-                    Radio(
-                      value: 3,
-                      groupValue: _mSelectedGender,
-                      activeColor: AppColors.soulPrimary,
-                      onChanged: (val) {
-                        setSelectedGender(val);
-                      },
-                    ),
-                    Text(
-                      "Both",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey[600],
-                        fontWeight: FontWeight.w600,
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.25,
+                      child: FlatButton(
+                        color: _mSelectedGender == 2
+                            ? AppColors.soulPrimary
+                            : Colors.transparent,
+                        child: Text(
+                          "Both",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: _mSelectedGender == 2
+                                ? Colors.white
+                                : Colors.grey[600],
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1.0,
+                            color: Colors.grey[700],
+                            style: BorderStyle.solid,
+                          ),
+                          borderRadius: BorderRadius.circular(6.0),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _mSelectedGender = 2;
+                          });
+                        },
                       ),
                     ),
                   ],
@@ -233,26 +289,27 @@ class _FilterDialogState extends State<FilterDialog> {
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w800,
-                        color: AppColors.soulAccentDark,
+                        color: Colors.grey[700], //AppColors.soulAccentDark,
                       ),
                     ),
                     ageDisplayMin == ageDisplayMax
                         ? Text(
-                            ageDisplayMin.toInt().toString(),
+                            ageDisplayMin.toInt().toString() + " years",
                             style: TextStyle(
                               color: Colors.grey[600],
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w700,
                             ),
                           )
                         : Text(
                             ageDisplayMin.toInt().toString() +
                                 " - " +
-                                ageDisplayMax.toInt().toString(),
+                                ageDisplayMax.toInt().toString() +
+                                " years",
                             style: TextStyle(
                               color: Colors.grey[600],
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
                   ],
@@ -262,26 +319,28 @@ class _FilterDialogState extends State<FilterDialog> {
                       vertical: screenAwareSizeV(8.0, context),
                       horizontal: screenAwareSizeH(8.0, context)),
                   child: FlutterSlider(
-                    values: [_mAgeRange.start, _mAgeRange.end],
+                    values: [ageDisplayMin, ageDisplayMax],
                     rangeSlider: true,
                     min: minAge,
                     max: maxAge,
                     step: FlutterSliderStep(step: 1),
                     tooltip: FlutterSliderTooltip(
-                        alwaysShowTooltip: true,
-                        positionOffset:
-                            FlutterSliderTooltipPositionOffset(top: 2.0),
-                        boxStyle: FlutterSliderTooltipBox(
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                          ),
+                      alwaysShowTooltip: true,
+                      textStyle: labelStyle,
+                      positionOffset:
+                          FlutterSliderTooltipPositionOffset(top: 8.0),
+                      boxStyle: FlutterSliderTooltipBox(
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
                         ),
-                        custom: (value) {
-                          return Text(
-                            value.toInt().toString() + " yrs",
-                            style: labelStyle,
-                          );
-                        }),
+                      ),
+                      custom: (value) {
+                        return Text(
+                          value.toInt().toString(),
+                          style: labelStyle,
+                        );
+                      },
+                    ),
                     handler: FlutterSliderHandler(
                       decoration: BoxDecoration(),
                       child: Container(
@@ -295,8 +354,8 @@ class _FilterDialogState extends State<FilterDialog> {
                       ),
                     ),
                     trackBar: FlutterSliderTrackBar(
-                      activeTrackBarHeight: 4.0,
-                      inactiveTrackBarHeight: 3.0,
+                      activeTrackBarHeight: 3.0,
+                      inactiveTrackBarHeight: 2.0,
                       activeTrackBar: BoxDecoration(
                         color: AppColors.soulPrimary,
                       ),
@@ -307,10 +366,6 @@ class _FilterDialogState extends State<FilterDialog> {
                     onDragging: (handlerIndex, mLowerVal, mHigherVal) {
                       ageDisplayMin = mLowerVal;
                       ageDisplayMax = mHigherVal;
-                      setState(() {});
-                    },
-                    onDragCompleted: (handlerIndex, mLowerVal, mHigherVal) {
-                      _mAgeRange = new RangeValues(mLowerVal, mHigherVal);
                       setState(() {});
                     },
                   ),
@@ -325,7 +380,7 @@ class _FilterDialogState extends State<FilterDialog> {
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w800,
-                        color: AppColors.soulAccentDark,
+                        color: Colors.grey[700], //AppColors.soulAccentDark,
                       ),
                     ),
                   ],
@@ -345,7 +400,7 @@ class _FilterDialogState extends State<FilterDialog> {
                       alwaysShowTooltip: true,
                       textStyle: labelStyle,
                       positionOffset:
-                          FlutterSliderTooltipPositionOffset(top: 2.0),
+                          FlutterSliderTooltipPositionOffset(top: 8.0),
                       boxStyle: FlutterSliderTooltipBox(
                         decoration: BoxDecoration(
                           color: Colors.transparent,
@@ -353,7 +408,7 @@ class _FilterDialogState extends State<FilterDialog> {
                       ),
                       custom: (value) {
                         return Text(
-                          value.toInt().toString() + " m",
+                          value.toInt().toString() + " cm",
                           style: labelStyle,
                         );
                       },
@@ -371,8 +426,8 @@ class _FilterDialogState extends State<FilterDialog> {
                       ),
                     ),
                     trackBar: FlutterSliderTrackBar(
-                      activeTrackBarHeight: 4.0,
-                      inactiveTrackBarHeight: 3.0,
+                      activeTrackBarHeight: 3.0,
+                      inactiveTrackBarHeight: 2.0,
                       activeTrackBar: BoxDecoration(
                         color: AppColors.soulPrimary,
                       ),
@@ -397,7 +452,8 @@ class _FilterDialogState extends State<FilterDialog> {
               onPressed: () {},
               child: Text(
                 "Done",
-                style: TextStyle(color: Colors.white),
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
               ),
             ),
           ),

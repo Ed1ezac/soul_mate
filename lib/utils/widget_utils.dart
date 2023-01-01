@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 //this utility class...
 
 //this is the pixel hieght of:
-//my Huawei Y6-2019
+//my Huawei Y6-2019 720x1560
 const double baseHeight = 885.1;
 const baseWidth = 408.5;
 

@@ -3,11 +3,11 @@ class UserHabitsAndInterests {
   List<String> interests;
 
   UserHabitsAndInterests({
-    this.habits,
-    this.interests,
+    required this.habits,
+    required this.interests,
   });
 
   bool isEmpty() {
-    return habits == null && interests == null;
+    return habits.isEmpty && interests.isEmpty;
   }
 }

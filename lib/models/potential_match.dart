@@ -5,5 +5,5 @@ class PotentialMatch {
   List<String> interests;
 
   PotentialMatch(this.imageURI, this.name, this.age, this.height,
-      {this.introversion, this.interests});
+      {required this.introversion, required this.interests});
 }

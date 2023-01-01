@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:Soulmate_App/utils/widget_utils.dart';
-import 'dart:math' as math;
 import '../styles.dart';
+import 'dart:math' as math;
 import 'height_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HeightPicker extends StatefulWidget {
   final int maxHeight;
@@ -12,10 +12,10 @@ class HeightPicker extends StatefulWidget {
   final ValueChanged<int> onChange;
 
   const HeightPicker(
-      {Key key,
-      this.height,
-      this.widgetHeight,
-      this.onChange,
+      {Key? key,
+      required this.height,
+      required this.widgetHeight,
+      required this.onChange,
       this.maxHeight = 210,
       this.minHeight = 0})
       : super(key: key);
@@ -27,9 +27,10 @@ class HeightPicker extends StatefulWidget {
 }
 
 class _HeightPickerState extends State<HeightPicker> {
+  double labelsFontSize = ScreenUtil().setSp(13.0);
   int heightInterval = 10;
-  double startDragYOffset;
-  int startDragHeight;
+  late double startDragYOffset;
+  late int startDragHeight;
 
   double get _pixelsPerUnit {
     return _drawingHeight / widget.totalUnits;
@@ -43,8 +44,8 @@ class _HeightPickerState extends State<HeightPicker> {
 
   double get _drawingHeight {
     double totalHeight = widget.widgetHeight;
-    double marginBottom = marginBottomAdapted(context);
-    double marginTop = marginTopAdapted(context);
+    double marginBottom = ScreenUtil().setHeight(16.0);
+    double marginTop = ScreenUtil().setHeight(29.0);
     return totalHeight - (marginBottom + marginTop + labelsFontSize);
   }
 
@@ -154,10 +155,10 @@ class _HeightPickerState extends State<HeightPicker> {
   }
 
   int _globalOffsetToHeight(Offset globalOffset) {
-    RenderBox getBox = context.findRenderObject();
+    RenderBox getBox = context.findRenderObject() as RenderBox;
     Offset localPosition = getBox.globalToLocal(globalOffset);
     double dy = localPosition.dy;
-    dy = dy - marginTopAdapted(context) - labelsFontSize / 2;
+    dy = dy - ScreenUtil().setHeight(29.0) - labelsFontSize / 2;
     int height = widget.maxHeight - (dy ~/ _pixelsPerUnit);
     return height;
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../styles.dart';
 
 class SliderHandlerDecoration extends Decoration {
@@ -8,7 +7,7 @@ class SliderHandlerDecoration extends Decoration {
   SliderHandlerDecoration({this.handlerRadius = 8.0});
 
   @override
-  BoxPainter createBoxPainter([onChanged]) {
+  BoxPainter createBoxPainter([onChange()?]) {
     return _SliderHandlerDecorationPainter(handlerRadius);
   }
 }
@@ -18,7 +17,7 @@ class _SliderHandlerDecorationPainter extends BoxPainter {
   _SliderHandlerDecorationPainter(this.mRadius);
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    final Offset center = configuration.size.center(offset);
+    final Offset center = configuration.size!.center(offset);
     final rect = Rect.fromCircle(center: center, radius: mRadius);
     final sliderGrip = Paint()
       ..color = Colors.white

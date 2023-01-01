@@ -1,8 +1,8 @@
-import 'package:Soulmate_App/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:Soulmate_App/pages/onboarding/animated_image.dart';
 import 'package:Soulmate_App/styles.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:Soulmate_App/pages/onboarding/animated_image.dart';
 
 class Welcome extends StatelessWidget {
   @override
@@ -15,7 +15,7 @@ class Welcome extends StatelessWidget {
       backgroundColor: AppColors.soulPrimaryLight,
       //body
       body: Padding(
-        padding: EdgeInsets.only(bottom: screenAwareSizeV(32.0, context)),
+        padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(32.0)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -25,14 +25,14 @@ class Welcome extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 child: SafeArea(
                   child: Container(
-                    width: (MediaQuery.of(context).size.width -
-                        screenAwareSizeH(32.0, context)),
+                    width: (ScreenUtil().screenWidth -
+                        ScreenUtil().setWidth(32.0)),
                     child: Text(
                       'Soulmate',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: "Delafield",
-                          fontSize: 56.0,
+                          fontSize: ScreenUtil().setSp(56.0),
                           color: Colors.white),
                     ),
                   ),
@@ -49,7 +49,7 @@ class Welcome extends StatelessWidget {
                     child: _AnimatedHeartWidget(),
                   ),
                   Positioned(
-                    top: 0.0, //screenAwareSizeV(0.0, context),
+                    top: 0.0,
                     child: AnimatedImage(
                         'assets/images/couple_intro.svg'), //const _CoupleImage(),
                   )
@@ -60,12 +60,12 @@ class Welcome extends StatelessWidget {
               flex: 2,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: screenAwareSizeH(16.0, context),
-                    vertical: screenAwareSizeV(8.0, context)),
+                    horizontal: ScreenUtil().setWidth(16.0),
+                    vertical: ScreenUtil().setHeight(8.0)),
                 child: Text(
                   "Welcome to Soulmate. Your journey to find love begins here, we hope it ends here.",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: ScreenUtil().setSp(19),
                     decoration: TextDecoration.none,
                     color: Colors.white,
                   ),
@@ -106,10 +106,10 @@ class _AnimatedHeartWidget extends StatefulWidget {
 
 class _AnimatedHeartState extends State<_AnimatedHeartWidget>
     with TickerProviderStateMixin {
-  AnimationController _controllerFloatUp;
-  AnimationController _controllerGrowSize;
-  Animation<double> _animationFloatUp;
-  Animation<double> _animationGrowSize;
+  late AnimationController _controllerFloatUp;
+  late AnimationController _controllerGrowSize;
+  late Animation<double> _animationFloatUp;
+  late Animation<double> _animationGrowSize;
 
   @override
   void initState() {
@@ -122,9 +122,9 @@ class _AnimatedHeartState extends State<_AnimatedHeartWidget>
 
   @override
   Widget build(BuildContext context) {
-    double _heartHeight = MediaQuery.of(context).size.height / 3;
-    double _heartWidth = MediaQuery.of(context).size.width / 1.8;
-    double _heartStartLocation = MediaQuery.of(context).size.height / 5;
+    double _heartHeight = ScreenUtil().screenHeight / 3;
+    double _heartWidth = ScreenUtil().screenHeight / 1.8;
+    double _heartStartLocation = ScreenUtil().screenHeight / 5;
 
     _animationFloatUp = Tween(begin: _heartStartLocation, end: 0.0).animate(
         CurvedAnimation(

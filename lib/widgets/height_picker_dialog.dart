@@ -1,33 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:Soulmate_App/utils/widget_utils.dart';
-import '../styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'height_picker.dart';
 
 class HeightPickerDialog extends StatefulWidget {
   final int height;
-  HeightPickerDialog({this.height});
+  HeightPickerDialog({required this.height});
   @override
-  HeightPickerDialogState createState() => HeightPickerDialogState(height);
+  HeightPickerDialogState createState() => HeightPickerDialogState();
 }
 
 class HeightPickerDialogState extends State<HeightPickerDialog> {
-  int height;
-  HeightPickerDialogState(int height) {
-    this.height = height;
+  late int height;
+
+  @override
+  void initState() {
+    height = widget.height;
+    super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(16.0))),
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.75,
-        width: MediaQuery.of(context).size.width * 0.75,
+        height: ScreenUtil().screenHeight * 0.75,
+        width: ScreenUtil().screenWidth * 0.75,
         decoration: BoxDecoration(
             color: Colors.grey[200],
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         child: Padding(
-          padding: EdgeInsets.only(top: screenAwareSizeV(16.0, context)),
+          padding: EdgeInsets.only(top: ScreenUtil().setHeight(16.0)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -37,7 +40,7 @@ class HeightPickerDialogState extends State<HeightPickerDialog> {
                   )),
               Text("approximate your height against the door.",
                   style: TextStyle(
-                    fontSize: 13.0,
+                    fontSize: ScreenUtil().setSp(13.0),
                     color: Colors.grey,
                     fontWeight: FontWeight.w300,
                   )),

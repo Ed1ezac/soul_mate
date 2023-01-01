@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:Soulmate_App/styles.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Soulmate_App/pages/onboarding/on_boarding_carousel.dart';
 
 void main() {
@@ -12,31 +13,37 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //debugPaintSizeEnabled = true;
-    return MaterialApp(
-      title: 'Soulmate',
-      theme: ThemeData(
-        // This is the theme of your application.
-        fontFamily: "Nunito",
-        primaryColor: AppColors.soulPrimary,
-        primaryColorDark: AppColors.soulPrimaryDark,
-        accentColor: AppColors.soulAccent,
-        cursorColor: AppColors.soulAccent,
-        errorColor: AppColors.errorColor,
-        textSelectionColor: AppColors.soulAccentLight,
-        textSelectionHandleColor: AppColors.soulAccentDark,
-        inputDecorationTheme: InputDecorationTheme(
-          border: OutlineInputBorder(),
-          errorBorder: const OutlineInputBorder(
-            borderSide:
-                const BorderSide(color: AppColors.errorColor, width: 6.0),
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    return ScreenUtilInit(
+      designSize: Size(393, 698.1), //Sam-density = dp:393x698
+      builder: (BuildContext context, child) => MaterialApp(
+        title: 'Soulmate',
+        theme: ThemeData(
+          //theme of the app.
+          fontFamily: "Nunito",
+          primaryColor: AppColors.soulPrimary,
+          primaryColorDark: AppColors.soulPrimaryDark,
+          accentColor: AppColors.soulAccent,
+          errorColor: AppColors.errorColor,
+          textSelectionTheme: TextSelectionThemeData(
+            cursorColor: AppColors.soulAccent,
+            selectionHandleColor: AppColors.soulAccentDark,
+            selectionColor: AppColors.soulAccentLight,
           ),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(),
+            errorBorder: const OutlineInputBorder(
+              borderSide:
+                  const BorderSide(color: AppColors.errorColor, width: 6.0),
+            ),
+          ),
+          // This makes the visual density adapt to the platform that you run
+          // the app on. For desktop platforms, the controls will be smaller and
+          // closer together (more dense) than on mobile platforms.
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        home: OnBoardingCarousel(),
       ),
-      home: OnBoardingCarousel(),
     );
   }
 }

@@ -1,26 +1,30 @@
-import 'package:Soulmate_App/models/potential_match.dart';
-import 'package:flutter/material.dart';
 import 'dart:math';
-import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:Soulmate_App/models/potential_match.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ExploreCard extends StatefulWidget {
   final int flag;
   final PotentialMatch potentialMatch;
-  final double bottom, right, left, cardWidth, rotation, skew;
+  final double bottom, right, left, cardHeight, cardWidth, rotation, skew;
   final ValueChanged<PotentialMatch> dismissPotential;
   final ValueChanged<PotentialMatch> addToFavourites;
 
+  static const double maxHeight = 408.0, maxWidth = 352.0;
+  static const double minHeight = 244.8, minWidth = 211.2;
+
   ExploreCard({
-    this.flag,
-    this.left,
-    this.skew,
-    this.right,
-    this.bottom,
-    this.rotation,
-    this.cardWidth,
-    this.potentialMatch,
-    this.addToFavourites,
-    this.dismissPotential,
+    required this.flag,
+    required this.left,
+    required this.skew,
+    required this.right,
+    required this.bottom,
+    required this.rotation,
+    required this.potentialMatch,
+    required this.addToFavourites,
+    required this.dismissPotential,
+    this.cardWidth = maxWidth,
+    this.cardHeight = maxHeight,
   });
 
   @override
@@ -30,37 +34,31 @@ class ExploreCard extends StatefulWidget {
 class ExploreCardState extends State<ExploreCard> {
   @override
   Widget build(BuildContext context) {
-    return new Positioned(
-      bottom: screenAwareSizeV(32.0, context) + widget.bottom,
-      right:
-          widget.flag == 0 ? widget.right != 0.0 ? widget.right : null : null,
-      left: widget.flag == 1 ? widget.right != 0.0 ? widget.right : null : null,
-      child: new Dismissible(
-        key: new Key(new Random().toString()),
-        crossAxisEndOffset: -0.15,
-        onResize: () {},
-        onDismissed: (DismissDirection direction) {
-          if (direction == DismissDirection.endToStart)
-            widget.dismissPotential(widget.potentialMatch);
-          else
-            widget.addToFavourites(widget.potentialMatch);
-        },
-        //transform
-        child: new Transform(
-          alignment:
-              widget.flag == 0 ? Alignment.bottomRight : Alignment.bottomLeft,
-          transform: new Matrix4.skewX(widget.skew),
-          child: new RotationTransition(
-            turns: new AlwaysStoppedAnimation(widget.flag == 0
-                ? widget.rotation / 360
-                : -widget.rotation / 360),
-            child: new Hero(
-              tag: "img",
-              child: new GestureDetector(
-                onTap: () {},
-                //card
-                child: _exploreCard(context),
-              ),
+    return new Dismissible(
+      key: UniqueKey(), //new Key(new Random().toString()),
+      crossAxisEndOffset: -0.15,
+      onResize: () {},
+      onDismissed: (DismissDirection direction) {
+        if (direction == DismissDirection.endToStart)
+          widget.dismissPotential(widget.potentialMatch);
+        else
+          widget.addToFavourites(widget.potentialMatch);
+      },
+      //transform
+      child: new Transform(
+        alignment:
+            widget.flag == 0 ? Alignment.bottomRight : Alignment.bottomLeft,
+        transform: new Matrix4.skewX(widget.skew),
+        child: new RotationTransition(
+          turns: new AlwaysStoppedAnimation(widget.flag == 0
+              ? widget.rotation / 360
+              : -widget.rotation / 360),
+          child: new Hero(
+            tag: "img" + widget.cardWidth.toString(),
+            child: new GestureDetector(
+              onTap: () {},
+              //card
+              child: _exploreCard(context),
             ),
           ),
         ),
@@ -69,17 +67,17 @@ class ExploreCardState extends State<ExploreCard> {
   }
 
   Widget _exploreCard(BuildContext context) {
+    double heightFactor = (widget.cardHeight / ExploreCard.maxHeight);
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.6,
-      width: (MediaQuery.of(context).size.width -
-          screenAwareSizeH(80.0, context) +
-          widget.cardWidth),
+      width: ScreenUtil().setWidth(widget.cardWidth),
+      height: ScreenUtil().setHeight(widget.cardHeight),
       child: Card(
         elevation: 4.0,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Wrap(
+          //crossAxisAlignment: CrossAxisAlignment.start,
+          clipBehavior: Clip.antiAlias,
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
@@ -87,43 +85,54 @@ class ExploreCardState extends State<ExploreCard> {
             ),
             Container(
               padding: EdgeInsets.symmetric(
-                horizontal: screenAwareSizeH(16.0, context),
+                horizontal: ScreenUtil().setWidth(16.0),
               ),
-              margin: EdgeInsets.only(top: screenAwareSizeV(8.0, context)),
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(4.0)),
               child: Text(
                 widget.potentialMatch.name +
                     (widget.potentialMatch.age == null
                         ? ''
                         : ', ' + widget.potentialMatch.age.toString()),
+                textScaleFactor: heightFactor < 0.9 ? heightFactor : null,
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),
             Container(
               padding: EdgeInsets.symmetric(
-                horizontal: screenAwareSizeH(16.0, context),
+                horizontal: ScreenUtil().setWidth(16.0),
               ),
-              margin: EdgeInsets.only(top: screenAwareSizeV(8.0, context)),
+              margin:
+                  EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(3.0)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text('Social Introvert',
+                      textScaleFactor:
+                          heightFactor < 0.93 ? heightFactor : null,
                       style: Theme.of(context).textTheme.bodyText2),
                   Text(widget.potentialMatch.height.toString() + 'cm',
+                      textScaleFactor:
+                          heightFactor < 0.93 ? heightFactor : null,
                       style: Theme.of(context).textTheme.bodyText2),
                 ],
               ),
             ),
             Divider(
-              indent: 4.0,
+              indent: 16.0,
+              height: 1,
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: screenAwareSizeV(8.0, context)),
-              padding: EdgeInsets.symmetric(
-                horizontal: screenAwareSizeH(16.0, context),
-              ),
-              child: Text(
-                'Swiming, music, partying',
-                style: Theme.of(context).textTheme.caption,
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Container(
+                margin: EdgeInsets.only(top: ScreenUtil().setHeight(4.0)),
+                padding: EdgeInsets.symmetric(
+                  horizontal: ScreenUtil().setWidth(16.0),
+                ),
+                child: Text(
+                  'Swiming, music, partying',
+                  textScaleFactor: heightFactor < 0.93 ? heightFactor : null,
+                  style: Theme.of(context).textTheme.caption,
+                ),
               ),
             ),
           ],
@@ -139,14 +148,15 @@ class ExploreCardState extends State<ExploreCard> {
         //image
         Image.asset(
           widget.potentialMatch.imageURI,
-          height: MediaQuery.of(context).size.height * 0.45,
+          height: ScreenUtil().setHeight(widget.cardHeight *
+              0.7451), //magic number=ratio of cardheight to imageheight
           fit: BoxFit.cover,
         ),
         //scrim
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            height: screenAwareSizeV(100.0, context),
+            height: ScreenUtil().setHeight(80.0),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -165,8 +175,8 @@ class ExploreCardState extends State<ExploreCard> {
           alignment: Alignment.bottomRight,
           child: Container(
             margin: EdgeInsets.only(
-                right: screenAwareSizeH(8.0, context),
-                bottom: screenAwareSizeV(8.0, context)),
+                right: ScreenUtil().setWidth(8.0),
+                bottom: ScreenUtil().setHeight(8.0)),
             alignment: Alignment.bottomRight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -175,11 +185,12 @@ class ExploreCardState extends State<ExploreCard> {
                 Icon(
                   Icons.near_me,
                   color: Colors.white,
-                  size: 16.0,
+                  size: ScreenUtil().setWidth(16.0),
                 ),
                 Text(
                   "200m",
-                  style: TextStyle(color: Colors.white, fontSize: 11.0),
+                  style: TextStyle(
+                      color: Colors.white, fontSize: ScreenUtil().setSp(11.0)),
                 ),
               ],
             ),

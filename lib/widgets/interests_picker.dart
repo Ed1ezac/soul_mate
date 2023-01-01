@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../styles.dart';
 
 class InterestsPicker extends StatefulWidget {
   final List<String> pickedInterests;
 
-  InterestsPicker({this.pickedInterests});
+  InterestsPicker({required this.pickedInterests});
 
   @override
   _InterestsPickerState createState() => _InterestsPickerState();
@@ -33,7 +33,7 @@ class _InterestsPickerState extends State<InterestsPicker> {
             color: Colors.grey[200],
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         child: Padding(
-          padding: EdgeInsets.only(top: screenAwareSizeV(16.0, context)),
+          padding: EdgeInsets.only(top: ScreenUtil().setHeight(16.0)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -44,7 +44,7 @@ class _InterestsPickerState extends State<InterestsPicker> {
               Text(
                 "choose 6 for now.",
                 style: TextStyle(
-                  fontSize: 13.0,
+                  fontSize: ScreenUtil().setSp(13.0),
                   color: Colors.grey,
                   fontWeight: FontWeight.w300,
                 ),
@@ -57,7 +57,7 @@ class _InterestsPickerState extends State<InterestsPicker> {
                       controlAffinity: ListTileControlAffinity.leading,
                       title: Text(interests[index]),
                       onChanged: (value) => setState(() {
-                        if (value) {
+                        if (value!) {
                           //deterrence
                           if (_selectedInterests.length < 6) {
                             _selectedInterests.add(interests[index]);
@@ -84,7 +84,7 @@ class _InterestsPickerState extends State<InterestsPicker> {
                   onPressed: () {
                     widget.pickedInterests.clear();
                     widget.pickedInterests.addAll(_selectedInterests);
-                    _selectedInterests = null;
+                    _selectedInterests = [];
                     Navigator.pop(context, widget.pickedInterests.isNotEmpty);
                   },
                 ),

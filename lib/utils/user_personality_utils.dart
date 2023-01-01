@@ -78,7 +78,7 @@ class PersonalityUtils {
       "Shows love by prioritizing time alone with their partner, e.g. walks, weekend getaways, long phone calls," +
           " to create and share special moments together.";
 
-  String getIntroversionTitle(int introversion) {
+  String? getIntroversionTitle(int introversion) {
     switch (introversion) {
       case (3):
         return PersonalityUtils.SOCIAL_INTROVERT_TITLE;
@@ -88,10 +88,12 @@ class PersonalityUtils {
         return PersonalityUtils.THINKING_INTROVERT_TITLE;
       case (9):
         return PersonalityUtils.RESTRAINED_INTROVERT_TITLE;
+      default:
+        return null;
     }
   }
 
-  String getExtroversionTitle(int extroversion) {
+  String? getExtroversionTitle(int extroversion) {
     switch (extroversion) {
       case (4):
         return PersonalityUtils.EXTROVERTED_FEELER_TITLE;
@@ -101,10 +103,12 @@ class PersonalityUtils {
         return PersonalityUtils.EXTROVERTED_THINKERS_TITLE;
       case (10):
         return PersonalityUtils.EXTROVERTED_INTUITORS_TITLE;
+      default:
+        return null;
     }
   }
 
-  String getLoveExpressionTitle(int loveExpression) {
+  String? getLoveExpressionTitle(int loveExpression) {
     switch (loveExpression) {
       case (11):
         return PersonalityUtils.GIFTING_TITLE;
@@ -116,6 +120,8 @@ class PersonalityUtils {
         return PersonalityUtils.BODILY_AFFECTION_TITLE;
       case (15):
         return PersonalityUtils.PRIORITIZING_TIME_TITLE;
+      default:
+        return null;
     }
   }
 }

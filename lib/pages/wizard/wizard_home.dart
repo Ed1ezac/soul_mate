@@ -4,8 +4,8 @@ import 'package:Soulmate_App/models/user_basic_details.dart';
 import 'package:Soulmate_App/models/form_progress_observer.dart';
 import 'package:Soulmate_App/models/user_habits_and_interests.dart';
 import 'package:Soulmate_App/models/user_personality.dart';
-import 'package:Soulmate_App/utils/widget_utils.dart';
 import 'package:Soulmate_App/widgets/wizard_option.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../styles.dart';
 
 class ProfileWizard extends StatefulWidget {
@@ -15,18 +15,24 @@ class ProfileWizard extends StatefulWidget {
 
 class WizardState extends State<ProfileWizard>
     with SingleTickerProviderStateMixin {
-  UserBasicDetails details = UserBasicDetails();
-  UserPersonality personality = UserPersonality();
-  UserHabitsAndInterests habitsAndInterests = UserHabitsAndInterests();
-  FormProgressObserver _observer;
-  AnimationController _fabFloatUpController;
-  Animation<double> _fabFloatUpAnimation;
-  OptionState basicsState = OptionState.COMPLETE, //OptionState.ACTIVE
-      personalityState = OptionState.COMPLETE, //OptionState.INACTIVE
-      interestsState = OptionState.ACTIVE;
+  UserBasicDetails details = UserBasicDetails(
+      name: "",
+      age: 0,
+      sexuality: Sexuality.Heterosexual,
+      height: 0,
+      gender: Gender.Female);
+  UserPersonality personality = UserPersonality(-1, -1, -1);
+  UserHabitsAndInterests habitsAndInterests =
+      UserHabitsAndInterests(habits: [], interests: []);
+  late FormProgressObserver _observer;
+  late AnimationController _fabFloatUpController;
+  late Animation<double> _fabFloatUpAnimation;
+  OptionState basicsState = OptionState.ACTIVE, //OptionState.COMPLETE
+      personalityState = OptionState.INACTIVE, //
+      interestsState = OptionState.INACTIVE;
   bool _isWizardComplete = false;
 
-  FloatingActionButton advanceButton;
+  late FloatingActionButton advanceButton;
 
   @override
   initState() {
@@ -55,31 +61,33 @@ class WizardState extends State<ProfileWizard>
                 child: SafeArea(
                   child: Container(
                     margin: EdgeInsets.only(
-                      top: screenAwareSizeV(32.0, context),
+                      top: ScreenUtil().setHeight(32.0),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Container(
-                          width: screenAwareSizeH(75.0, context),
-                          height: screenAwareSizeV(75.0, context),
-                          margin: EdgeInsets.only(bottom: 8.0),
+                          width: ScreenUtil().setWidth(75.0),
+                          height: ScreenUtil().setWidth(75.0),
+                          margin: EdgeInsets.only(
+                              bottom: ScreenUtil().setHeight(8.0)),
                           child: Icon(
                             Icons.person_add,
-                            size: 70.0,
+                            size: ScreenUtil().setWidth(70.0),
                             color: AppColors.soulPrimaryLight,
                           ),
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(
-                              vertical: 8.0, horizontal: 8.0),
+                              vertical: ScreenUtil().setHeight(8.0),
+                              horizontal: ScreenUtil().setWidth(8.0)),
                           child: Text(
-                            "Hi Eddie, help us find matches for you by" +
+                            "Help us find matches for you by" +
                                 " creating your profile in just a few steps.",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 20.0,
+                                fontSize: ScreenUtil().setSp(20.0),
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -94,11 +102,11 @@ class WizardState extends State<ProfileWizard>
               flex: 4,
               child: Container(
                 color: AppColors.soulPrimaryLight,
-                padding: EdgeInsets.symmetric(
-                    vertical: screenAwareSizeV(8.0, context)),
+                padding:
+                    EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(8.0)),
                 child: ListView(
                   padding: EdgeInsets.symmetric(
-                      horizontal: screenAwareSizeH(8.0, context)),
+                      horizontal: ScreenUtil().setWidth(8.0)),
                   children: <Widget>[
                     Consumer<FormProgressObserver>(
                       builder: (context, progressObserver, child) {
@@ -108,7 +116,8 @@ class WizardState extends State<ProfileWizard>
                           thisObject: details,
                           notifyParent: updateParent,
                           onStateChange: (state) => basicsState = state,
-                          onObjectChange: (infoObject) => details = infoObject,
+                          onObjectChange: (infoObject) =>
+                              details = infoObject as UserBasicDetails,
                         );
                       },
                     ),
@@ -120,7 +129,8 @@ class WizardState extends State<ProfileWizard>
                           thisObject: personality,
                           notifyParent: updateParent,
                           onStateChange: (state) => personalityState = state,
-                          onObjectChange: (result) => personality = result,
+                          onObjectChange: (result) =>
+                              personality = result as UserPersonality,
                         );
                       },
                     ),
@@ -132,8 +142,8 @@ class WizardState extends State<ProfileWizard>
                             notifyParent: updateParent,
                             thisObject: habitsAndInterests,
                             onStateChange: (state) => interestsState = state,
-                            onObjectChange: (result) =>
-                                habitsAndInterests = result);
+                            onObjectChange: (result) => habitsAndInterests =
+                                result as UserHabitsAndInterests);
                       },
                     ),
                   ],
@@ -196,8 +206,7 @@ class WizardState extends State<ProfileWizard>
 
   Widget _showFab(BuildContext context) {
     _fabFloatUpAnimation = Tween<double>(
-      begin:
-          MediaQuery.of(context).size.height + screenAwareSizeV(56.0, context),
+      begin: MediaQuery.of(context).size.height + ScreenUtil().setHeight(56.0),
       end: 0.0,
     ).animate(
       CurvedAnimation(parent: _fabFloatUpController, curve: Curves.bounceInOut),
@@ -207,7 +216,6 @@ class WizardState extends State<ProfileWizard>
     //   position: Offset(0.0, _fabFloatUpAnimation.value),
     //   child: advanceFab(),
     // );
-
     // return Transform.translate(
     //   offset: _fabFloatUpAnimation.value,
     //   child: advanceButton,
@@ -231,9 +239,8 @@ class WizardState extends State<ProfileWizard>
 
   void createUserProfile() {
     //to create a profile we need to:
-
     //persistDataLocally();
-    //createRecordOnFirebase();
+    //createRecordOnServer();
   }
 
   @override

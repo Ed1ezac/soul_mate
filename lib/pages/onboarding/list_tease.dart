@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:Soulmate_App/utils/widget_utils.dart';
-import 'package:Soulmate_App/pages/onboarding/animated_image.dart';
 import 'package:Soulmate_App/styles.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:Soulmate_App/pages/onboarding/animated_image.dart';
 
 class ListTease extends StatelessWidget {
-  ListTease({Key key}) : super(key: key);
+  ListTease({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class ListTease extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.soulAccentLight,
       body: Padding(
-        padding: EdgeInsets.only(bottom: screenAwareSizeV(32.0, context)),
+        padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(32.0)),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -26,14 +26,14 @@ class ListTease extends StatelessWidget {
                 child: SafeArea(
                   bottom: false,
                   child: Container(
-                    width: (MediaQuery.of(context).size.width -
-                        screenAwareSizeH(32.0, context)),
+                    width: (ScreenUtil().screenWidth -
+                        ScreenUtil().setWidth(32.0)),
                     child: Text(
                       'Match',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: "Delafield",
-                          fontSize: 56.0,
+                          fontSize: ScreenUtil().setSp(56.0),
                           color: Colors.white),
                     ),
                   ),
@@ -48,14 +48,14 @@ class ListTease extends StatelessWidget {
               flex: 2,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: screenAwareSizeH(16.0, context),
-                  vertical: screenAwareSizeV(8.0, context),
+                  horizontal: ScreenUtil().setWidth(16.0),
+                  vertical: ScreenUtil().setHeight(8.0),
                 ),
                 child: Text(
-                  "Potential dates are suggested to you based on your " +
-                      "interests and personality. It's a match when you like someone who liked you!",
+                  "Potential partners will be suggested to you. " +
+                      "It's a match when you like someone who liked you!",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: ScreenUtil().setSp(19),
                     decoration: TextDecoration.none,
                     color: Colors.white,
                   ),

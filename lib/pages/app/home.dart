@@ -1,9 +1,10 @@
+import 'package:Soulmate_App/pages/app/notifications.dart';
 import 'package:Soulmate_App/styles.dart';
 import 'package:Soulmate_App/widgets/filter_dialog_content.dart';
 import 'package:flutter/material.dart';
 import 'package:Soulmate_App/utils/widget_utils.dart';
 
-import 'chats.dart';
+import 'chats_list.dart';
 import 'explore.dart';
 import 'my_profile.dart';
 
@@ -14,16 +15,16 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
-  List _pagesList = List();
-  Widget _currentPage;
+  List _pagesList = [];
+  late Widget _currentPage;
 
   @override
   void initState() {
     super.initState();
-
+    _pagesList.add(new Explore());
+    _pagesList.add(ChatsList());
+    _pagesList.add(Notifications());
     _pagesList.add(Profile());
-    _pagesList.add(Explore());
-    _pagesList.add(Chat());
   }
 
   @override
@@ -36,15 +37,20 @@ class _HomeState extends State<Home> {
           style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24.0),
         ),
         actions: <Widget>[
-          if (_currentIndex == 1)
+          if (_currentIndex == 0)
             IconButton(
               icon: Icon(Icons.tune),
               onPressed: () => _openFilterDialog(),
             ),
-          IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () => {},
-          ),
+          if (_currentIndex == 1)
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () => {},
+            ),
+          // IconButton(
+          //   icon: Icon(Icons.more_vert),
+          //   onPressed: () => {},
+          // ),
         ],
       ),
       backgroundColor: Color(0xfafafaff),
@@ -63,20 +69,27 @@ class _HomeState extends State<Home> {
 
   Widget bottomNavBar(BuildContext context) {
     return BottomNavigationBar(
+      selectedItemColor: AppColors.soulPrimary,
+      unselectedItemColor: Colors.grey[400],
+      showUnselectedLabels: true,
       onTap: (selectedIndex) => _changePage(selectedIndex),
       currentIndex: _currentIndex,
       items: [
         BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle),
-          title: Text("profile"),
-        ),
-        BottomNavigationBarItem(
           icon: Icon(Icons.find_in_page),
-          title: Text("explore"),
+          label: "explore",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.chat),
-          title: Text("chats"),
+          label: "chats",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.notifications),
+          label: "notifications",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.account_circle),
+          label: "profile",
         ),
       ],
     );
@@ -117,6 +130,8 @@ class _HomeState extends State<Home> {
         context: context,
         barrierLabel: 'filter',
         barrierColor: Colors.black87,
-        pageBuilder: (context, animation1, animation2) {});
+        pageBuilder: (context, animation1, animation2) {
+          return Container();
+        });
   }
 }

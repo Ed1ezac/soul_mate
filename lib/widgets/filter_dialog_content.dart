@@ -1,7 +1,7 @@
 import 'package:Soulmate_App/widgets/slider_handler_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
-import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../styles.dart';
 
@@ -15,9 +15,9 @@ class _FilterDialogState extends State<FilterDialog> {
   int _mSelectedGender = 1;
   double minAge = 18, minHeight = 80;
   double maxAge = 48, maxHeight = 210, maxDistance = 10000;
-  RangeValues _mAgeRange = RangeValues(20, 30);
   RangeValues _mHeightRange = RangeValues(140, 170);
-  double ageDisplayMin, ageDisplayMax;
+  RangeValues _mAgeRange = RangeValues(20, 30);
+  late double ageDisplayMin, ageDisplayMax;
 
   @override
   void initState() {
@@ -28,23 +28,23 @@ class _FilterDialogState extends State<FilterDialog> {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle labelStyle =
-        TextStyle(fontSize: 13.0, color: AppColors.soulPrimaryDark);
+    TextStyle labelStyle = TextStyle(
+        fontSize: ScreenUtil().setSp(13.0), color: AppColors.soulPrimaryDark);
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+        borderRadius: BorderRadius.all(Radius.circular(14.0)),
         color: Colors.grey[50], //.withOpacity(0.2), //Color(0xFFAAA9AD)
       ), //AppColors.soulPrimaryLight),
       height: MediaQuery.of(context).size.height * 0.74,
-      padding: EdgeInsets.symmetric(vertical: screenAwareSizeV(8.0, context)),
+      padding: EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(8.0)),
       child: Column(
         children: <Widget>[
           Container(
             //color: AppColors.soulPrimary,
             padding: EdgeInsets.only(
-              top: screenAwareSizeV(8.0, context),
-              left: screenAwareSizeH(8.0, context),
-              right: screenAwareSizeH(8.0, context),
+              top: ScreenUtil().setHeight(8.0),
+              left: ScreenUtil().setHeight(8.0),
+              right: ScreenUtil().setHeight(8.0),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +52,7 @@ class _FilterDialogState extends State<FilterDialog> {
                 Text(
                   "Filter",
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: ScreenUtil().setSp(18.0),
                     color: Colors.grey[700], //AppColors.soulAccentDark,
                     fontWeight: FontWeight.w800,
                   ),
@@ -66,7 +66,7 @@ class _FilterDialogState extends State<FilterDialog> {
           Container(
             padding: EdgeInsets.symmetric(
                 //vertical: screenAwareSizeV(8.0, context),
-                horizontal: screenAwareSizeH(16.0, context)),
+                horizontal: ScreenUtil().setWidth(16.0)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -77,7 +77,7 @@ class _FilterDialogState extends State<FilterDialog> {
                     Text(
                       "Distance",
                       style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: ScreenUtil().setSp(16.0),
                         fontWeight: FontWeight.w800,
                         color: Colors.grey[700], //AppColors.soulAccentDark,
                       ),
@@ -137,8 +137,7 @@ class _FilterDialogState extends State<FilterDialog> {
                       density: 0.5,
                       displayLines: false,
                       linesDistanceFromTrackBar: 8.0,
-                      labelsDistanceFromTrackBar:
-                          screenAwareSizeV(40.0, context),
+                      labelsDistanceFromTrackBar: ScreenUtil().setHeight(40.0),
                       labels: [
                         FlutterSliderHatchMarkLabel(
                           percent: 0,
@@ -170,7 +169,7 @@ class _FilterDialogState extends State<FilterDialog> {
                 Text(
                   "Interested in",
                   style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: ScreenUtil().setSp(16.0),
                     fontWeight: FontWeight.w800,
                     color: Colors.grey[700], //AppColors.soulAccentDark,
                   ),
@@ -182,7 +181,7 @@ class _FilterDialogState extends State<FilterDialog> {
                       height: MediaQuery.of(context).size.height * 0.05,
                       width: MediaQuery.of(context).size.width * 0.25,
                       margin: EdgeInsets.symmetric(
-                        vertical: screenAwareSizeV(16.0, context),
+                        vertical: ScreenUtil().setHeight(16.0),
                       ),
                       child: FlatButton(
                         color: _mSelectedGender == 0
@@ -191,7 +190,7 @@ class _FilterDialogState extends State<FilterDialog> {
                         child: Text(
                           "Men",
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: ScreenUtil().setSp(15.0),
                             color: _mSelectedGender == 0
                                 ? Colors.white
                                 : Colors.grey[600],
@@ -201,7 +200,9 @@ class _FilterDialogState extends State<FilterDialog> {
                         shape: RoundedRectangleBorder(
                           side: BorderSide(
                             width: 1.0,
-                            color: Colors.grey[700],
+                            color: _mSelectedGender == 0
+                                ? AppColors.soulPrimaryDark
+                                : Colors.grey.shade700,
                             style: BorderStyle.solid,
                           ),
                           borderRadius: BorderRadius.circular(6.0),
@@ -223,7 +224,7 @@ class _FilterDialogState extends State<FilterDialog> {
                         child: Text(
                           "Women",
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: ScreenUtil().setSp(15.0),
                             color: _mSelectedGender == 1
                                 ? Colors.white
                                 : Colors.grey[600],
@@ -233,7 +234,9 @@ class _FilterDialogState extends State<FilterDialog> {
                         shape: RoundedRectangleBorder(
                           side: BorderSide(
                             width: 1.0,
-                            color: Colors.grey[700],
+                            color: _mSelectedGender == 1
+                                ? AppColors.soulPrimaryDark
+                                : Colors.grey.shade700,
                             style: BorderStyle.solid,
                           ),
                           borderRadius: BorderRadius.circular(6.0),
@@ -255,7 +258,7 @@ class _FilterDialogState extends State<FilterDialog> {
                         child: Text(
                           "Both",
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: ScreenUtil().setSp(15.0),
                             color: _mSelectedGender == 2
                                 ? Colors.white
                                 : Colors.grey[600],
@@ -265,7 +268,9 @@ class _FilterDialogState extends State<FilterDialog> {
                         shape: RoundedRectangleBorder(
                           side: BorderSide(
                             width: 1.0,
-                            color: Colors.grey[700],
+                            color: _mSelectedGender == 2
+                                ? AppColors.soulPrimaryDark
+                                : Colors.grey.shade700,
                             style: BorderStyle.solid,
                           ),
                           borderRadius: BorderRadius.circular(6.0),
@@ -287,7 +292,7 @@ class _FilterDialogState extends State<FilterDialog> {
                     Text(
                       "Age",
                       style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: ScreenUtil().setSp(16.0),
                         fontWeight: FontWeight.w800,
                         color: Colors.grey[700], //AppColors.soulAccentDark,
                       ),
@@ -297,7 +302,7 @@ class _FilterDialogState extends State<FilterDialog> {
                             ageDisplayMin.toInt().toString() + " years",
                             style: TextStyle(
                               color: Colors.grey[600],
-                              fontSize: 15.0,
+                              fontSize: ScreenUtil().setSp(15.0),
                               fontWeight: FontWeight.w700,
                             ),
                           )
@@ -308,7 +313,7 @@ class _FilterDialogState extends State<FilterDialog> {
                                 " years",
                             style: TextStyle(
                               color: Colors.grey[600],
-                              fontSize: 15.0,
+                              fontSize: ScreenUtil().setSp(15.0),
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -316,8 +321,8 @@ class _FilterDialogState extends State<FilterDialog> {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(
-                      vertical: screenAwareSizeV(8.0, context),
-                      horizontal: screenAwareSizeH(8.0, context)),
+                      vertical: ScreenUtil().setHeight(8.0),
+                      horizontal: ScreenUtil().setWidth(8.0)),
                   child: FlutterSlider(
                     values: [ageDisplayMin, ageDisplayMax],
                     rangeSlider: true,
@@ -378,7 +383,7 @@ class _FilterDialogState extends State<FilterDialog> {
                     Text(
                       "Height",
                       style: TextStyle(
-                        fontSize: 16.0,
+                        fontSize: ScreenUtil().setSp(16.0),
                         fontWeight: FontWeight.w800,
                         color: Colors.grey[700], //AppColors.soulAccentDark,
                       ),
@@ -387,8 +392,8 @@ class _FilterDialogState extends State<FilterDialog> {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(
-                      vertical: screenAwareSizeV(8.0, context),
-                      horizontal: screenAwareSizeH(8.0, context)),
+                      vertical: ScreenUtil().setHeight(8.0),
+                      horizontal: ScreenUtil().setWidth(8.0)),
                   child: FlutterSlider(
                     values: [_mHeightRange.start, _mHeightRange.end],
                     rangeSlider: true,

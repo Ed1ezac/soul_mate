@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:Soulmate_App/models/user_personality.dart';
 import 'package:Soulmate_App/utils/user_personality_utils.dart';
-import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../styles.dart';
 
 class PersonalityDetails extends StatefulWidget {
   final UserPersonality personality;
-  PersonalityDetails({this.personality});
+  PersonalityDetails({required this.personality});
 
   @override
   PersonalityDetailsState createState() => PersonalityDetailsState();
@@ -14,16 +14,16 @@ class PersonalityDetails extends StatefulWidget {
 
 class PersonalityDetailsState extends State<PersonalityDetails> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  int selectedExtroversion = 1, selectedExtroversionType;
-  int selectedLoveExpression;
+  late int selectedExtroversion = 1, selectedExtroversionType;
+  late int selectedLoveExpression;
   bool isExtrovert = false;
   String extroversion = "introvert";
-  String errorMessage;
+  late String errorMessage;
 
   @override
   void initState() {
     super.initState();
-    if (widget.personality != null && !widget.personality.isEmpty()) {
+    if (!widget.personality.isEmpty()) {
       selectedExtroversion = widget.personality.extroversion;
       selectedExtroversionType = widget.personality.extroversionType;
       selectedLoveExpression = widget.personality.loveExpression;
@@ -54,21 +54,22 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
             Expanded(
               child: ListView(
                 padding: EdgeInsets.symmetric(
-                    vertical: screenAwareSizeV(16.0, context)),
+                    vertical: ScreenUtil().setHeight(16.0)),
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(
-                        top: screenAwareSizeV(8.0, context),
-                        bottom: screenAwareSizeV(8.0, context),
-                        left: screenAwareSizeH(32.0, context),
-                        right: screenAwareSizeH(16.0, context)),
+                        top: ScreenUtil().setHeight(8.0),
+                        bottom: ScreenUtil().setHeight(8.0),
+                        left: ScreenUtil().setWidth(32.0),
+                        right: ScreenUtil().setWidth(16.0)),
                     child: Text(
                       "Your personality is modelled using two aspects, your intro/extro-version and your love" +
                           " expression. The first aspect is shown publicly on your profile while the second can only" +
                           " be seen by your matches. While you may possess traits asscociated with most options, you" +
                           " are required to choose the one option that closely describes you.",
                       style: TextStyle(
-                          fontSize: 16.0, fontWeight: FontWeight.w700),
+                          fontSize: ScreenUtil().setSp(16.0),
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
                   RadioListTile(
@@ -84,7 +85,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                     selected: !isExtrovert,
                   ),
                   Divider(
-                    indent: screenAwareSizeH(32.0, context),
+                    indent: ScreenUtil().setWidth(32.0),
                   ),
                   RadioListTile(
                     value: PersonalityUtils.EXTROVERT,
@@ -99,15 +100,14 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                     selected: isExtrovert,
                   ),
                   Divider(
-                    indent: screenAwareSizeH(32.0, context),
+                    indent: ScreenUtil().setWidth(32.0),
                   ),
                   Container(
-                    margin:
-                        EdgeInsets.only(left: screenAwareSizeH(32.0, context)),
+                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(32.0)),
                     child: Text(
                       "Type of $extroversion",
                       style: TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w600),
+                          fontSize: (18.0), fontWeight: FontWeight.w600),
                     ),
                   ),
                   isExtrovert
@@ -120,24 +120,25 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                       Container(
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.symmetric(
-                            horizontal: screenAwareSizeH(32.0, context)),
+                            horizontal: ScreenUtil().setWidth(32.0)),
                         child: Text(
                           "Love Expression",
                           style: TextStyle(
-                              fontSize: 18.0, fontWeight: FontWeight.w600),
+                              fontSize: ScreenUtil().setSp(18.0),
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(
-                            left: screenAwareSizeH(32.0, context),
-                            right: screenAwareSizeH(16.0, context),
-                            bottom: screenAwareSizeV(8.0, context)),
+                            left: ScreenUtil().setWidth(32.0),
+                            right: ScreenUtil().setWidth(16.0),
+                            bottom: ScreenUtil().setHeight(8.0)),
                         child: Text(
                           "A love expression is the way someone expresses love. Out of the five expressions," +
                               " one is always more dominant for each individual. Learning yours and your" +
                               " partner's love expression can help create a stronger bond in your relationship.",
                           style: TextStyle(
-                            fontSize: 15.0,
+                            fontSize: ScreenUtil().setSp(15.0),
                             color: Theme.of(context).hintColor,
                           ),
                         ),
@@ -157,7 +158,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                         selectedLoveExpression == PersonalityUtils.GIFTING,
                   ),
                   Divider(
-                    indent: screenAwareSizeH(32.0, context),
+                    indent: ScreenUtil().setWidth(32.0),
                   ),
                   RadioListTile(
                     value: PersonalityUtils.HELPFULNESS,
@@ -172,7 +173,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                         selectedLoveExpression == PersonalityUtils.HELPFULNESS,
                   ),
                   Divider(
-                    indent: screenAwareSizeH(32.0, context),
+                    indent: ScreenUtil().setWidth(32.0),
                   ),
                   RadioListTile(
                     value: PersonalityUtils.VERBAL_AFFECTION,
@@ -187,7 +188,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                         PersonalityUtils.VERBAL_AFFECTION,
                   ),
                   Divider(
-                    indent: screenAwareSizeH(32.0, context),
+                    indent: ScreenUtil().setWidth(32.0),
                   ),
                   RadioListTile(
                     value: PersonalityUtils.BODILY_AFFECTION,
@@ -202,7 +203,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                         PersonalityUtils.BODILY_AFFECTION,
                   ),
                   Divider(
-                    indent: screenAwareSizeH(32.0, context),
+                    indent: ScreenUtil().setWidth(32.0),
                   ),
                   RadioListTile(
                     value: PersonalityUtils.PRIORITIZING_TIME,
@@ -249,7 +250,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
 
   Widget introvertTypeRadioGroup() {
     return Container(
-      margin: EdgeInsets.only(left: screenAwareSizeH(56.0, context)),
+      margin: EdgeInsets.only(left: ScreenUtil().setWidth(56.0)),
       child: Column(
         children: <Widget>[
           RadioListTile(
@@ -265,7 +266,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                 selectedExtroversionType == PersonalityUtils.SOCIAL_INTROVERT,
           ),
           Divider(
-            indent: screenAwareSizeH(64.0, context),
+            indent: ScreenUtil().setWidth(64.0),
           ),
           RadioListTile(
             value: PersonalityUtils.THINKING_INTROVERT,
@@ -280,7 +281,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                 selectedExtroversionType == PersonalityUtils.THINKING_INTROVERT,
           ),
           Divider(
-            indent: screenAwareSizeH(64.0, context),
+            indent: ScreenUtil().setWidth(64.0),
           ),
           RadioListTile(
             value: PersonalityUtils.ANXIOUS_INTROVERT,
@@ -295,7 +296,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                 selectedExtroversionType == PersonalityUtils.ANXIOUS_INTROVERT,
           ),
           Divider(
-            indent: screenAwareSizeH(64.0, context),
+            indent: ScreenUtil().setWidth(64.0),
           ),
           RadioListTile(
             value: PersonalityUtils.RESTRAINED_INTROVERT,
@@ -316,7 +317,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
 
   Widget extrovertTypeRadioGroup() {
     return Container(
-      margin: EdgeInsets.only(left: screenAwareSizeH(56.0, context)),
+      margin: EdgeInsets.only(left: ScreenUtil().setWidth(56.0)),
       child: Column(
         children: <Widget>[
           RadioListTile(
@@ -332,7 +333,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                 selectedExtroversionType == PersonalityUtils.EXTROVERTED_FEELER,
           ),
           Divider(
-            indent: screenAwareSizeH(64.0, context),
+            indent: ScreenUtil().setWidth(64.0),
           ),
           RadioListTile(
             value: PersonalityUtils.EXTROVERTED_SENSORS,
@@ -347,7 +348,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                 PersonalityUtils.EXTROVERTED_SENSORS,
           ),
           Divider(
-            indent: screenAwareSizeH(64.0, context),
+            indent: ScreenUtil().setWidth(64.0),
           ),
           RadioListTile(
             value: PersonalityUtils.EXTROVERTED_THINKERS,
@@ -362,7 +363,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                 PersonalityUtils.EXTROVERTED_THINKERS,
           ),
           Divider(
-            indent: screenAwareSizeH(64.0, context),
+            indent: ScreenUtil().setWidth(64.0),
           ),
           RadioListTile(
             value: PersonalityUtils.EXTROVERTED_INTUITORS,
@@ -426,6 +427,6 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
       backgroundColor: Theme.of(context).errorColor,
     );
 
-    _scaffoldKey.currentState.showSnackBar(snackbar);
+    ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
 }

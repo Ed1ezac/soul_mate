@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:Soulmate_App/utils/widget_utils.dart';
 import 'package:Soulmate_App/pages/onboarding/welcome.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:Soulmate_App/pages/onboarding/list_tease.dart';
 import 'package:Soulmate_App/pages/onboarding/chat_tease.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 //import 'package:soul_mate/styles.dart';
 
 class OnBoardingCarousel extends StatefulWidget {
@@ -58,11 +57,11 @@ class _CarouselState extends State<OnBoardingCarousel> {
                   children: _pageList.map((page) {
                     int index = _pageList.indexOf(page);
                     return Container(
-                      width: screenAwareSizeH(12.0, context),
-                      height: screenAwareSizeV(12.0, context),
+                      width: ScreenUtil().setWidth(12.0),
+                      height: ScreenUtil().setWidth(12.0),
                       margin: EdgeInsets.symmetric(
-                          vertical: screenAwareSizeV(12.0, context),
-                          horizontal: screenAwareSizeH(3.0, context)),
+                          vertical: ScreenUtil().setHeight(12.0),
+                          horizontal: ScreenUtil().setWidth(3.0)),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _current == index
@@ -81,16 +80,16 @@ class _CarouselState extends State<OnBoardingCarousel> {
               child: SafeArea(
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: screenAwareSizeH(8.0, context),
-                    bottom: screenAwareSizeV(16.0, context),
-                    right: screenAwareSizeH(24.0, context),
+                    left: ScreenUtil().setWidth(8.0),
+                    bottom: ScreenUtil().setHeight(16.0),
+                    right: ScreenUtil().setWidth(24.0),
                   ),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () => _controller.nextPage(),
                     child: Text(
                       'NEXT. .',
                       style: TextStyle(
-                        fontSize: 19,
+                        fontSize: ScreenUtil().setSp(19),
                         fontWeight: FontWeight.w900,
                         color: Colors.white,
                       ),

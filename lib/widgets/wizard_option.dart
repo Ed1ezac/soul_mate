@@ -1,6 +1,9 @@
+import 'package:Soulmate_App/models/user_basic_details.dart';
+import 'package:Soulmate_App/models/user_habits_and_interests.dart';
+import 'package:Soulmate_App/models/user_personality.dart';
 import 'package:flutter/material.dart';
 import 'package:Soulmate_App/styles.dart';
-import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Soulmate_App/pages/wizard/basic_details.dart';
 import 'package:Soulmate_App/widgets/wizard_option_drawing.dart';
 import 'package:Soulmate_App/pages/wizard/personality_details.dart';
@@ -18,11 +21,11 @@ class WizardOption extends StatefulWidget {
       _inactiveElevation = 2.0;
 
   WizardOption({
-    this.thisObject,
-    this.notifyParent,
-    this.onStateChange,
-    this.onObjectChange,
-    @required this.position,
+    required this.thisObject,
+    required this.notifyParent,
+    required this.onStateChange,
+    required this.onObjectChange,
+    required this.position,
     this.state = OptionState.INACTIVE,
   });
 
@@ -32,12 +35,12 @@ class WizardOption extends StatefulWidget {
 
 class WizardOptionState extends State<WizardOption>
     with TickerProviderStateMixin {
-  Animation<double> _heightAnimation;
-  Animation<double> _paddingAnimation;
-  double startElevation, endElevation;
-  Animation<double> _elevationAnimation;
-  AnimationController _elevationAnimationController;
-  double _widgetHeight; //= screenAwareSizeV(140.0, context);
+  late Animation<double> _heightAnimation;
+  late Animation<double> _paddingAnimation;
+  late double startElevation, endElevation;
+  late Animation<double> _elevationAnimation;
+  late AnimationController _elevationAnimationController;
+  late double _widgetHeight; //= ScreenUtil().setHeight(140.0, context);
 
   @override
   void dispose() {
@@ -47,7 +50,7 @@ class WizardOptionState extends State<WizardOption>
 
   @override
   Widget build(BuildContext context) {
-    _widgetHeight = screenAwareSizeV(140.0, context);
+    _widgetHeight = ScreenUtil().setHeight(110.0);
     configureAnimations();
     return optionCard(context);
   }
@@ -63,14 +66,13 @@ class WizardOptionState extends State<WizardOption>
             parent: _elevationAnimationController,
             curve: Interval(0.0, 0.75, curve: Curves.elasticIn)));
     _heightAnimation = Tween(
-            begin: screenAwareSizeV(140.0, context),
-            end: screenAwareSizeV(155.0, context))
+            begin: ScreenUtil().setHeight(110.0),
+            end: ScreenUtil().setHeight(120.0))
         .animate(CurvedAnimation(
             parent: _elevationAnimationController,
             curve: Interval(0.7, 1.0, curve: Curves.easeIn)));
     _paddingAnimation = Tween(
-            begin: screenAwareSizeH(8.0, context),
-            end: screenAwareSizeH(0.0, context))
+            begin: ScreenUtil().setWidth(8.0), end: ScreenUtil().setWidth(0.0))
         .animate(CurvedAnimation(
             parent: _elevationAnimationController,
             curve: Interval(0.8, 1.0, curve: Curves.easeIn)));
@@ -120,25 +122,25 @@ class WizardOptionState extends State<WizardOption>
 
   EdgeInsets _getWidgetMargin() {
     if (widget.position == 1) {
-      return EdgeInsets.only(top: screenAwareSizeV(8.0, context));
+      return EdgeInsets.only(top: ScreenUtil().setHeight(8.0));
     } else {
-      return EdgeInsets.only(top: screenAwareSizeV(16.0, context));
+      return EdgeInsets.only(top: ScreenUtil().setHeight(16.0));
     }
   }
 
   Widget compactOptionCard() {
     final overlap = widget.state == OptionState.COMPLETE
-        ? screenAwareSizeH(23.0, context)
-        : screenAwareSizeH(24.0, context);
+        ? ScreenUtil().setWidth(20.0)
+        : ScreenUtil().setWidth(20.0);
     final items = [
       mainCard(),
       Container(
           height: widget.state == OptionState.COMPLETE
-              ? screenAwareSizeV(55.0, context)
-              : screenAwareSizeV(53.0, context), //53
+              ? ScreenUtil().setWidth(54.0)
+              : ScreenUtil().setWidth(52.0), //53
           width: widget.state == OptionState.COMPLETE
-              ? screenAwareSizeH(55.0, context)
-              : screenAwareSizeH(56.0, context), //56
+              ? ScreenUtil().setWidth(53.0)
+              : ScreenUtil().setWidth(48.0), //56
           child: widget.state == OptionState.COMPLETE
               ? circleWithIcon()
               : circleWithNumber()),
@@ -165,7 +167,7 @@ class WizardOptionState extends State<WizardOption>
               color: widget.state == OptionState.ACTIVE
                   ? (AppColors.soulPrimary)
                   : Colors.grey,
-              fontSize: 18.0,
+              fontSize: ScreenUtil().setSp(18.0),
               fontWeight: FontWeight.bold),
         ),
       ),
@@ -178,7 +180,8 @@ class WizardOptionState extends State<WizardOption>
       shape: CircleBorder(), //(side: BorderSide(color: Colors.grey)),
       //elevation: _activeElevation,
       child: Center(
-        child: Icon(Icons.check, size: 18.0, color: Colors.white),
+        child: Icon(Icons.check,
+            size: ScreenUtil().setWidth(18.0), color: Colors.white),
       ),
     );
   }
@@ -197,10 +200,10 @@ class WizardOptionState extends State<WizardOption>
           : WizardOptionBorder(),
       child: Container(
         padding: EdgeInsets.fromLTRB(
-            screenAwareSizeH(36.0, context),
-            screenAwareSizeV(16.0, context),
-            screenAwareSizeH(16.0, context),
-            screenAwareSizeH(16.0, context)),
+            ScreenUtil().setWidth(36.0),
+            ScreenUtil().setHeight(16.0),
+            ScreenUtil().setWidth(16.0),
+            ScreenUtil().setWidth(16.0)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -212,7 +215,7 @@ class WizardOptionState extends State<WizardOption>
                 Text(
                   getOptionTitle(), //title
                   style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: ScreenUtil().setSp(18.0),
                       color: getOptionTextColor(),
                       fontWeight: FontWeight.w600),
                 ),
@@ -238,7 +241,7 @@ class WizardOptionState extends State<WizardOption>
       case OptionState.COMPLETE:
         return AppColors.soulAccentDark;
       case OptionState.INACTIVE:
-        return Colors.grey[400];
+        return Colors.grey;
       default:
         throw new Exception("invalid state for this option.");
     }
@@ -291,12 +294,12 @@ class WizardOptionState extends State<WizardOption>
           onTap: () => executeAction(),
           child: Container(
             padding: EdgeInsets.symmetric(
-                vertical: screenAwareSizeV(6.0, context),
-                horizontal: screenAwareSizeH(6.0, context)),
+                vertical: ScreenUtil().setHeight(6.0),
+                horizontal: ScreenUtil().setWidth(6.0)),
             child: Text(
               "Start",
               style: TextStyle(
-                  fontSize: 14.0,
+                  fontSize: ScreenUtil().setSp(14.0),
                   color: AppColors.soulPrimaryDark,
                   fontWeight: FontWeight.w600),
             ),
@@ -308,19 +311,20 @@ class WizardOptionState extends State<WizardOption>
           onTap: () => executeAction(),
           child: Container(
             padding: EdgeInsets.symmetric(
-                vertical: screenAwareSizeV(6.0, context),
-                horizontal: screenAwareSizeH(6.0, context)),
+                vertical: ScreenUtil().setHeight(6.0),
+                horizontal: ScreenUtil().setWidth(6.0)),
             child: Text(
               "Edit",
               style: TextStyle(
-                  fontSize: 14.0,
+                  fontSize: ScreenUtil().setSp(14.0),
                   color: AppColors.soulAccent,
                   fontWeight: FontWeight.w600),
             ),
           ),
         );
       case OptionState.INACTIVE:
-        return Icon(Icons.lock, size: 18.0, color: Colors.grey);
+        return Icon(Icons.lock,
+            size: ScreenUtil().setWidth(18.0), color: Colors.grey);
       default:
         throw new Exception("invalid state for this option.");
     }
@@ -348,7 +352,7 @@ class WizardOptionState extends State<WizardOption>
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (context) => BasicDetails(
-          details: widget.thisObject,
+          details: widget.thisObject as UserBasicDetails,
         ),
       ),
     );
@@ -364,7 +368,7 @@ class WizardOptionState extends State<WizardOption>
       MaterialPageRoute(
         fullscreenDialog: true,
         builder: (context) => PersonalityDetails(
-          personality: widget.thisObject,
+          personality: widget.thisObject as UserPersonality,
         ),
       ),
     );
@@ -379,7 +383,8 @@ class WizardOptionState extends State<WizardOption>
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => HabitsAndInterests(widget.thisObject),
+        builder: (context) =>
+            HabitsAndInterests(widget.thisObject as UserHabitsAndInterests),
       ),
     );
 

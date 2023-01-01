@@ -15,10 +15,10 @@ class Explore extends StatefulWidget {
 
 class ExploreState extends State<Explore> with TickerProviderStateMixin {
   int flag = 0;
-  AnimationController _slideController;
-  Animation<double> slide;
-  Animation<double> rotate;
-  Animation<double> bottom;
+  late AnimationController _slideController;
+  late Animation<double> slide;
+  late Animation<double> rotate;
+  late Animation<double> bottom;
   List<PotentialMatch> items = [];
   List<PotentialMatch> selectedItems = [];
   var itemsLength;
@@ -70,15 +70,21 @@ class ExploreState extends State<Explore> with TickerProviderStateMixin {
     );
 
     items
-      ..add(new PotentialMatch("assets/images/blu_bg.jpg", "Jessica", 23, 158))
-      ..add(
-          new PotentialMatch("assets/images/girl_avatar.jpg", "Candy", 26, 161))
-      ..add(new PotentialMatch("assets/images/blu_bg.jpg", "Mindy", 29, 184))
+      ..add(new PotentialMatch("assets/images/blu_bg.jpg", "Jessica", 23, 158,
+          introversion: 0, interests: []))
       ..add(new PotentialMatch(
-          "assets/images/girl_avatar.jpg", "Tamayo", 32, 191))
-      ..add(new PotentialMatch("assets/images/blu_bg.jpg", "Flo", 20, 121))
+          "assets/images/girl_avatar.jpg", "Candy", 26, 161,
+          introversion: 0, interests: []))
+      ..add(new PotentialMatch("assets/images/blu_bg.jpg", "Mindy", 29, 184,
+          introversion: 0, interests: []))
       ..add(new PotentialMatch(
-          "assets/images/girl_avatar.jpg", "Janet", 28, 189));
+          "assets/images/girl_avatar.jpg", "Tamayo", 32, 191,
+          introversion: 0, interests: []))
+      ..add(new PotentialMatch("assets/images/blu_bg.jpg", "Flo", 20, 121,
+          introversion: 0, interests: []))
+      ..add(new PotentialMatch(
+          "assets/images/girl_avatar.jpg", "Janet", 28, 189,
+          introversion: 0, interests: []));
   }
 
   @override
@@ -213,11 +219,16 @@ class ExploreState extends State<Explore> with TickerProviderStateMixin {
             cardWidth: backCardWidth,
             rotation: 0.0,
             skew: 0.0,
+            addToFavourites: addToFavourites,
+            dismissPotential: dismissPotential,
+            flag: flag,
           );
         }
       }).toList(),
     );
   }
+
+  void _addToFaves() {}
 
   Future<Null> _swipeAnimation() async {
     try {

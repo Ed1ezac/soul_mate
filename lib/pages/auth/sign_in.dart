@@ -1,7 +1,7 @@
-import 'package:Soulmate_App/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:Soulmate_App/custom_icons_icons.dart';
 import 'package:Soulmate_App/pages/app/home.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../styles.dart';
 
 class SignIn extends StatefulWidget {
@@ -12,7 +12,7 @@ class SignIn extends StatefulWidget {
 class UserSignIn extends State<SignIn> {
   bool _formChanged = false;
   bool _isDefaultFlag = false;
-  FocusNode focusNode;
+  late FocusNode focusNode;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -34,14 +34,13 @@ class UserSignIn extends State<SignIn> {
       borderSide:
           const BorderSide(color: AppColors.soulPrimaryLight, width: 0.0),
     );
-    double formWidgetHeight = (MediaQuery.of(context).size.height / 11);
     return Scaffold(
       backgroundColor: AppColors.soulPrimary,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: screenAwareSizeH(8.0, context),
+              horizontal: ScreenUtil().setWidth(8.0),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,15 +57,16 @@ class UserSignIn extends State<SignIn> {
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.symmetric(
-                              horizontal: screenAwareSizeH(32.0, context),
+                              horizontal: ScreenUtil().setWidth(32.0),
                             ),
                             margin: EdgeInsets.symmetric(
-                              vertical: screenAwareSizeV(8.0, context),
+                              vertical: ScreenUtil().setHeight(8.0),
                             ),
-                            height: formWidgetHeight,
+                            height: ScreenUtil().setHeight(76.0),
                             child: TextFormField(
                               autofocus: false,
-                              autovalidate: true,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               style: TextStyle(color: Colors.white70),
                               decoration: InputDecoration(
                                 helperText: "",
@@ -83,15 +83,16 @@ class UserSignIn extends State<SignIn> {
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(
-                              horizontal: screenAwareSizeH(32.0, context),
+                              horizontal: ScreenUtil().setWidth(32.0),
                             ),
                             margin: EdgeInsets.symmetric(
-                              vertical: screenAwareSizeV(8.0, context),
+                              vertical: ScreenUtil().setHeight(8.0),
                             ),
-                            height: formWidgetHeight,
+                            height: ScreenUtil().setHeight(76.0),
                             //password
                             child: TextFormField(
-                              autovalidate: true,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               obscureText: true,
                               style: TextStyle(color: Colors.white70),
                               decoration: InputDecoration(
@@ -107,20 +108,20 @@ class UserSignIn extends State<SignIn> {
                           ),
                           Container(
                             padding: EdgeInsets.symmetric(
-                              horizontal: screenAwareSizeH(32.0, context),
+                              horizontal: ScreenUtil().setWidth(32.0),
                             ),
                             margin: EdgeInsets.symmetric(
-                              vertical: screenAwareSizeV(8.0, context),
+                              vertical: ScreenUtil().setHeight(8.0),
                             ),
-                            height: MediaQuery.of(context).size.height / 18,
-                            width: MediaQuery.of(context).size.width - 16,
+                            height: ScreenUtil().setHeight(44.0),
+                            width: ScreenUtil().screenWidth - 16,
                             child: RaisedButton(
                               color: AppColors.soulPrimaryLight,
                               child: Text(
                                 "Login",
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 18.0,
+                                    fontSize: ScreenUtil().setSp(18.0),
                                     fontWeight: FontWeight.bold),
                               ),
                               onPressed: () => navigateToDrawingArea(),
@@ -128,29 +129,30 @@ class UserSignIn extends State<SignIn> {
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(
-                              vertical: screenAwareSizeV(8.0, context),
+                              vertical: ScreenUtil().setHeight(8.0),
                             ),
                             child: Text(
-                              "~ OR ~",
+                              "OR",
                               style: TextStyle(
-                                  color: Colors.white70, fontSize: 12.0),
+                                  color: Colors.white70,
+                                  fontSize: ScreenUtil().setSp(12.0)),
                             ),
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(
-                              vertical: screenAwareSizeV(8.0, context),
+                              vertical: ScreenUtil().setHeight(8.0),
                             ),
                             child: Text(
                               "Login with",
                               style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 16.0,
+                                  fontSize: ScreenUtil().setSp(16.0),
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(
-                              vertical: screenAwareSizeV(8.0, context),
+                              vertical: ScreenUtil().setHeight(8.0),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -159,12 +161,11 @@ class UserSignIn extends State<SignIn> {
                                   customBorder: CircleBorder(),
                                   onTap: () {},
                                   child: Container(
-                                    width: screenAwareSizeH(55.0, context),
-                                    height: screenAwareSizeV(55.0, context),
+                                    width: ScreenUtil().setWidth(50.0),
+                                    height: ScreenUtil().setWidth(50.0),
                                     margin: EdgeInsets.symmetric(
-                                      vertical: screenAwareSizeV(12.0, context),
-                                      horizontal:
-                                          screenAwareSizeH(8.0, context),
+                                      vertical: ScreenUtil().setHeight(12.0),
+                                      horizontal: ScreenUtil().setWidth(8.0),
                                     ),
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
@@ -179,12 +180,11 @@ class UserSignIn extends State<SignIn> {
                                   customBorder: CircleBorder(),
                                   onTap: () {},
                                   child: Container(
-                                    width: screenAwareSizeH(55.0, context),
-                                    height: screenAwareSizeV(55.0, context),
+                                    width: ScreenUtil().setWidth(50.0),
+                                    height: ScreenUtil().setWidth(50.0),
                                     margin: EdgeInsets.symmetric(
-                                      vertical: screenAwareSizeV(12.0, context),
-                                      horizontal:
-                                          screenAwareSizeH(8.0, context),
+                                      vertical: ScreenUtil().setHeight(12.0),
+                                      horizontal: ScreenUtil().setWidth(8.0),
                                     ),
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
@@ -205,7 +205,7 @@ class UserSignIn extends State<SignIn> {
                 ),
                 Container(
                   margin: EdgeInsets.only(
-                    top: screenAwareSizeV(194.0, context),
+                    top: ScreenUtil().setHeight(64.0),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -213,7 +213,7 @@ class UserSignIn extends State<SignIn> {
                       Text(
                         "don't have an account?",
                         style: TextStyle(
-                          fontSize: 11.0,
+                          fontSize: ScreenUtil().setSp(11.0),
                           color: Colors.white70,
                         ),
                       ),
@@ -222,13 +222,13 @@ class UserSignIn extends State<SignIn> {
                         onTap: () => navigateToSignUp(context),
                         child: Container(
                           padding: EdgeInsets.symmetric(
-                            vertical: screenAwareSizeV(6.0, context),
-                            horizontal: screenAwareSizeH(6.0, context),
+                            vertical: ScreenUtil().setHeight(6.0),
+                            horizontal: ScreenUtil().setWidth(6.0),
                           ),
                           child: Text(
                             "REGISTER",
                             style: TextStyle(
-                              fontSize: 11.0,
+                              fontSize: ScreenUtil().setSp(11.0),
                               color: Colors.white,
                               fontWeight: FontWeight.w800,
                             ),
@@ -262,19 +262,20 @@ class UserSignIn extends State<SignIn> {
   Widget headerText(BuildContext context) {
     return SafeArea(
       child: Container(
-        width:
-            MediaQuery.of(context).size.width - screenAwareSizeH(16.0, context),
+        width: ScreenUtil().screenWidth - ScreenUtil().setWidth(16.0),
         margin: EdgeInsets.fromLTRB(
-          screenAwareSizeH(8.0, context),
-          screenAwareSizeV(80.0, context),
-          screenAwareSizeH(8.0, context),
-          screenAwareSizeH(40.0, context),
+          ScreenUtil().setWidth(8.0),
+          ScreenUtil().setHeight(80.0),
+          ScreenUtil().setWidth(8.0),
+          ScreenUtil().setHeight(40.0),
         ),
         child: Text(
           'Sign In',
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 32, color: Colors.white, fontWeight: FontWeight.w900),
+              fontSize: ScreenUtil().setSp(32),
+              color: Colors.white,
+              fontWeight: FontWeight.w900),
         ),
       ),
     );

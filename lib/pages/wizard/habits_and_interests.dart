@@ -1,7 +1,7 @@
 import 'package:Soulmate_App/models/user_habits_and_interests.dart';
 import 'package:flutter/material.dart';
-import 'package:Soulmate_App/utils/widget_utils.dart';
 import 'package:Soulmate_App/widgets/habit_picker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Soulmate_App/widgets/interests_picker.dart';
 import '../../styles.dart';
 
@@ -21,13 +21,12 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
       _interestsIsEmpty = true,
       _habitsHasError = false,
       _interestsHasError = false;
-  String habitsErrorText, interestsErrorText;
+  late String habitsErrorText, interestsErrorText;
 
   @override
   initState() {
     super.initState();
-    if (widget.habitsAndInterests != null &&
-        !widget.habitsAndInterests.isEmpty()) {
+    if (!widget.habitsAndInterests.isEmpty()) {
       _pickedHabits.addAll(widget.habitsAndInterests.habits);
       _pickedInterests.addAll(widget.habitsAndInterests.interests);
       _interestsIsEmpty = false;
@@ -38,10 +37,9 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
   @override
   Widget build(BuildContext context) {
     final EdgeInsets _formFieldPadding = EdgeInsets.symmetric(
-        vertical: 0.0, horizontal: screenAwareSizeH(32.0, context));
+        vertical: 0.0, horizontal: ScreenUtil().setWidth(32.0));
     final EdgeInsets _formFieldMargin = EdgeInsets.only(
-        top: screenAwareSizeV(8.0, context),
-        bottom: screenAwareSizeV(16.0, context));
+        top: ScreenUtil().setHeight(8.0), bottom: ScreenUtil().setHeight(16.0));
 
     return Scaffold(
       appBar: AppBar(
@@ -56,9 +54,9 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.only(
-            left: screenAwareSizeH(8.0, context),
-            right: screenAwareSizeH(8.0, context),
-            bottom: screenAwareSizeV(16.0, context),
+            left: ScreenUtil().setWidth(8.0),
+            right: ScreenUtil().setWidth(8.0),
+            bottom: ScreenUtil().setHeight(16.0),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +69,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
                       "only shown to your matches.",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 16.0,
+                    fontSize: ScreenUtil().setSp(16.0),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -180,7 +178,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
     }
   }
 
-  Widget _getHabitsText() {
+  Widget? _getHabitsText() {
     if (_pickedHabits.isNotEmpty) {
       String items = "";
       for (int i = 0; i < _pickedHabits.length; i++) {
@@ -190,7 +188,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
       }
       return Text(
         items,
-        style: TextStyle(fontSize: 16.0),
+        style: TextStyle(fontSize: ScreenUtil().setSp(16.0)),
       );
     }
     return null;
@@ -227,7 +225,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
     }
   }
 
-  Widget _getInterestsText() {
+  Widget? _getInterestsText() {
     if (_pickedInterests.isNotEmpty) {
       String items = "";
       for (int i = 0; i < _pickedInterests.length; i++) {
@@ -237,7 +235,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
       }
       return Text(
         items,
-        style: TextStyle(fontSize: 16.0),
+        style: TextStyle(fontSize: ScreenUtil().setSp(16.0)),
       );
     }
 

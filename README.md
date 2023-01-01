@@ -1,4 +1,1 @@
-# Soulmate-app, Botswana
-
-The first dating app in Botswana, intended to help singles meet.
-This app was made entirely in flutter.
+Soulmate-app is the first mobile dating app to be develped in and published in Botswana.

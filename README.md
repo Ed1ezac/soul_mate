@@ -34,7 +34,7 @@ This project's directory structure follows the Flutter framework directory struc
 
 
 ## Testing
-The app does not define any tests yet. In order to test the app you can use Flutter built in testing:
+The app does not define any custom tests yet. However you'll find the default widget test setup in the `test` directory to get started.
 Depending on which aspect of the app you are interested in testing, you can find useful information on the different types of testing available namely `unit test`, `widget test` and `intergration test` by:
 
 Visiting the [Flutter documentation on testing](https://docs.flutter.dev/cookbook/testing) to learn more.
@@ -45,7 +45,7 @@ Contributions are welcome. Please contact me to give me a heads-up and to agree 
 ## Evolution
 This app is on the development phase and aims to reach minimum reproducible prototype with few core features very soon. It will eventually add other supporting features later.
 **Core Features**
-- []Potential dates feed
+- [x]Potential dates feed
 - []Basic chat and messaging
 - []Profile with small Image gallery
 
@@ -55,5 +55,5 @@ This app is on the development phase and aims to reach minimum reproducible prot
 - []Support for Billing
 
 ## License
-This project is under the [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/)
+This project is under the [GNU Affero General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/)
 

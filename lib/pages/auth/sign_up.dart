@@ -1,7 +1,9 @@
+import 'package:Soulmate_App/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:soul_mate/pages/auth/sign_in.dart';
-import 'package:soul_mate/custom_icons_icons.dart';
-import 'package:soul_mate/pages/wizard/wizard_home.dart';
+import 'package:Soulmate_App/pages/auth/sign_in.dart';
+import 'package:Soulmate_App/custom_icons_icons.dart';
+import 'package:Soulmate_App/widgets/DRAWING_AREA.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../styles.dart';
 
 class SignUp extends StatefulWidget {
@@ -16,7 +18,7 @@ class SignUp extends StatefulWidget {
 class UserSignUp extends State<SignUp> {
   bool _formChanged = false;
   bool _isDefaultFlag = false;
-  FocusNode focusNode;
+  late FocusNode focusNode;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -38,203 +40,238 @@ class UserSignUp extends State<SignUp> {
       borderSide:
           const BorderSide(color: AppColors.soulPrimaryLight, width: 0.0),
     );
-    double formWidgetHeight = (MediaQuery.of(context).size.height / 11);
     return Scaffold(
       backgroundColor: AppColors.soulPrimary,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
+            padding: EdgeInsets.symmetric(
+              horizontal: ScreenUtil().setWidth(8.0),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                //Top header
-                headerText(context),
-                //form
-                Form(
-                  key: _formKey,
-                  //onChanged: ,
-                  child: Column(
-                    children: <Widget>[
-                      //email
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 32.0),
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        height: formWidgetHeight,
-                        child: TextFormField(
-                          autofocus: false,
-                          autovalidate: true,
-                          style: TextStyle(color: Colors.white70),
-                          decoration: InputDecoration(
-                              helperText: "",
-                              labelText: "email",
-                              labelStyle: labelStyle,
-                              focusedBorder: focusedBorder,
-                              enabledBorder: enabledBorder,
-                              prefixIcon: Icon(
-                                Icons.mail_outline,
-                                color: AppColors.soulPrimaryLight,
-                              )),
-                        ),
-                      ),
-
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 32.0),
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        height: formWidgetHeight,
-                        //password
-                        child: TextFormField(
-                          autovalidate: true,
-                          obscureText: true,
-                          style: TextStyle(color: Colors.white70),
-                          decoration: InputDecoration(
-                              helperText: "",
-                              labelText: "password",
-                              labelStyle: labelStyle,
-                              focusedBorder: focusedBorder,
-                              enabledBorder: enabledBorder,
-                              prefixIcon: Icon(Icons.vpn_key,
-                                  color: AppColors.soulPrimaryLight)),
-                        ),
-                      ),
-
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 0.0, horizontal: 32.0),
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        height: formWidgetHeight,
-                        //password confirm
-                        child: TextFormField(
-                          autovalidate: true,
-                          obscureText: true,
-                          style: TextStyle(color: Colors.white70),
-                          cursorColor: AppColors.soulAccent,
-                          decoration: InputDecoration(
-                              helperText: "",
-                              labelText: "confirm password",
-                              labelStyle: labelStyle,
-                              focusedBorder: focusedBorder,
-                              enabledBorder: enabledBorder,
-                              prefixIcon: Icon(Icons.vpn_key,
-                                  color: AppColors.soulPrimaryLight)),
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 32.0, vertical: 0.0),
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        height: MediaQuery.of(context).size.height / 18,
-                        width: MediaQuery.of(context).size.width - 16,
-                        child: RaisedButton(
-                          color: AppColors.soulPrimaryLight,
-                          child: Text(
-                            "Register",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    //Top header
+                    headerText(context),
+                    //form
+                    Form(
+                      key: _formKey,
+                      //onChanged: ,
+                      child: Column(
+                        children: <Widget>[
+                          //email
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: ScreenUtil().setWidth(32.0),
+                            ),
+                            margin: EdgeInsets.symmetric(
+                              vertical: ScreenUtil().setHeight(5.0),
+                            ),
+                            height: ScreenUtil().setHeight(76.0),
+                            child: TextFormField(
+                              autofocus: false,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              style: TextStyle(color: Colors.white70),
+                              decoration: InputDecoration(
+                                  helperText: "",
+                                  labelText: "email",
+                                  labelStyle: labelStyle,
+                                  focusedBorder: focusedBorder,
+                                  enabledBorder: enabledBorder,
+                                  prefixIcon: Icon(
+                                    Icons.mail_outline,
+                                    color: AppColors.soulPrimaryLight,
+                                  )),
+                            ),
                           ),
-                          onPressed: () => _continueToProfileWizard(),
+
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: ScreenUtil().setWidth(32.0),
+                            ),
+                            margin: EdgeInsets.symmetric(
+                              vertical: ScreenUtil().setHeight(5.0),
+                            ),
+                            height: ScreenUtil().setHeight(76.0),
+                            //password
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              obscureText: true,
+                              style: TextStyle(color: Colors.white70),
+                              decoration: InputDecoration(
+                                  helperText: "",
+                                  labelText: "password",
+                                  labelStyle: labelStyle,
+                                  focusedBorder: focusedBorder,
+                                  enabledBorder: enabledBorder,
+                                  prefixIcon: Icon(Icons.vpn_key,
+                                      color: AppColors.soulPrimaryLight)),
+                            ),
+                          ),
+
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: ScreenUtil().setWidth(32.0),
+                            ),
+                            margin: EdgeInsets.symmetric(
+                              vertical: ScreenUtil().setHeight(5.0),
+                            ),
+                            height: ScreenUtil().setHeight(76.0),
+                            //password confirm
+                            child: TextFormField(
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              obscureText: true,
+                              style: TextStyle(color: Colors.white70),
+                              cursorColor: AppColors.soulAccent,
+                              decoration: InputDecoration(
+                                  helperText: "",
+                                  labelText: "confirm password",
+                                  labelStyle: labelStyle,
+                                  focusedBorder: focusedBorder,
+                                  enabledBorder: enabledBorder,
+                                  prefixIcon: Icon(Icons.vpn_key,
+                                      color: AppColors.soulPrimaryLight)),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: ScreenUtil().setWidth(32.0),
+                            ),
+                            margin: EdgeInsets.symmetric(
+                              vertical: ScreenUtil().setHeight(8.0),
+                            ),
+                            height: ScreenUtil().setHeight(44.0),
+                            width: ScreenUtil().screenWidth - 16,
+                            child: RaisedButton(
+                              color: AppColors.soulPrimaryLight,
+                              child: Text(
+                                "Register",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenUtil().setSp(18.0),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () => _continueToProfileWizard(),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                              vertical: ScreenUtil().setHeight(8.0),
+                            ),
+                            child: Text(
+                              "OR",
+                              style: TextStyle(
+                                  color: Colors.white70,
+                                  fontSize: ScreenUtil().setSp(12.0)),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                              vertical: ScreenUtil().setHeight(8.0),
+                            ),
+                            child: Text(
+                              "Register with",
+                              style: TextStyle(
+                                  fontSize: ScreenUtil().setSp(16.0),
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(
+                              vertical: ScreenUtil().setHeight(8.0),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                InkWell(
+                                  customBorder: CircleBorder(),
+                                  onTap: () {},
+                                  child: Container(
+                                    width: ScreenUtil().setWidth(50.0),
+                                    height: ScreenUtil().setWidth(50.0),
+                                    margin: EdgeInsets.symmetric(
+                                      vertical: screenAwareSizeV(12.0, context),
+                                      horizontal:
+                                          screenAwareSizeH(8.0, context),
+                                    ),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: AppColors.soulPrimaryLight),
+                                    child: Icon(
+                                      CustomIcons.facebook_f,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  customBorder: CircleBorder(),
+                                  onTap: () {},
+                                  child: Container(
+                                    width: ScreenUtil().setWidth(50.0),
+                                    height: ScreenUtil().setWidth(50.0),
+                                    margin: EdgeInsets.symmetric(
+                                      vertical: screenAwareSizeV(12.0, context),
+                                      horizontal:
+                                          screenAwareSizeH(8.0, context),
+                                    ),
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: AppColors.soulPrimaryLight),
+                                    child: Icon(
+                                      CustomIcons.twitter,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                //below form
+                Container(
+                  margin: EdgeInsets.only(
+                    top: ScreenUtil().setHeight(16.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "already have an account?",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(11.0),
+                          color: Colors.white70,
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        child: Text(
-                          "~ OR ~",
-                          style: TextStyle(color: Colors.white, fontSize: 14.0),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        child: Text(
-                          "Register with",
-                          style: TextStyle(
-                              fontSize: 16.0,
+                      InkWell(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        onTap: () => navigateToLogin(),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: ScreenUtil().setHeight(6.0),
+                            horizontal: ScreenUtil().setWidth(6.0),
+                          ),
+                          child: Text(
+                            "LOGIN",
+                            style: TextStyle(
+                              fontSize: ScreenUtil().setSp(11.0),
                               color: Colors.white,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            InkWell(
-                              customBorder: CircleBorder(),
-                              onTap: () {},
-                              child: Container(
-                                width: 55.0,
-                                height: 55.0,
-                                margin: EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 8.0),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColors.soulPrimaryLight),
-                                child: Icon(
-                                  CustomIcons.facebook_f,
-                                  color: Colors.white,
-                                ),
-                              ),
+                              fontWeight: FontWeight.w800,
                             ),
-                            InkWell(
-                              customBorder: CircleBorder(),
-                              onTap: () {},
-                              child: Container(
-                                width: 55.0,
-                                height: 55.0,
-                                margin: EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 8.0),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColors.soulPrimaryLight),
-                                child: Icon(
-                                  CustomIcons.twitter,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
                     ],
-                  ),
-                ),
-                //below form
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 48.0, bottom: 8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "already have an Account?",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                        InkWell(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          onTap: () => navigateToLogin(),
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 6.0, horizontal: 6.0),
-                            child: Text(
-                              "LOGIN",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
               ],
@@ -249,7 +286,7 @@ class UserSignUp extends State<SignUp> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProfileWizard(),
+        builder: (context) => DrawingArea(), //ProfileWizard(),
       ),
     );
   }
@@ -264,7 +301,9 @@ class UserSignUp extends State<SignUp> {
     );
   }
 
-  bool validateFormFields() {}
+  bool validateFormFields() {
+    return false;
+  }
 
   @override
   void dispose() {
@@ -275,13 +314,20 @@ class UserSignUp extends State<SignUp> {
   Widget headerText(BuildContext context) {
     return SafeArea(
       child: Container(
-        width: MediaQuery.of(context).size.width - 16,
-        margin: EdgeInsets.fromLTRB(8.0, 64.0, 8.0, 42.0),
+        width: ScreenUtil().screenWidth - ScreenUtil().setWidth(16.0),
+        margin: EdgeInsets.fromLTRB(
+          ScreenUtil().setWidth(8.0),
+          ScreenUtil().setHeight(64.0),
+          ScreenUtil().setWidth(8.0),
+          ScreenUtil().setHeight(42.0),
+        ),
         child: Text(
           'Sign Up',
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 32, color: Colors.white, fontWeight: FontWeight.w900),
+              fontSize: ScreenUtil().setSp(32),
+              color: Colors.white,
+              fontWeight: FontWeight.w900),
         ),
       ),
     );

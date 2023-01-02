@@ -1,12 +1,12 @@
 import '../styles.dart';
 import 'package:flutter/material.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HabitPicker extends StatefulWidget {
   //collection of habits
   final List<String> pickedHabits;
 
-  HabitPicker({this.pickedHabits});
+  HabitPicker({required this.pickedHabits});
   @override
   HabitPickerState createState() => HabitPickerState();
 }
@@ -32,7 +32,7 @@ class HabitPickerState extends State<HabitPicker> {
             color: Colors.grey[200],
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         child: Padding(
-          padding: EdgeInsets.only(top: screenAwareSizeV(16.0, context)),
+          padding: EdgeInsets.only(top: ScreenUtil().setHeight(16.0)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -42,7 +42,7 @@ class HabitPickerState extends State<HabitPicker> {
                   )),
               Text("choose 3 for now.",
                   style: TextStyle(
-                    fontSize: 13.0,
+                    fontSize: ScreenUtil().setSp(13.0),
                     color: Colors.grey,
                     fontWeight: FontWeight.w300,
                   )),
@@ -54,7 +54,7 @@ class HabitPickerState extends State<HabitPicker> {
                     controlAffinity: ListTileControlAffinity.leading,
                     title: Text(habits[index]),
                     onChanged: (value) => setState(() {
-                      if (value) {
+                      if (value!) {
                         //deterrance
                         if (_selectedHabits.length < 3) {
                           _selectedHabits.add(habits[index]);
@@ -80,7 +80,7 @@ class HabitPickerState extends State<HabitPicker> {
                   onPressed: () {
                     widget.pickedHabits.clear();
                     widget.pickedHabits.addAll(_selectedHabits);
-                    _selectedHabits = null;
+                    _selectedHabits = [];
                     Navigator.pop(context, widget.pickedHabits.isNotEmpty);
                   },
                 ),
@@ -100,13 +100,18 @@ class HabitPickerState extends State<HabitPicker> {
     "Smoking",
     "Gambling",
     "Hugging",
+    "Singing",
     "Reading",
+    "Swearing",
+    "Joking",
     "Spitting",
     "Laughing",
     "Cuddling",
     "Belching",
+    "Singing",
     "Exercising",
     "Gossiping",
+    "Humming",
     "Day Dreaming",
     "Chewing Gum",
     "Drinking Tea",

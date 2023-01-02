@@ -1,11 +1,6 @@
-import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
-import 'package:soul_mate/widgets/height_picker.dart';
-import 'package:soul_mate/widgets/wizard_option_drawing.dart';
-
-import '../styles.dart';
+import 'package:Soulmate_App/widgets/card_stack.dart';
+import 'package:Soulmate_App/models/potential_match.dart';
 
 class DrawingArea extends StatefulWidget {
   @override
@@ -16,49 +11,34 @@ class DrawingArea extends StatefulWidget {
 
 class DrawingAreaState extends State<DrawingArea> {
   //int height = 700;
-  int height;
+  List<PotentialMatch> _items = [
+    PotentialMatch("assets/images/blu_bg.jpg", "Jessica", 23, 158,
+        introversion: 0, interests: []),
+    PotentialMatch("assets/images/girl_avatar.jpg", "Candy", 26, 161,
+        introversion: 0, interests: []),
+    PotentialMatch("assets/images/blu_bg.jpg", "Mindy", 29, 184,
+        introversion: 0, interests: []),
+    PotentialMatch("assets/images/girl_avatar.jpg", "Tamayo", 32, 191,
+        introversion: 0, interests: []),
+    PotentialMatch("assets/images/blu_bg.jpg", "Flo", 20, 121,
+        introversion: 0, interests: []),
+    PotentialMatch("assets/images/girl_avatar.jpg", "Janet", 28, 189,
+        introversion: 0, interests: [])
+  ];
 
   @override
   void initState() {
     super.initState();
     //height = widget.height ?? 170;
-    height = 170;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Colors.green[100],
       body: SafeArea(
         child: Center(
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.75,
-            width: MediaQuery.of(context).size.width * 0.75,
-            child: Card(
-              color: Colors.grey[200],
-              child: Padding(
-                padding: EdgeInsets.only(top: screenAwareSizeV(16.0, context)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text("HEIGHT (cm)",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                        )),
-                    Expanded(
-                      child: LayoutBuilder(builder: (context, constraints) {
-                        return HeightPicker(
-                          widgetHeight: constraints.maxHeight,
-                          height: height,
-                          onChange: (val) => setState(() => height = val),
-                        );
-                      }),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          child: CardStack(potentials: _items),
         ),
       ),
     );

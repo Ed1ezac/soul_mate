@@ -6,11 +6,11 @@ class UserBasicDetails {
   int age, height;
 
   UserBasicDetails(
-      {this.age,
-      this.name,
-      this.gender,
-      this.height,
-      this.sexuality,
+      {required this.age,
+      required this.name,
+      required this.gender,
+      required this.height,
+      required this.sexuality,
       this.hideAge = false});
 
   Map<String, dynamic> toJson() => {
@@ -23,14 +23,15 @@ class UserBasicDetails {
       };
 
   bool isEmpty() {
-    return this.age == null &&
-        this.name == null &&
-        this.height == null &&
-        this.gender == null &&
-        this.sexuality == null;
+    //default values
+    return this.age == 0 &&
+        this.name == "" &&
+        this.height == 0 &&
+        this.gender == Gender.Female &&
+        this.sexuality == Sexuality.Heterosexual;
   }
 }
 
-enum Gender { Male, Female, GenderQueer, GenderNeutral }
+enum Gender { Male, Female, Transgender, GenderNeutral }
 
-enum Sexuality { Heterosexual, Homosexual, Bisexual }
+enum Sexuality { Heterosexual, Homosexual, Bisexual, Other }

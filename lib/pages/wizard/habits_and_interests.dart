@@ -1,11 +1,15 @@
+import 'package:Soulmate_App/models/user_habits_and_interests.dart';
 import 'package:flutter/material.dart';
-import 'package:soul_mate/utils/widget_utils.dart';
-import 'package:soul_mate/widgets/habit_picker.dart';
-import 'package:soul_mate/widgets/interests_picker.dart';
-
+import 'package:Soulmate_App/widgets/habit_picker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:Soulmate_App/widgets/interests_picker.dart';
 import '../../styles.dart';
 
 class HabitsAndInterests extends StatefulWidget {
+  final UserHabitsAndInterests habitsAndInterests;
+
+  HabitsAndInterests(this.habitsAndInterests);
+
   @override
   _HabitsAndInterestsState createState() => _HabitsAndInterestsState();
 }
@@ -17,31 +21,42 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
       _interestsIsEmpty = true,
       _habitsHasError = false,
       _interestsHasError = false;
-  RangeValues _currentRangeValues = const RangeValues(20, 40);
+  late String habitsErrorText, interestsErrorText;
+
+  @override
+  initState() {
+    super.initState();
+    if (!widget.habitsAndInterests.isEmpty()) {
+      _pickedHabits.addAll(widget.habitsAndInterests.habits);
+      _pickedInterests.addAll(widget.habitsAndInterests.interests);
+      _interestsIsEmpty = false;
+      _habitsIsEmpty = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = (MediaQuery.of(context).size.height);
     final EdgeInsets _formFieldPadding = EdgeInsets.symmetric(
-        vertical: 0.0, horizontal: screenAwareSizeH(32.0, context));
+        vertical: 0.0, horizontal: ScreenUtil().setWidth(32.0));
     final EdgeInsets _formFieldMargin = EdgeInsets.only(
-        top: screenAwareSizeV(8.0, context),
-        bottom: screenAwareSizeV(16.0, context));
+        top: ScreenUtil().setHeight(8.0), bottom: ScreenUtil().setHeight(16.0));
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Habits and Interests"),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.check), onPressed: () => Navigator.pop(context)),
+            icon: Icon(Icons.check),
+            onPressed: () => _popOrFail(),
+          ),
         ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.only(
-            left: screenAwareSizeH(8.0, context),
-            right: screenAwareSizeH(8.0, context),
-            bottom: screenAwareSizeV(16.0, context),
+            left: ScreenUtil().setWidth(8.0),
+            right: ScreenUtil().setWidth(8.0),
+            bottom: ScreenUtil().setHeight(16.0),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +69,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
                       "only shown to your matches.",
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 16.0,
+                    fontSize: ScreenUtil().setSp(16.0),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -85,81 +100,51 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
                   ],
                 ),
               ),
-              Divider(),
-              Container(
-                padding: _formFieldPadding,
-                margin: _formFieldMargin,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Age Range",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    RichText(
-                      text: TextSpan(
-                          style: TextStyle(
-                            color: Theme.of(context).hintColor,
-                          ),
-                          text: "I want to date people aged:",
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: _currentRangeValues.start.toString() +
-                                  ' to ' +
-                                  _currentRangeValues.end.toString(),
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                //fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ]),
-                    ),
-                    Container(
-                      child: RangeSlider(
-                        values: _currentRangeValues,
-                        min: 18,
-                        max: 100,
-                        divisions: 82,
-                        labels: RangeLabels(
-                          _currentRangeValues.start.round().toString() + " yrs",
-                          _currentRangeValues.end.round().toString() + " yrs",
-                        ),
-                        onChanged: (RangeValues values) {
-                          setState(() {
-                            _currentRangeValues = values;
-                          });
-                        },
-                        onChangeEnd: (values) {
-                          if (values.end - values.start > 30) {
-                            setState(() {
-                              values = new RangeValues(
-                                  values.start, values.start + 30);
-                              _currentRangeValues = values;
-                            });
-                          }
-                        },
-                      ),
-                    ),
-                    Text(
-                      "max range is 30 years.",
-                      style: TextStyle(
-                        color: Theme.of(context).hintColor,
-                        fontSize: 13.0,
-                        //fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _popOrFail() {
+    if (_formIsValid()) {
+      widget.habitsAndInterests.habits = _pickedHabits;
+      widget.habitsAndInterests.interests = _pickedInterests;
+      //pop!
+      Navigator.pop(context, widget.habitsAndInterests);
+    } else {
+      //display errors
+      setState(() {});
+    }
+  }
+
+  bool _formIsValid() {
+    bool isValid = true;
+    _habitsHasError = false;
+    _interestsHasError = false;
+
+    if (_pickedHabits.isEmpty) {
+      isValid = false;
+      _habitsHasError = true;
+      habitsErrorText = "you need to pick some habits.";
+    } else if (_pickedHabits.length != 3) {
+      isValid = false;
+      _habitsHasError = true;
+      habitsErrorText = "you must pick 3 habits.";
+    }
+
+    if (_pickedInterests.isEmpty) {
+      isValid = false;
+      _interestsHasError = true;
+      interestsErrorText = "you need to pick some interests.";
+    } else if (_pickedInterests.length != 6) {
+      isValid = false;
+      _interestsHasError = true;
+      interestsErrorText = "you must pick 6 interests.";
+    }
+
+    return isValid;
   }
 
   Widget buildHabitsWidget() {
@@ -168,7 +153,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
         isEmpty: _habitsIsEmpty,
         child: _getHabitsText(),
         decoration: InputDecoration(
-          errorText: "something aint right..",
+          errorText: habitsErrorText,
           labelText: "Habits",
           prefixIcon: Icon(
             Icons.beenhere,
@@ -193,7 +178,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
     }
   }
 
-  Widget _getHabitsText() {
+  Widget? _getHabitsText() {
     if (_pickedHabits.isNotEmpty) {
       String items = "";
       for (int i = 0; i < _pickedHabits.length; i++) {
@@ -203,7 +188,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
       }
       return Text(
         items,
-        style: TextStyle(fontSize: 16.0),
+        style: TextStyle(fontSize: ScreenUtil().setSp(16.0)),
       );
     }
     return null;
@@ -215,7 +200,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
         isEmpty: _interestsIsEmpty,
         child: _getInterestsText(),
         decoration: InputDecoration(
-          errorText: "something aint right..",
+          errorText: interestsErrorText,
           labelText: "Interests",
           prefixIcon: Icon(
             Icons.beach_access,
@@ -240,7 +225,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
     }
   }
 
-  Widget _getInterestsText() {
+  Widget? _getInterestsText() {
     if (_pickedInterests.isNotEmpty) {
       String items = "";
       for (int i = 0; i < _pickedInterests.length; i++) {
@@ -250,7 +235,7 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
       }
       return Text(
         items,
-        style: TextStyle(fontSize: 16.0),
+        style: TextStyle(fontSize: ScreenUtil().setSp(16.0)),
       );
     }
 
@@ -263,9 +248,9 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
         context: context,
         builder: (context) => HabitPicker(pickedHabits: _pickedHabits));
 
-    if (hasItems != null && hasItems) {
+    if (hasItems != null) {
       setState(() {
-        _habitsIsEmpty = false;
+        _habitsIsEmpty = !hasItems;
       });
     }
   }
@@ -276,9 +261,9 @@ class _HabitsAndInterestsState extends State<HabitsAndInterests> {
         builder: (context) =>
             InterestsPicker(pickedInterests: _pickedInterests));
 
-    if (hasItems != null && hasItems) {
+    if (hasItems != null) {
       setState(() {
-        _interestsIsEmpty = false;
+        _interestsIsEmpty = !hasItems;
       });
     }
   }

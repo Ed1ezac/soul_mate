@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AnimatedImage extends StatefulWidget {
-  String _assetPath;
+  final String _assetPath;
   AnimatedImage(this._assetPath);
 
   @override
   State<StatefulWidget> createState() {
-    return _EnlargeAndFadeIn(_assetPath);
+    return _EnlargeAndFadeIn();
   }
 }
 
 class _EnlargeAndFadeIn extends State<AnimatedImage>
     with TickerProviderStateMixin {
-  AnimationController _controllerFadeIn;
-  AnimationController _controllerEnlarge;
-  Animation _fadeIn;
-  Animation _enlarge;
-  String path;
-
-  _EnlargeAndFadeIn(String path) {
-    this.path = path;
-  }
+  late AnimationController _controllerFadeIn;
+  late AnimationController _controllerEnlarge;
+  late Animation _fadeIn;
+  late Animation _enlarge;
 
   @override
   initState() {
@@ -37,12 +33,13 @@ class _EnlargeAndFadeIn extends State<AnimatedImage>
   @override
   Widget build(BuildContext context) {
     double startOpacity = 0.3;
-    double startWidth = MediaQuery.of(context).size.width - 30;
+    double startWidth = ScreenUtil().screenWidth - ScreenUtil().setWidth(40.0);
 
     _fadeIn = Tween(begin: startOpacity, end: 1.0).animate(
         CurvedAnimation(parent: _controllerFadeIn, curve: Curves.ease));
     _enlarge = Tween(
-            begin: startWidth, end: (MediaQuery.of(context).size.width - 8))
+            begin: startWidth,
+            end: (ScreenUtil().screenWidth - ScreenUtil().setWidth(16.0)))
         .animate(
             CurvedAnimation(parent: _controllerEnlarge, curve: Curves.ease));
 
@@ -63,9 +60,9 @@ class _EnlargeAndFadeIn extends State<AnimatedImage>
 
   Widget svgImage(BuildContext context) {
     return SvgPicture.asset(
-      path,
-      height: MediaQuery.of(context).size.height - 200,
-      width: MediaQuery.of(context).size.width - 8,
+      widget._assetPath,
+      height: ScreenUtil().screenHeight - ScreenUtil().setHeight(280.0),
+      width: ScreenUtil().screenWidth - ScreenUtil().setWidth(40.0),
       semanticsLabel: 'vector asset image',
     );
   }

@@ -21,14 +21,14 @@ class WizardOptionBorder extends ShapeBorder {
   }
 
   @override
-  Path getInnerPath(Rect rect, {TextDirection textDirection}) {
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) {
     return new Path()
       ..fillType = PathFillType.evenOdd
       ..addPath(getOuterPath(rect), Offset.zero);
   }
 
   @override
-  Path getOuterPath(Rect rect, {TextDirection textDirection}) {
+  Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
     Rect guest = _positionGuestAtCenterLeft(rect);
 
     // The guest's shape is a circle bounded by the guest rectangle.
@@ -83,7 +83,7 @@ class WizardOptionBorder extends ShapeBorder {
   }
 
   @override
-  void paint(Canvas canvas, Rect rect, {TextDirection textDirection}) {
+  void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {
     Paint paint = new Paint()
       ..color = colored ? borderColor : Colors.transparent
       ..style = PaintingStyle.stroke

@@ -77,4 +77,51 @@ class PersonalityUtils {
   static final String PRIORITIZING_TIME_TIP =
       "Shows love by prioritizing time alone with their partner, e.g. walks, weekend getaways, long phone calls," +
           " to create and share special moments together.";
+
+  String? getIntroversionTitle(int introversion) {
+    switch (introversion) {
+      case (3):
+        return PersonalityUtils.SOCIAL_INTROVERT_TITLE;
+      case (5):
+        return PersonalityUtils.ANXIOUS_INTROVERT_TITLE;
+      case (7):
+        return PersonalityUtils.THINKING_INTROVERT_TITLE;
+      case (9):
+        return PersonalityUtils.RESTRAINED_INTROVERT_TITLE;
+      default:
+        return null;
+    }
+  }
+
+  String? getExtroversionTitle(int extroversion) {
+    switch (extroversion) {
+      case (4):
+        return PersonalityUtils.EXTROVERTED_FEELER_TITLE;
+      case (6):
+        return PersonalityUtils.EXTROVERTED_SENSORS_TITLE;
+      case (8):
+        return PersonalityUtils.EXTROVERTED_THINKERS_TITLE;
+      case (10):
+        return PersonalityUtils.EXTROVERTED_INTUITORS_TITLE;
+      default:
+        return null;
+    }
+  }
+
+  String? getLoveExpressionTitle(int loveExpression) {
+    switch (loveExpression) {
+      case (11):
+        return PersonalityUtils.GIFTING_TITLE;
+      case (12):
+        return PersonalityUtils.HELPFULNESS_TITLE;
+      case (13):
+        return PersonalityUtils.VERBAL_AFFECTION_TITLE;
+      case (14):
+        return PersonalityUtils.BODILY_AFFECTION_TITLE;
+      case (15):
+        return PersonalityUtils.PRIORITIZING_TIME_TITLE;
+      default:
+        return null;
+    }
+  }
 }

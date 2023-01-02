@@ -3,8 +3,8 @@ import 'package:Soulmate_App/utils/widget_utils.dart';
 import 'package:Soulmate_App/widgets/explore_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
-
 import '../../styles.dart';
+
 
 class Explore extends StatefulWidget {
   @override

@@ -45,14 +45,14 @@ Contributions are welcome. Please contact me to give me a heads-up and to agree 
 ## Evolution
 This app is on the development phase and aims to reach minimum reproducible prototype with few core features very soon. It will eventually add other supporting features later.
 **Core Features**
-- [x]Potential dates feed
-- []Basic chat and messaging
-- []Profile with small Image gallery
+- [x] Potential dates feed
+- [] Basic chat and messaging
+- [] Profile with small Image gallery
 
 **Supporting Features**
-- []Profile with video intros
-- []In app Calls
-- []Support for Billing
+- [] Profile with video intros
+- [] In app Calls
+- [] Support for Billing
 
 ## License
 This project is under the [GNU Affero General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/)

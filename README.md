@@ -17,7 +17,7 @@ This system was made using the Flutter framework, a cross-platform framework bas
 ## Requirements
 If you intend to make additions to this project you need to meet the following (Minimum requirements):
 - Flutter v2.10.0 
-- Dart v2.16.0
+- Dart SDK v2.16.0
 
 ## Architecture & Directories
 This project's directory structure follows the Flutter framework directory structure. All the important code however lives in the `lib/` directory. To stay organized the directory includes `models`, `pages`, `utils` and the `widgets` folders to hold their respective files.
@@ -27,7 +27,7 @@ This project's directory structure follows the Flutter framework directory struc
 - Download and unzip the project 
 - If you have Visual Studio Code IDE you can use its built-in command processor by clicking `Terminal`->`New Terminal` on the top ribbon menu
 - Otherwise fire up your console app *(e.g command prompt on windows)* and navigate to the project folder 
-- Install the necessary packages by running `pub get`
+- Install the necessary packages by running `dart pub get`
 - Connect your device, make sure you have installed USB drivers which enable debugging for the smartphone
 - To run the app press `ctrl + F5` on windows, `command + F5` on mac
 - Wait for the build to complete and voila! the app should appear on your phone

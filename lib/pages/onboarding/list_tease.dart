@@ -15,7 +15,7 @@ class ListTease extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.soulAccentLight,
       body: Padding(
-        padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(32.0)),
+        padding: EdgeInsets.only(bottom: 32.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -26,14 +26,13 @@ class ListTease extends StatelessWidget {
                 child: SafeArea(
                   bottom: false,
                   child: Container(
-                    width: (ScreenUtil().screenWidth -
-                        ScreenUtil().setWidth(32.0)),
+                    width: (1.sw - 32.w),
                     child: Text(
                       'Match',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: "Delafield",
-                          fontSize: ScreenUtil().setSp(56.0),
+                          fontSize: 56.sp,
                           color: Colors.white),
                     ),
                   ),
@@ -48,15 +47,14 @@ class ListTease extends StatelessWidget {
               flex: 2,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: ScreenUtil().setWidth(16.0),
-                  vertical: ScreenUtil().setHeight(8.0),
+                  horizontal: 16.w,
+                  vertical: 8.h,
                 ),
                 child: Text(
                   "Potential partners will be suggested to you. " +
                       "It's a match when you like someone who liked you!",
                   style: TextStyle(
-                    fontSize: ScreenUtil().setSp(19),
-                    decoration: TextDecoration.none,
+                    fontSize: 20.sp,
                     color: Colors.white,
                   ),
                 ),

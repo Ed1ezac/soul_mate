@@ -15,7 +15,7 @@ class Welcome extends StatelessWidget {
       backgroundColor: AppColors.soulPrimaryLight,
       //body
       body: Padding(
-        padding: EdgeInsets.only(bottom: ScreenUtil().setHeight(32.0)),
+        padding: EdgeInsets.only(bottom: 32.0.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -25,14 +25,13 @@ class Welcome extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 child: SafeArea(
                   child: Container(
-                    width: (ScreenUtil().screenWidth -
-                        ScreenUtil().setWidth(32.0)),
+                    width: (1.sw - 32.w),
                     child: Text(
                       'Soulmate',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: "Delafield",
-                          fontSize: ScreenUtil().setSp(56.0),
+                          fontSize: 56.sp,
                           color: Colors.white),
                     ),
                   ),
@@ -50,8 +49,7 @@ class Welcome extends StatelessWidget {
                   ),
                   Positioned(
                     top: 0.0,
-                    child: AnimatedImage(
-                        'assets/images/couple_intro.svg'), //const _CoupleImage(),
+                    child: AnimatedImage('assets/images/couple_intro.svg'),
                   )
                 ],
               ),
@@ -59,14 +57,11 @@ class Welcome extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setWidth(16.0),
-                    vertical: ScreenUtil().setHeight(8.0)),
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                 child: Text(
                   "Welcome to Soulmate. Your journey to find love begins here, we hope it ends here.",
                   style: TextStyle(
-                    fontSize: ScreenUtil().setSp(19),
-                    decoration: TextDecoration.none,
+                    fontSize: 20.sp,
                     color: Colors.white,
                   ),
                 ),
@@ -122,9 +117,9 @@ class _AnimatedHeartState extends State<_AnimatedHeartWidget>
 
   @override
   Widget build(BuildContext context) {
-    double _heartHeight = ScreenUtil().screenHeight / 3;
-    double _heartWidth = ScreenUtil().screenHeight / 1.8;
-    double _heartStartLocation = ScreenUtil().screenHeight / 5;
+    double _heartHeight = 1.sw < 600 ? (3 * 1.sw / 5) : 480;
+    double _heartWidth = 1.sw < 600 ? (3 * 1.sw / 5) : 480;
+    double _heartStartLocation = 1.sh / 5;
 
     _animationFloatUp = Tween(begin: _heartStartLocation, end: 0.0).animate(
         CurvedAnimation(

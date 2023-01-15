@@ -15,14 +15,8 @@ class OnBoardingCarousel extends StatefulWidget {
 
 class _CarouselState extends State<OnBoardingCarousel> {
   final CarouselController _controller = CarouselController();
-  int _current = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  List<Widget> _pageList = [
+  int _currentPage = 0;
+  final List<Widget> _pageList = [
     Welcome(),
     ListTease(),
     ChatTease(),
@@ -30,20 +24,19 @@ class _CarouselState extends State<OnBoardingCarousel> {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
         children: <Widget>[
           CarouselSlider(
             items: _pageList,
             options: CarouselOptions(
-                height: height,
+                height: 1.sh,
                 viewportFraction: 1.0,
                 enlargeCenterPage: false,
                 enableInfiniteScroll: false,
                 onPageChanged: (index, reason) {
                   setState(() {
-                    _current = index;
+                    _currentPage = index;
                   });
                 }),
             carouselController: _controller,
@@ -57,14 +50,13 @@ class _CarouselState extends State<OnBoardingCarousel> {
                   children: _pageList.map((page) {
                     int index = _pageList.indexOf(page);
                     return Container(
-                      width: ScreenUtil().setWidth(12.0),
-                      height: ScreenUtil().setWidth(12.0),
-                      margin: EdgeInsets.symmetric(
-                          vertical: ScreenUtil().setHeight(12.0),
-                          horizontal: ScreenUtil().setWidth(3.0)),
+                      width: 12.w,
+                      height: 12.w,
+                      margin:
+                          EdgeInsets.symmetric(vertical: 12.h, horizontal: 4.w),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: _current == index
+                        color: _currentPage == index
                             ? Color.fromRGBO(255, 255, 255, 0.9)
                             : Color.fromRGBO(255, 255, 255, 0.3),
                       ),
@@ -74,22 +66,22 @@ class _CarouselState extends State<OnBoardingCarousel> {
               ),
             ),
           ),
-          if (_current < 2)
+          if (_currentPage < 2)
             Align(
               alignment: Alignment.bottomRight,
               child: SafeArea(
                 child: Padding(
                   padding: EdgeInsets.only(
-                    left: ScreenUtil().setWidth(8.0),
-                    bottom: ScreenUtil().setHeight(16.0),
-                    right: ScreenUtil().setWidth(24.0),
+                    left: 8.w,
+                    bottom: 16.h,
+                    right: 24.w,
                   ),
                   child: TextButton(
                     onPressed: () => _controller.nextPage(),
                     child: Text(
-                      'NEXT. .',
+                      'NEXT...',
                       style: TextStyle(
-                        fontSize: ScreenUtil().setSp(19),
+                        fontSize: 18.sp,
                         fontWeight: FontWeight.w900,
                         color: Colors.white,
                       ),

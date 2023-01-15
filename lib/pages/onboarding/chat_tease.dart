@@ -12,7 +12,7 @@ class ChatTease extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.soulPrimary,
       body: Padding(
-        padding: EdgeInsets.only(bottom: ScreenUtil().setWidth(32.0)),
+        padding: EdgeInsets.only(bottom: 32.h),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
@@ -23,15 +23,14 @@ class ChatTease extends StatelessWidget {
                 child: SafeArea(
                   bottom: false,
                   child: Container(
-                    width: (ScreenUtil().screenWidth -
-                        ScreenUtil().setWidth(32.0)),
+                    width: (1.sw - 32.w),
                     child: Text(
                       'Chat',
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.visible,
                       style: TextStyle(
                           fontFamily: "Delafield",
-                          fontSize: ScreenUtil().setSp(56.0),
+                          fontSize: 56.sp,
                           color: Colors.white),
                     ),
                   ),
@@ -46,14 +45,13 @@ class ChatTease extends StatelessWidget {
               flex: 2,
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: ScreenUtil().setWidth(16.0),
-                  vertical: ScreenUtil().setHeight(8.0),
+                  horizontal: 16.w,
+                  vertical: 8.h,
                 ),
                 child: Text(
                   "Once you are matched, you can get to know your matched partner better by chatting with them.",
                   style: TextStyle(
-                    fontSize: ScreenUtil().setSp(20),
-                    decoration: TextDecoration.none,
+                    fontSize: 20.sp,
                     color: Colors.white,
                   ),
                 ),
@@ -66,8 +64,7 @@ class ChatTease extends StatelessWidget {
         icon: Icon(Icons.play_arrow),
         label: Text(
           'START',
-          style: TextStyle(
-              fontSize: ScreenUtil().setSp(16), fontWeight: FontWeight.w900),
+          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w900),
         ),
         onPressed: () {
           //

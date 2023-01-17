@@ -1,8 +1,9 @@
+import 'package:Soulmate_App/pages/app/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Soulmate_App/models/user_basic_details.dart';
+import 'package:Soulmate_App/models/user.dart';
 import 'package:Soulmate_App/models/form_progress_observer.dart';
-import 'package:Soulmate_App/models/user_habits_and_interests.dart';
+import 'package:Soulmate_App/models/user_interests.dart';
 import 'package:Soulmate_App/models/user_personality.dart';
 import 'package:Soulmate_App/widgets/wizard_option.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,19 +16,14 @@ class ProfileWizard extends StatefulWidget {
 
 class WizardState extends State<ProfileWizard>
     with SingleTickerProviderStateMixin {
-  UserBasicDetails details = UserBasicDetails(
-      name: "",
-      age: 0,
-      sexuality: Sexuality.Heterosexual,
-      height: 0,
-      gender: Gender.Female);
-  UserPersonality personality = UserPersonality(-1, -1, -1);
-  UserHabitsAndInterests habitsAndInterests =
-      UserHabitsAndInterests(habits: [], interests: []);
+  User details =
+      User(name: "", birthday: "", sexuality: "", height: -1, gender: "");
+  UserPersonality personality = UserPersonality(-1, -1);
+  UserInterests interests = UserInterests(habits: [], interests: []);
   late FormProgressObserver _observer;
   late AnimationController _fabFloatUpController;
   late Animation<double> _fabFloatUpAnimation;
-  OptionState basicsState = OptionState.ACTIVE, //OptionState.COMPLETE
+  OptionState basicsState = OptionState.ACTIVE,
       personalityState = OptionState.INACTIVE, //
       interestsState = OptionState.INACTIVE;
   bool _isWizardComplete = false;
@@ -40,8 +36,7 @@ class WizardState extends State<ProfileWizard>
     _observer = FormProgressObserver();
     _fabFloatUpController =
         AnimationController(vsync: this, duration: const Duration(seconds: 3));
-
-    _fabFloatUpController.forward();
+    //_fabFloatUpController.forward();
   }
 
   @override
@@ -61,35 +56,38 @@ class WizardState extends State<ProfileWizard>
                 child: SafeArea(
                   child: Container(
                     margin: EdgeInsets.only(
-                      top: ScreenUtil().setHeight(32.0),
+                      top: 32.h,
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Container(
-                          width: ScreenUtil().setWidth(75.0),
-                          height: ScreenUtil().setWidth(75.0),
+                          width: 75.w,
+                          height: 75.w,
                           margin: EdgeInsets.only(
-                              bottom: ScreenUtil().setHeight(8.0)),
+                            bottom: 8.h,
+                          ),
                           child: Icon(
                             Icons.person_add,
-                            size: ScreenUtil().setWidth(70.0),
+                            size: 70.w,
                             color: AppColors.soulPrimaryLight,
                           ),
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(
-                              vertical: ScreenUtil().setHeight(8.0),
-                              horizontal: ScreenUtil().setWidth(8.0)),
+                            vertical: 8.h,
+                            horizontal: 16.w,
+                          ),
                           child: Text(
-                            "Help us find matches for you by" +
+                            "Help us find a match for you by" +
                                 " creating your profile in just a few steps.",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: ScreenUtil().setSp(20.0),
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
+                              fontSize: 20.sp,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ],
@@ -102,22 +100,25 @@ class WizardState extends State<ProfileWizard>
               flex: 4,
               child: Container(
                 color: AppColors.soulPrimaryLight,
-                padding:
-                    EdgeInsets.symmetric(vertical: ScreenUtil().setHeight(8.0)),
+                padding: EdgeInsets.symmetric(
+                  vertical: 8.h,
+                ),
                 child: ListView(
                   padding: EdgeInsets.symmetric(
-                      horizontal: ScreenUtil().setWidth(8.0)),
+                    horizontal: 8.w,
+                  ),
                   children: <Widget>[
                     Consumer<FormProgressObserver>(
                       builder: (context, progressObserver, child) {
                         return WizardOption(
                           position: 1,
                           state: basicsState,
-                          thisObject: details,
                           notifyParent: updateParent,
                           onStateChange: (state) => basicsState = state,
+                          wizardObject: details,
                           onObjectChange: (infoObject) =>
-                              details = infoObject as UserBasicDetails,
+                              //TODO
+                              details = infoObject as User,
                         );
                       },
                     ),
@@ -126,8 +127,8 @@ class WizardState extends State<ProfileWizard>
                         return WizardOption(
                           position: 2,
                           state: personalityState,
-                          thisObject: personality,
                           notifyParent: updateParent,
+                          wizardObject: personality,
                           onStateChange: (state) => personalityState = state,
                           onObjectChange: (result) =>
                               personality = result as UserPersonality,
@@ -140,10 +141,10 @@ class WizardState extends State<ProfileWizard>
                             position: 3,
                             state: interestsState,
                             notifyParent: updateParent,
-                            thisObject: habitsAndInterests,
+                            wizardObject: interests,
                             onStateChange: (state) => interestsState = state,
-                            onObjectChange: (result) => habitsAndInterests =
-                                result as UserHabitsAndInterests);
+                            onObjectChange: (result) =>
+                                interests = result as UserInterests);
                       },
                     ),
                   ],
@@ -160,8 +161,6 @@ class WizardState extends State<ProfileWizard>
   void updateParent(int updaterPosition) {
     switch (updaterPosition) {
       case 1:
-        updateNextChild(updaterPosition);
-        break;
       case 2:
         updateNextChild(updaterPosition);
         break;
@@ -196,6 +195,8 @@ class WizardState extends State<ProfileWizard>
 
   void _flagProfileCreationComplete() {
     _observer.registerProgess();
+    //TODO
+    _fabFloatUpController.forward();
 
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
@@ -206,20 +207,11 @@ class WizardState extends State<ProfileWizard>
 
   Widget _showFab(BuildContext context) {
     _fabFloatUpAnimation = Tween<double>(
-      begin: MediaQuery.of(context).size.height + ScreenUtil().setHeight(56.0),
+      begin: 1.sh + 56.h,
       end: 0.0,
     ).animate(
       CurvedAnimation(parent: _fabFloatUpController, curve: Curves.bounceInOut),
     );
-
-    // return SlideTransition(
-    //   position: Offset(0.0, _fabFloatUpAnimation.value),
-    //   child: advanceFab(),
-    // );
-    // return Transform.translate(
-    //   offset: _fabFloatUpAnimation.value,
-    //   child: advanceButton,
-    // );
 
     return Transform(
       transform:
@@ -231,8 +223,15 @@ class WizardState extends State<ProfileWizard>
   Widget advanceFab() {
     return Container(
       child: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text("Create"),
+        onPressed: () {
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          );
+        },
+        label: Text(
+          "Create",
+          style: TextStyle(fontSize: 18.sp),
+        ),
       ),
     );
   }

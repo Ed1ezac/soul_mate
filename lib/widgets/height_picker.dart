@@ -27,7 +27,7 @@ class HeightPicker extends StatefulWidget {
 }
 
 class _HeightPickerState extends State<HeightPicker> {
-  double labelsFontSize = ScreenUtil().setSp(13.0);
+  double labelsFontSize = 14.sp;
   int heightInterval = 10;
   late double startDragYOffset;
   late int startDragHeight;
@@ -44,8 +44,9 @@ class _HeightPickerState extends State<HeightPicker> {
 
   double get _drawingHeight {
     double totalHeight = widget.widgetHeight;
-    double marginBottom = ScreenUtil().setHeight(16.0);
-    double marginTop = ScreenUtil().setHeight(29.0);
+    double marginBottom = 16.h;
+    //TODO
+    double marginTop = 32.h;
     return totalHeight - (marginBottom + marginTop + labelsFontSize);
   }
 
@@ -69,7 +70,7 @@ class _HeightPickerState extends State<HeightPicker> {
 
   Widget _drawBackgroundDoor() {
     return Align(
-      alignment: Alignment.center,
+      alignment: Alignment.center, //TODO
       child: Image(
         image: AssetImage("assets/images/height_door.png"),
         fit: BoxFit.contain,
@@ -90,7 +91,7 @@ class _HeightPickerState extends State<HeightPicker> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-          width: MediaQuery.of(context).size.width * 0.5,
+          width: 0.5.sw,
           child: RaisedButton(
             child: Text(
               "DONE",
@@ -104,44 +105,6 @@ class _HeightPickerState extends State<HeightPicker> {
           )),
     );
   }
-
-/**
- Maybe for the future
-  Widget _drawLabels() {
-    int labelsToDisplay = widget.totalUnits ~/ heightInterval + 1;
-    List<Widget> labels = List.generate(
-      labelsToDisplay,
-      (idx) {
-        int val = widget.maxHeight - heightInterval * idx;
-        if (val < 80) {
-          return Text("");
-        } else {
-          return Text(
-            val.toString(),
-            style: TextStyle(
-                color: AppColors.soulAccent, fontSize: labelsFontSize),
-          );
-        }
-      },
-    );
-
-    return Align(
-      alignment: Alignment.centerRight,
-      child: IgnorePointer(
-        child: Padding(
-          padding: EdgeInsets.only(
-            right: screenAwareSizeH(12.0, context),
-            bottom: marginBottomAdapted(context),
-            top: marginTopAdapted(context),
-          ),
-          child: Column(
-            children: labels,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          ),
-        ),
-      ),
-    );
-  }*/
 
   _onTapDown(TapDownDetails tapDownDetails) {
     int height = _globalOffsetToHeight(tapDownDetails.globalPosition);
@@ -158,7 +121,7 @@ class _HeightPickerState extends State<HeightPicker> {
     RenderBox getBox = context.findRenderObject() as RenderBox;
     Offset localPosition = getBox.globalToLocal(globalOffset);
     double dy = localPosition.dy;
-    dy = dy - ScreenUtil().setHeight(29.0) - labelsFontSize / 2;
+    dy = dy - (32.h) - (labelsFontSize / 2);
     int height = widget.maxHeight - (dy ~/ _pixelsPerUnit);
     return height;
   }

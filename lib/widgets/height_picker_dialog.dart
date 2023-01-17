@@ -22,15 +22,15 @@ class HeightPickerDialogState extends State<HeightPickerDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16.0))),
+          borderRadius: BorderRadius.all(Radius.circular(12.0))),
       child: Container(
-        height: ScreenUtil().screenHeight * 0.75,
-        width: ScreenUtil().screenWidth * 0.75,
+        height: 0.75.sh,
+        width: 0.75.sw,
         decoration: BoxDecoration(
             color: Colors.grey[200],
             borderRadius: BorderRadius.all(Radius.circular(10.0))),
         child: Padding(
-          padding: EdgeInsets.only(top: ScreenUtil().setHeight(16.0)),
+          padding: EdgeInsets.only(top: 16.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -40,7 +40,7 @@ class HeightPickerDialogState extends State<HeightPickerDialog> {
                   )),
               Text("approximate your height against the door.",
                   style: TextStyle(
-                    fontSize: ScreenUtil().setSp(13.0),
+                    fontSize: 14.sp,
                     color: Colors.grey,
                     fontWeight: FontWeight.w300,
                   )),

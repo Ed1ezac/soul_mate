@@ -72,11 +72,9 @@ class UserSignUp extends State<SignUp> {
                             labelStyle: labelStyle,
                             focusedBorder: focusedBorder,
                             enabledBorder: enabledBorder,
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 18.h, horizontal: 4.w),
                             prefixIcon: Icon(
                               Icons.mail_outline,
-                              color: AppColors.soulPrimaryLight,
+                              color: AppColors.soulPrimary,
                             ),
                           ),
                         ),
@@ -91,11 +89,9 @@ class UserSignUp extends State<SignUp> {
                             labelStyle: labelStyle,
                             focusedBorder: focusedBorder,
                             enabledBorder: enabledBorder,
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 18.h, horizontal: 4.w),
                             prefixIcon: Icon(
                               Icons.vpn_key,
-                              color: AppColors.soulPrimaryLight,
+                              color: AppColors.soulPrimary,
                             ),
                           ),
                         ),
@@ -110,11 +106,9 @@ class UserSignUp extends State<SignUp> {
                               labelStyle: labelStyle,
                               focusedBorder: focusedBorder,
                               enabledBorder: enabledBorder,
-                              contentPadding: EdgeInsets.symmetric(
-                                  vertical: 18.h, horizontal: 4.w),
                               prefixIcon: Icon(
                                 Icons.vpn_key,
-                                color: AppColors.soulPrimaryLight,
+                                color: AppColors.soulPrimary,
                               )),
                         ),
 

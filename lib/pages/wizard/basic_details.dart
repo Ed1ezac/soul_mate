@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:Soulmate_App/styles.dart';
 import '../../custom_icons_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:Soulmate_App/models/user_basic_details.dart';
+import 'package:Soulmate_App/models/user.dart';
 import 'package:Soulmate_App/widgets/height_picker_dialog.dart';
 
 class BasicDetails extends StatefulWidget {
-  final UserBasicDetails details;
+  final User details;
   BasicDetails({required this.details});
 
   @override
@@ -16,138 +16,107 @@ class BasicDetails extends StatefulWidget {
 }
 
 class BasicDetailsState extends State<BasicDetails> {
-  bool _heightIsEmpty = true, _heightHasError = false, _shouldHideAge = false;
+  bool _heightIsEmpty = true, _heightHasError = false;
   late String _height;
-  late Gender _gender;
-  late Sexuality _sexuality;
   int defaultHeight = 157;
+  bool isDateSelected = false;
+  DateTime birthDate = DateTime.now();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  //late Future<List<String>> _gendersList;
 
   @override
   void initState() {
     super.initState();
-    if (!widget.details.isEmpty()) {
-      _height = widget.details.height.toString();
-      _gender = widget.details.gender;
-      _sexuality = widget.details.sexuality;
-      _shouldHideAge = widget.details.hideAge;
-      _heightIsEmpty = false;
-    }
+    //_gendersList = _getAllGenders();
+    _height = widget.details.height.toString();
+    _heightIsEmpty = widget.details.isEmpty();
   }
 
   @override
   Widget build(BuildContext context) {
-    //double screenHeight = (MediaQuery.of(context).size.height);
-    final EdgeInsets _formFieldPadding = EdgeInsets.symmetric(
-        vertical: 0.0, horizontal: ScreenUtil().setWidth(32.0));
-    final EdgeInsets _formFieldMargin = EdgeInsets.only(
-        top: ScreenUtil().setHeight(8.0), bottom: ScreenUtil().setHeight(8.0));
+    final EdgeInsets _formFieldMargin = EdgeInsets.symmetric(vertical: 8.h);
 
     return Scaffold(
       //backgroundColor: AppColor.soulPrimaryLight,
       appBar: AppBar(
         title: Text("Basics"),
+        backgroundColor: AppColors.soulPrimary,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.check),
-            onPressed: () => _returnORFail(),
+            onPressed: () => _returnOrFail(),
           )
         ],
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.only(
-              left: ScreenUtil().setWidth(8.0),
-              right: ScreenUtil().setWidth(8.0),
-              bottom: ScreenUtil().setHeight(16.0),
+            padding: EdgeInsets.symmetric(
+              horizontal: 24.w,
+              vertical: 12.h,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  padding: _formFieldPadding,
+                  //padding: _formFieldPadding,
                   margin: _formFieldMargin,
                   child: Text(
-                    "Help us get to know you better! Don't worry, most of your " +
+                    "Most of your " +
                         "basic details are private and never shared with anyone.",
                     style: TextStyle(
-                      color: Colors.black,
-                      fontSize: ScreenUtil().setSp(16.0),
-                      fontWeight: FontWeight.w700,
+                      color: Colors.black54,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
+                _gap(),
                 Form(
                   key: _formKey,
                   child: Column(
                     children: <Widget>[
                       //SCREEN NAME
-                      Container(
-                        padding: _formFieldPadding,
-                        margin: _formFieldMargin,
-                        height: ScreenUtil().setHeight(96.0),
-                        child: TextFormField(
-                          autofocus: false,
-                          initialValue: widget.details.name == null
-                              ? ''
-                              : widget.details.name,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (name) => _validateName(name!),
-                          onSaved: (name) => {widget.details.name = name!},
-                          decoration: InputDecoration(
-                            helperMaxLines: 2,
-                            helperText:
-                                "People will see this when they look at your profile or interact with you.",
-                            labelText: "Screen Name/Alias",
-                            labelStyle: TextStyle(color: Colors.grey),
-                            focusColor: AppColors.soulPrimary,
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: AppColors.soulPrimary, width: 2.0),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.person,
-                              color: AppColors.soulPrimary,
-                            ),
+                      TextFormField(
+                        autofocus: false,
+                        initialValue: widget.details.name,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (name) => _validateName(name!),
+                        onSaved: (name) => {widget.details.name = name!},
+                        decoration: InputDecoration(
+                          helperText:
+                              "People will see this when they look at your profile or interact with you.",
+                          labelText: "Screen Name/Alias",
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: AppColors.soulPrimaryLight,
                           ),
                         ),
                       ),
-                      //AGE
-                      Container(
-                        padding: _formFieldPadding,
-                        margin: _formFieldMargin,
-                        height: ScreenUtil().setHeight(96.0),
-                        child: TextFormField(
-                          autofocus: false,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          initialValue: widget.details.age == null
-                              ? ''
-                              : widget.details.age.toString(),
-                          enableInteractiveSelection: false,
-                          validator: (age) => _validateAge(age!),
-                          onSaved: (age) =>
-                              {widget.details.age = int.tryParse(age!)!},
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                            helperMaxLines: 2,
-                            helperText:
-                                "Your age is shown beside your name on your profile. It is public by default.",
-                            labelText: "Age",
-                            labelStyle: TextStyle(color: Colors.grey),
-                            focusColor: AppColors.soulPrimary,
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: AppColors.soulPrimary, width: 2.0),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.cake,
-                              color: AppColors.soulPrimary,
-                            ),
+                      _gap(),
+                      //Birthday / AGE
+                      TextFormField(
+                        autofocus: false,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        initialValue: widget.details.age == 0
+                            ? ''
+                            : widget.details.age.toString(),
+                        enableInteractiveSelection: false,
+                        validator: (age) => _validateAge(age!),
+                        onSaved: (age) =>
+                            {widget.details.age = int.tryParse(age!)!},
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          helperText:
+                              "Your age is shown beside your name on your profile. It is public by default.",
+                          labelText: "Age",
+                          prefixIcon: Icon(
+                            Icons.cake,
+                            color: AppColors.soulPrimaryLight,
                           ),
                         ),
                       ),
-                      Container(
+                      /*Container(
                         padding: _formFieldPadding,
                         margin: EdgeInsets.only(
                             bottom: ScreenUtil().setHeight(10.0)),
@@ -167,117 +136,103 @@ class BasicDetailsState extends State<BasicDetails> {
                             ),
                           ],
                         ),
-                      ),
+                      ),*/
+                      _gap(),
                       //GENDER
-                      Container(
-                        padding: _formFieldPadding,
-                        margin: _formFieldMargin,
-                        height: ScreenUtil().setHeight(90.0),
-                        child: DropdownButtonFormField<Gender>(
-                          value: _gender,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          onTap: () {
-                            FocusScope.of(context)
-                                .requestFocus(new FocusNode());
-                          },
-                          validator: (_gender) => _validateGender(_gender!),
-                          onSaved: (_gender) =>
-                              {widget.details.gender = _gender!},
-                          decoration: InputDecoration(
-                            helperText: "This is private.",
-                            labelText: "Gender",
-                            prefixIcon: Icon(
-                              CustomIcons.transgender_alt, //puzzle_piece
-                              color: AppColors.soulPrimary,
-                            ),
+                      DropdownButtonFormField<String>(
+                        value: widget.details.gender,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        onTap: () {
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                        },
+                        validator: (gender) => _validateGender(gender!),
+                        onSaved: (gender) => {widget.details.gender = gender!},
+                        decoration: InputDecoration(
+                          helperText: "This is private.",
+                          labelText: "Gender",
+                          prefixIcon: Icon(
+                            CustomIcons.transgender_alt, //puzzle_piece
+                            color: AppColors.soulPrimaryLight,
                           ),
-                          items: <DropdownMenuItem<Gender>>[
-                            DropdownMenuItem(
-                              value: Gender.Male,
-                              child: Text("Male"),
-                            ),
-                            DropdownMenuItem(
-                              value: Gender.Female,
-                              child: Text("Female"),
-                            ),
-                            DropdownMenuItem(
-                              value: Gender.Transgender,
-                              child: Text("Transgender"),
-                            ),
-                            DropdownMenuItem(
-                              value: Gender.GenderNeutral,
-                              child: Text("Gender Neutral"),
-                            ),
-                          ],
-                          onChanged: (Gender? value) {
-                            setState(() {
-                              _gender = value!;
-                            });
-                          },
                         ),
+                        items: <DropdownMenuItem<String>>[
+                          DropdownMenuItem(
+                            value: "Male",
+                            child: Text("Male"),
+                          ),
+                          DropdownMenuItem(
+                            value: "Female",
+                            child: Text("Female"),
+                          ),
+                          DropdownMenuItem(
+                            value: "Transgender",
+                            child: Text("Transgender"),
+                          ),
+                          DropdownMenuItem(
+                            value: "Gender Neutral",
+                            child: Text("Gender Neutral"),
+                          ),
+                        ],
+                        onChanged: (String? value) {
+                          setState(() {
+                            widget.details.gender = value!;
+                          });
+                        },
                       ),
+                      _gap(),
                       //SEXUALITY
-                      Container(
-                        padding: _formFieldPadding,
-                        margin: _formFieldMargin,
-                        height: ScreenUtil().setHeight(90.0),
-                        child: DropdownButtonFormField<Sexuality>(
-                          value: _sexuality,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          onTap: () {
-                            FocusScope.of(context)
-                                .requestFocus(new FocusNode());
-                          },
-                          validator: (_sexuality) =>
-                              _validateSexuality(_sexuality!),
-                          onSaved: (_sexuality) =>
-                              {widget.details.sexuality = _sexuality!},
-                          decoration: InputDecoration(
-                            helperText: "This is private.",
-                            labelText: "Sexual Orientation",
-                            prefixIcon: Icon(
-                              Icons.group, //CustomIcons.puzzle_piece,
-                              color: AppColors.soulPrimary,
-                            ),
+                      DropdownButtonFormField<String>(
+                        value: widget.details.sexuality,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        onTap: () {
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                        },
+                        validator: (sexuality) =>
+                            _validateSexuality(sexuality!),
+                        onSaved: (sexuality) =>
+                            {widget.details.sexuality = sexuality!},
+                        decoration: InputDecoration(
+                          helperText: "This is private.",
+                          labelText: "Sexual Orientation",
+                          prefixIcon: Icon(
+                            Icons.group, //CustomIcons.puzzle_piece,
+                            color: AppColors.soulPrimaryLight,
                           ),
-                          items: <DropdownMenuItem<Sexuality>>[
-                            DropdownMenuItem(
-                              value: Sexuality.Heterosexual,
-                              child: Text("Heterosexual"),
-                            ),
-                            DropdownMenuItem(
-                              value: Sexuality.Homosexual,
-                              child: Text("Homosexual"),
-                            ),
-                            DropdownMenuItem(
-                              value: Sexuality.Bisexual,
-                              child: Text("Bisexual"),
-                            ),
-                            DropdownMenuItem(
-                              value: Sexuality.Other,
-                              child: Text("Other"),
-                            ),
-                          ],
-                          onChanged: (Sexuality? value) {
-                            setState(() {
-                              _sexuality = value!;
-                            });
-                          },
                         ),
+                        items: <DropdownMenuItem<String>>[
+                          DropdownMenuItem(
+                            value: "Heterosexual",
+                            child: Text("Heterosexual"),
+                          ),
+                          DropdownMenuItem(
+                            value: "Homosexual",
+                            child: Text("Homosexual"),
+                          ),
+                          DropdownMenuItem(
+                            value: "Bisexual",
+                            child: Text("Bisexual"),
+                          ),
+                          DropdownMenuItem(
+                            value: "Other",
+                            child: Text("Other"),
+                          ),
+                        ],
+                        onChanged: (String? value) {
+                          setState(() {
+                            widget.details.sexuality = value!;
+                          });
+                        },
                       ),
+                      _gap(),
                       //HEIGHT
-                      Container(
-                        padding: _formFieldPadding,
-                        margin: _formFieldMargin,
-                        height: ScreenUtil().setHeight(96.0),
-                        child: GestureDetector(
-                            onTap: () {
-                              FocusScope.of(context)
-                                  .requestFocus(new FocusNode());
-                              _showHeightPickerDialog(context);
-                            },
-                            child: _buildHeightWidget(_heightHasError)),
+                      GestureDetector(
+                        onTap: () {
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          _showHeightPickerDialog(context);
+                        },
+                        child: _buildHeightWidget(_heightHasError),
                       ),
+                      _gap(),
                     ],
                   ),
                 ),
@@ -286,6 +241,17 @@ class BasicDetailsState extends State<BasicDetails> {
           ),
         ),
       ),
+    );
+  }
+
+  /*Future<List<String>> _getAllGenders() async {
+    //List<Map<String, Object?>> raw = await localProvider.getEventTypes();
+    //return List.generate(raw.length, (index) => EventType.fromMap(raw[index]));
+  }*/
+
+  Widget _gap() {
+    return SizedBox(
+      height: 32.h,
     );
   }
 
@@ -299,9 +265,10 @@ class BasicDetailsState extends State<BasicDetails> {
         decoration: InputDecoration(
           errorText: "height is required",
           labelText: "Height",
+          contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 4.w),
           prefixIcon: Icon(
             Icons.format_line_spacing,
-            color: AppColors.soulPrimary,
+            color: AppColors.soulPrimaryLight,
           ),
         ),
       );
@@ -312,23 +279,46 @@ class BasicDetailsState extends State<BasicDetails> {
         isEmpty: _heightIsEmpty,
         child: getHeightText(),
         decoration: InputDecoration(
-          helperMaxLines: 2,
           helperText: "This is shown publicly on your profile.",
           labelText: "Height",
+          contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 4.w),
           prefixIcon: Icon(
             Icons.format_line_spacing,
-            color: AppColors.soulPrimary,
+            color: AppColors.soulPrimaryLight,
           ),
         ),
       );
     }
   }
 
+  Widget _buildBirthDateWidget() {
+    return GestureDetector(
+      child: Container(),
+      onTap: () async {
+        final pickedDate = await showDatePicker(
+          context: context,
+          initialDate: new DateTime.now(),
+          firstDate: new DateTime(1920),
+          lastDate: new DateTime(2100),
+        );
+        if (pickedDate != null && pickedDate != birthDate) {
+          setState(() {
+            birthDate = pickedDate;
+            isDateSelected = true;
+            //
+            String birthDateString =
+                "${birthDate.day}/${birthDate.month}/${birthDate.year}";
+          });
+        }
+      },
+    );
+  }
+
   void _showHeightPickerDialog(BuildContext context) async {
     int pickedHeight = await showDialog(
         context: context,
         builder: (BuildContext context) => HeightPickerDialog(
-              height: _height == null ? defaultHeight : int.tryParse(_height)!,
+              height: _height == "0" ? defaultHeight : int.tryParse(_height)!,
             ));
     if (pickedHeight != null) {
       setState(() {
@@ -339,19 +329,19 @@ class BasicDetailsState extends State<BasicDetails> {
   }
 
   Widget? getHeightText() {
-    if (_height != null) {
+    if (!widget.details.isEmpty() || !(_height == "0")) {
       return Text(
         _height + " cm",
-        style: TextStyle(fontSize: ScreenUtil().setSp(16.0)),
+        style: TextStyle(fontSize: 16.sp),
       );
     }
     return null;
   }
 
   String? _validateName(String value) {
-    if (value.isEmpty) return "screen name is required";
-    if (value.length > 40) return "screen name is too long";
-    return value.length < 3 ? "screen name is too short" : null;
+    if (value.isEmpty) return "A name is required";
+    if (value.length > 40) return "Name is too long";
+    return value.length < 3 ? "Name is too short" : null;
   }
 
   String? _validateAge(String value) {
@@ -368,20 +358,22 @@ class BasicDetailsState extends State<BasicDetails> {
     return null;
   }
 
-  String? _validateGender(Gender value) {
-    return (value == null) ? "your gender is required" : null;
+  String? _validateGender(String value) {
+    return (value.isEmpty) ? "your gender is required" : null;
   }
 
-  String? _validateSexuality(Sexuality value) {
-    return (value == null) ? "your sexuality is required" : null;
+  String? _validateSexuality(String value) {
+    return (value.isEmpty) ? "your sexuality is required" : null;
   }
 
-  void _returnORFail() {
+  void _returnOrFail() {
     if (formIsValid()) {
       //save the formstate and all
       _formKey.currentState!.save();
       widget.details.height = int.tryParse(_height)!;
-      widget.details.hideAge = _shouldHideAge;
+
+      print("${widget.details.name}");
+
       Navigator.pop(context, widget.details);
     }
   }
@@ -394,7 +386,7 @@ class BasicDetailsState extends State<BasicDetails> {
   }
 
   bool _validateHeight(String value) {
-    if (value == null || value.isEmpty) {
+    if (value == "0" || value.isEmpty) {
       setState(() {
         _heightHasError = true;
       });

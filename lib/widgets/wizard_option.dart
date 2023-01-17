@@ -1,31 +1,28 @@
-import 'package:Soulmate_App/models/user_basic_details.dart';
-import 'package:Soulmate_App/models/user_habits_and_interests.dart';
-import 'package:Soulmate_App/models/user_personality.dart';
 import 'package:flutter/material.dart';
 import 'package:Soulmate_App/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:Soulmate_App/pages/wizard/basic_details.dart';
 import 'package:Soulmate_App/widgets/wizard_option_drawing.dart';
 import 'package:Soulmate_App/pages/wizard/personality_details.dart';
-import 'package:Soulmate_App/pages/wizard/habits_and_interests.dart';
+import 'package:Soulmate_App/pages/wizard/interest_selection.dart';
 
 class WizardOption extends StatefulWidget {
   final int position;
   final OptionState state;
-  final Object thisObject;
   final Function(int) notifyParent;
   final ValueChanged<Object> onObjectChange;
   final ValueChanged<OptionState> onStateChange;
+  final dynamic wizardObject;
   final double _activeElevation = 9.0,
       _completeElevation = 4.0,
       _inactiveElevation = 2.0;
 
   WizardOption({
-    required this.thisObject,
     required this.notifyParent,
     required this.onStateChange,
     required this.onObjectChange,
     required this.position,
+    required this.wizardObject,
     this.state = OptionState.INACTIVE,
   });
 
@@ -40,7 +37,7 @@ class WizardOptionState extends State<WizardOption>
   late double startElevation, endElevation;
   late Animation<double> _elevationAnimation;
   late AnimationController _elevationAnimationController;
-  late double _widgetHeight; //= ScreenUtil().setHeight(140.0, context);
+  late double _widgetHeight;
 
   @override
   void dispose() {
@@ -50,7 +47,7 @@ class WizardOptionState extends State<WizardOption>
 
   @override
   Widget build(BuildContext context) {
-    _widgetHeight = ScreenUtil().setHeight(110.0);
+    _widgetHeight = 110.h;
     configureAnimations();
     return optionCard(context);
   }
@@ -61,21 +58,43 @@ class WizardOptionState extends State<WizardOption>
       vsync: this,
     );
     determineElevationParams();
-    _elevationAnimation = Tween(begin: startElevation, end: endElevation)
-        .animate(CurvedAnimation(
-            parent: _elevationAnimationController,
-            curve: Interval(0.0, 0.75, curve: Curves.elasticIn)));
+    _elevationAnimation =
+        Tween(begin: startElevation, end: endElevation).animate(
+      CurvedAnimation(
+        parent: _elevationAnimationController,
+        curve: Interval(
+          0.0,
+          0.75,
+          curve: Curves.elasticIn,
+        ),
+      ),
+    );
     _heightAnimation = Tween(
-            begin: ScreenUtil().setHeight(110.0),
-            end: ScreenUtil().setHeight(120.0))
-        .animate(CurvedAnimation(
-            parent: _elevationAnimationController,
-            curve: Interval(0.7, 1.0, curve: Curves.easeIn)));
+      begin: 110.h,
+      end: 120.h,
+    ).animate(
+      CurvedAnimation(
+        parent: _elevationAnimationController,
+        curve: Interval(
+          0.7,
+          1.0,
+          curve: Curves.easeIn,
+        ),
+      ),
+    );
     _paddingAnimation = Tween(
-            begin: ScreenUtil().setWidth(8.0), end: ScreenUtil().setWidth(0.0))
-        .animate(CurvedAnimation(
-            parent: _elevationAnimationController,
-            curve: Interval(0.8, 1.0, curve: Curves.easeIn)));
+      begin: 8.w,
+      end: 0.0,
+    ).animate(
+      CurvedAnimation(
+        parent: _elevationAnimationController,
+        curve: Interval(
+          0.8,
+          1.0,
+          curve: Curves.easeIn,
+        ),
+      ),
+    );
 
     if (widget.state == OptionState.COMPLETE) {
       _elevationAnimationController.reverse();
@@ -122,25 +141,21 @@ class WizardOptionState extends State<WizardOption>
 
   EdgeInsets _getWidgetMargin() {
     if (widget.position == 1) {
-      return EdgeInsets.only(top: ScreenUtil().setHeight(8.0));
+      return EdgeInsets.only(top: 8.h);
     } else {
-      return EdgeInsets.only(top: ScreenUtil().setHeight(16.0));
+      return EdgeInsets.only(top: 16.h);
     }
   }
 
   Widget compactOptionCard() {
-    final overlap = widget.state == OptionState.COMPLETE
-        ? ScreenUtil().setWidth(20.0)
-        : ScreenUtil().setWidth(20.0);
+    final overlap = 20.w; //widget.state == OptionState.COMPLETE
+    //? ScreenUtil().setWidth(20.w)
+    //: ScreenUtil().setWidth(20.0);
     final items = [
       mainCard(),
       Container(
-          height: widget.state == OptionState.COMPLETE
-              ? ScreenUtil().setWidth(54.0)
-              : ScreenUtil().setWidth(52.0), //53
-          width: widget.state == OptionState.COMPLETE
-              ? ScreenUtil().setWidth(53.0)
-              : ScreenUtil().setWidth(48.0), //56
+          height: widget.state == OptionState.COMPLETE ? 54.w : 52.w, //53
+          width: widget.state == OptionState.COMPLETE ? 53.w : 48.w, //56
           child: widget.state == OptionState.COMPLETE
               ? circleWithIcon()
               : circleWithNumber()),
@@ -167,7 +182,7 @@ class WizardOptionState extends State<WizardOption>
               color: widget.state == OptionState.ACTIVE
                   ? (AppColors.soulPrimary)
                   : Colors.grey,
-              fontSize: ScreenUtil().setSp(18.0),
+              fontSize: 18.sp,
               fontWeight: FontWeight.bold),
         ),
       ),
@@ -177,19 +192,14 @@ class WizardOptionState extends State<WizardOption>
   Widget circleWithIcon() {
     return Card(
       color: AppColors.soulAccentDark,
-      shape: CircleBorder(), //(side: BorderSide(color: Colors.grey)),
-      //elevation: _activeElevation,
+      shape: CircleBorder(),
       child: Center(
-        child: Icon(Icons.check,
-            size: ScreenUtil().setWidth(18.0), color: Colors.white),
+        child: Icon(Icons.check, size: 18.w, color: Colors.white),
       ),
     );
   }
 
   Widget mainCard() {
-    /*if (widget.state == OptionState.ACTIVE) {
-      _widgetHeight = 150.0;
-    }*/
     return Card(
       elevation: _elevationAnimation.value, //getOptionElevation(),
       shape: widget.state == OptionState.COMPLETE
@@ -199,11 +209,7 @@ class WizardOptionState extends State<WizardOption>
               colored: true)
           : WizardOptionBorder(),
       child: Container(
-        padding: EdgeInsets.fromLTRB(
-            ScreenUtil().setWidth(36.0),
-            ScreenUtil().setHeight(16.0),
-            ScreenUtil().setWidth(16.0),
-            ScreenUtil().setWidth(16.0)),
+        padding: EdgeInsets.fromLTRB(36.w, 16.w, 16.w, 16.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -215,7 +221,7 @@ class WizardOptionState extends State<WizardOption>
                 Text(
                   getOptionTitle(), //title
                   style: TextStyle(
-                      fontSize: ScreenUtil().setSp(18.0),
+                      fontSize: 18.sp,
                       color: getOptionTextColor(),
                       fontWeight: FontWeight.w600),
                 ),
@@ -267,7 +273,7 @@ class WizardOptionState extends State<WizardOption>
       case 2:
         return "Personality";
       case 3:
-        return "Habits & Interests";
+        return "Interests";
       default:
         return "";
     }
@@ -278,7 +284,7 @@ class WizardOptionState extends State<WizardOption>
       case 1:
         return "Basic details about you";
       case 2:
-        return "The kind of person you are";
+        return "The type of person you are";
       case 3:
         return "Things you find interesting";
       default:
@@ -289,42 +295,25 @@ class WizardOptionState extends State<WizardOption>
   Widget getOptionAction(OptionState state) {
     switch (state) {
       case OptionState.ACTIVE:
-        return InkWell(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-          onTap: () => executeAction(),
-          child: Container(
-            padding: EdgeInsets.symmetric(
-                vertical: ScreenUtil().setHeight(6.0),
-                horizontal: ScreenUtil().setWidth(6.0)),
-            child: Text(
-              "Start",
-              style: TextStyle(
-                  fontSize: ScreenUtil().setSp(14.0),
-                  color: AppColors.soulPrimaryDark,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
-        );
       case OptionState.COMPLETE:
         return InkWell(
-          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+          borderRadius: BorderRadius.all(Radius.circular(5.w)),
           onTap: () => executeAction(),
           child: Container(
-            padding: EdgeInsets.symmetric(
-                vertical: ScreenUtil().setHeight(6.0),
-                horizontal: ScreenUtil().setWidth(6.0)),
+            padding: EdgeInsets.symmetric(vertical: 6.w, horizontal: 6.w),
             child: Text(
-              "Edit",
+              state == OptionState.ACTIVE ? "Start" : "Edit",
               style: TextStyle(
-                  fontSize: ScreenUtil().setSp(14.0),
-                  color: AppColors.soulAccent,
+                  fontSize: 14.sp,
+                  color: state == OptionState.ACTIVE
+                      ? AppColors.soulPrimaryDark
+                      : AppColors.soulAccent,
                   fontWeight: FontWeight.w600),
             ),
           ),
         );
       case OptionState.INACTIVE:
-        return Icon(Icons.lock,
-            size: ScreenUtil().setWidth(18.0), color: Colors.grey);
+        return Icon(Icons.lock, size: 8.w, color: Colors.grey);
       default:
         throw new Exception("invalid state for this option.");
     }
@@ -333,58 +322,29 @@ class WizardOptionState extends State<WizardOption>
   void executeAction() {
     switch (widget.position) {
       case 1:
-        openBasicsForm();
+        openForm(BasicDetails(
+          details: widget.wizardObject,
+        ));
         break;
       case 2:
-        openPersonalityForm();
+        openForm(PersonalityDetails(
+          personality: widget.wizardObject,
+        ));
         break;
       case 3:
-        openInterestsForm();
+        openForm(InterestSelection(widget.wizardObject));
         break;
       default:
         throw new Exception("invalid index for this option.");
     }
   }
 
-  void openBasicsForm() async {
+  void openForm(Widget formPage) async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
         fullscreenDialog: true,
-        builder: (context) => BasicDetails(
-          details: widget.thisObject as UserBasicDetails,
-        ),
-      ),
-    );
-
-    if (result != null) {
-      _markWidgetAsCompleted(result);
-    }
-  }
-
-  void openPersonalityForm() async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (context) => PersonalityDetails(
-          personality: widget.thisObject as UserPersonality,
-        ),
-      ),
-    );
-
-    if (result != null) {
-      _markWidgetAsCompleted(result);
-    }
-  }
-
-  void openInterestsForm() async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (context) =>
-            HabitsAndInterests(widget.thisObject as UserHabitsAndInterests),
+        builder: (context) => formPage,
       ),
     );
 

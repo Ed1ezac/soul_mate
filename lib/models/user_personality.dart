@@ -1,10 +1,8 @@
 class UserPersonality {
   int extroversion;
-  int extroversionType;
   int loveExpression;
 
-  UserPersonality(
-      this.extroversion, this.extroversionType, this.loveExpression);
+  UserPersonality(this.extroversion, this.loveExpression);
 
   @override
   String toString() {
@@ -12,13 +10,12 @@ class UserPersonality {
         extroversion.toString() +
         "\n"
             "type: " +
-        extroversionType.toString() +
         "\n"
             "love: " +
         loveExpression.toString();
   }
 
   bool isEmpty() {
-    return extroversion < 0 && extroversionType < 0 && loveExpression < 0;
+    return extroversion < 0 && loveExpression < 0;
   }
 }

@@ -14,7 +14,7 @@ class PersonalityDetails extends StatefulWidget {
 
 class PersonalityDetailsState extends State<PersonalityDetails> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  late int selectedExtroversion = 1, selectedExtroversionType;
+  late int selectedExtroversion = 1;
   late int selectedLoveExpression;
   bool isExtrovert = false;
   String extroversion = "introvert";
@@ -25,10 +25,9 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
     super.initState();
     if (!widget.personality.isEmpty()) {
       selectedExtroversion = widget.personality.extroversion;
-      selectedExtroversionType = widget.personality.extroversionType;
       selectedLoveExpression = widget.personality.loveExpression;
 
-      if (selectedExtroversion % 2 == 0) {
+      if (selectedExtroversion == 2) {
         isExtrovert = true;
         extroversion = "extrovert";
       }
@@ -41,10 +40,11 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Personality"),
+        backgroundColor: AppColors.soulPrimary,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.check),
-            onPressed: () => _returnORFail(context),
+            onPressed: () => _returnOrFail(context),
           ),
         ],
       ),
@@ -53,23 +53,18 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
           children: <Widget>[
             Expanded(
               child: ListView(
-                padding: EdgeInsets.symmetric(
-                    vertical: ScreenUtil().setHeight(16.0)),
+                padding: EdgeInsets.symmetric(vertical: 16.h),
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(
-                        top: ScreenUtil().setHeight(8.0),
-                        bottom: ScreenUtil().setHeight(8.0),
-                        left: ScreenUtil().setWidth(32.0),
-                        right: ScreenUtil().setWidth(16.0)),
+                        top: 8.h, bottom: 8.h, left: 32.w, right: 16.w),
                     child: Text(
-                      "Your personality is modelled using two aspects, your intro/extro-version and your love" +
-                          " expression. The first aspect is shown publicly on your profile while the second can only" +
-                          " be seen by your matches. While you may possess traits asscociated with most options, you" +
-                          " are required to choose the one option that closely describes you.",
+                      "Your personality is modelled using two aspects, your" +
+                          " Introversion/Extroversion and your Affection Trait. The first aspect" +
+                          " is shown on your profile while the second can only be seen" +
+                          " by your matches. Please choose the option that closely describes you.",
                       style: TextStyle(
-                          fontSize: ScreenUtil().setSp(16.0),
-                          fontWeight: FontWeight.w700),
+                          fontSize: 16.sp, fontWeight: FontWeight.w600),
                     ),
                   ),
                   RadioListTile(
@@ -85,7 +80,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                     selected: !isExtrovert,
                   ),
                   Divider(
-                    indent: ScreenUtil().setWidth(32.0),
+                    indent: 32.w,
                   ),
                   RadioListTile(
                     value: PersonalityUtils.EXTROVERT,
@@ -99,46 +94,28 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                     activeColor: AppColors.soulPrimary,
                     selected: isExtrovert,
                   ),
-                  Divider(
-                    indent: ScreenUtil().setWidth(32.0),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(32.0)),
-                    child: Text(
-                      "Type of $extroversion",
-                      style: TextStyle(
-                          fontSize: (18.0), fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  isExtrovert
-                      ? extrovertTypeRadioGroup()
-                      : introvertTypeRadioGroup(),
                   Divider(),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Container(
                         alignment: Alignment.centerLeft,
-                        margin: EdgeInsets.symmetric(
-                            horizontal: ScreenUtil().setWidth(32.0)),
+                        margin: EdgeInsets.symmetric(horizontal: 32.w),
                         child: Text(
-                          "Love Expression",
+                          "Affection Trait",
                           style: TextStyle(
-                              fontSize: ScreenUtil().setSp(18.0),
-                              fontWeight: FontWeight.w600),
+                              fontSize: 18.sp, fontWeight: FontWeight.w600),
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(
-                            left: ScreenUtil().setWidth(32.0),
-                            right: ScreenUtil().setWidth(16.0),
-                            bottom: ScreenUtil().setHeight(8.0)),
+                            left: 32.w, right: 16.w, bottom: 8.h),
                         child: Text(
-                          "A love expression is the way someone expresses love. Out of the five expressions," +
-                              " one is always more dominant for each individual. Learning yours and your" +
-                              " partner's love expression can help create a stronger bond in your relationship.",
+                          "An affection trait is the way someone prefers to receive and show their love. Out of" +
+                              " the five traits, one is always more dominant for each individual. Knowing" +
+                              " yours and your date's trait can help create a stronger bond.",
                           style: TextStyle(
-                            fontSize: ScreenUtil().setSp(15.0),
+                            fontSize: 16.sp,
                             color: Theme.of(context).hintColor,
                           ),
                         ),
@@ -151,14 +128,14 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                     title: Text(PersonalityUtils.GIFTING_TITLE),
                     subtitle: Text(PersonalityUtils.GIFTING_TIP),
                     onChanged: (val) {
-                      setSelectedRadioTile(val, 3);
+                      setSelectedRadioTile(val, 2);
                     },
                     activeColor: AppColors.soulPrimary,
                     selected:
                         selectedLoveExpression == PersonalityUtils.GIFTING,
                   ),
                   Divider(
-                    indent: ScreenUtil().setWidth(32.0),
+                    indent: 32.w,
                   ),
                   RadioListTile(
                     value: PersonalityUtils.HELPFULNESS,
@@ -166,14 +143,14 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                     title: Text(PersonalityUtils.HELPFULNESS_TITLE),
                     subtitle: Text(PersonalityUtils.HELPFULNESS_TIP),
                     onChanged: (val) {
-                      setSelectedRadioTile(val, 3);
+                      setSelectedRadioTile(val, 2);
                     },
                     activeColor: AppColors.soulPrimary,
                     selected:
                         selectedLoveExpression == PersonalityUtils.HELPFULNESS,
                   ),
                   Divider(
-                    indent: ScreenUtil().setWidth(32.0),
+                    indent: 32.w,
                   ),
                   RadioListTile(
                     value: PersonalityUtils.VERBAL_AFFECTION,
@@ -181,14 +158,14 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                     title: Text(PersonalityUtils.VERBAL_AFFECTION_TITLE),
                     subtitle: Text(PersonalityUtils.VERBAL_AFFECTION_TIP),
                     onChanged: (val) {
-                      setSelectedRadioTile(val, 3);
+                      setSelectedRadioTile(val, 2);
                     },
                     activeColor: AppColors.soulPrimary,
                     selected: selectedLoveExpression ==
                         PersonalityUtils.VERBAL_AFFECTION,
                   ),
                   Divider(
-                    indent: ScreenUtil().setWidth(32.0),
+                    indent: 32.w,
                   ),
                   RadioListTile(
                     value: PersonalityUtils.BODILY_AFFECTION,
@@ -196,14 +173,14 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                     title: Text(PersonalityUtils.BODILY_AFFECTION_TITLE),
                     subtitle: Text(PersonalityUtils.BODILY_AFFECTION_TIP),
                     onChanged: (val) {
-                      setSelectedRadioTile(val, 3);
+                      setSelectedRadioTile(val, 2);
                     },
                     activeColor: AppColors.soulPrimary,
                     selected: selectedLoveExpression ==
                         PersonalityUtils.BODILY_AFFECTION,
                   ),
                   Divider(
-                    indent: ScreenUtil().setWidth(32.0),
+                    indent: 32.w,
                   ),
                   RadioListTile(
                     value: PersonalityUtils.PRIORITIZING_TIME,
@@ -211,7 +188,7 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
                     title: Text(PersonalityUtils.PRIORITIZING_TIME_TITLE),
                     subtitle: Text(PersonalityUtils.PRIORITIZING_TIME_TIP),
                     onChanged: (val) {
-                      setSelectedRadioTile(val, 3);
+                      setSelectedRadioTile(val, 2);
                     },
                     activeColor: AppColors.soulPrimary,
                     selected: selectedLoveExpression ==
@@ -237,155 +214,18 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
         break;
       case 2:
         setState(() {
-          selectedExtroversionType = val;
-        });
-        break;
-      case 3:
-        setState(() {
           selectedLoveExpression = val;
         });
         break;
+      default:
+        throw Exception(
+            "Attempt to update radio selection using invalid group no.");
     }
   }
 
-  Widget introvertTypeRadioGroup() {
-    return Container(
-      margin: EdgeInsets.only(left: ScreenUtil().setWidth(56.0)),
-      child: Column(
-        children: <Widget>[
-          RadioListTile(
-            value: PersonalityUtils.SOCIAL_INTROVERT,
-            groupValue: selectedExtroversionType,
-            title: Text(PersonalityUtils.SOCIAL_INTROVERT_TITLE),
-            subtitle: Text(PersonalityUtils.SOCIAL_INTROVERT_TIP),
-            onChanged: (val) {
-              setSelectedRadioTile(val, 2);
-            },
-            activeColor: AppColors.soulPrimary,
-            selected:
-                selectedExtroversionType == PersonalityUtils.SOCIAL_INTROVERT,
-          ),
-          Divider(
-            indent: ScreenUtil().setWidth(64.0),
-          ),
-          RadioListTile(
-            value: PersonalityUtils.THINKING_INTROVERT,
-            groupValue: selectedExtroversionType,
-            title: Text(PersonalityUtils.THINKING_INTROVERT_TITLE),
-            subtitle: Text(PersonalityUtils.THINKING_INTROVERT_TIP),
-            onChanged: (val) {
-              setSelectedRadioTile(val, 2);
-            },
-            activeColor: AppColors.soulPrimary,
-            selected:
-                selectedExtroversionType == PersonalityUtils.THINKING_INTROVERT,
-          ),
-          Divider(
-            indent: ScreenUtil().setWidth(64.0),
-          ),
-          RadioListTile(
-            value: PersonalityUtils.ANXIOUS_INTROVERT,
-            groupValue: selectedExtroversionType,
-            title: Text(PersonalityUtils.ANXIOUS_INTROVERT_TITLE),
-            subtitle: Text(PersonalityUtils.ANXIOUS_INTROVERT_TIP),
-            onChanged: (val) {
-              setSelectedRadioTile(val, 2);
-            },
-            activeColor: AppColors.soulPrimary,
-            selected:
-                selectedExtroversionType == PersonalityUtils.ANXIOUS_INTROVERT,
-          ),
-          Divider(
-            indent: ScreenUtil().setWidth(64.0),
-          ),
-          RadioListTile(
-            value: PersonalityUtils.RESTRAINED_INTROVERT,
-            groupValue: selectedExtroversionType,
-            title: Text(PersonalityUtils.RESTRAINED_INTROVERT_TITLE),
-            subtitle: Text(PersonalityUtils.RESTRAINED_INTROVERT_TIP),
-            onChanged: (val) {
-              setSelectedRadioTile(val, 2);
-            },
-            activeColor: AppColors.soulPrimary,
-            selected: selectedExtroversionType ==
-                PersonalityUtils.RESTRAINED_INTROVERT,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget extrovertTypeRadioGroup() {
-    return Container(
-      margin: EdgeInsets.only(left: ScreenUtil().setWidth(56.0)),
-      child: Column(
-        children: <Widget>[
-          RadioListTile(
-            value: PersonalityUtils.EXTROVERTED_FEELER,
-            groupValue: selectedExtroversionType,
-            title: Text(PersonalityUtils.EXTROVERTED_FEELER_TITLE),
-            subtitle: Text(PersonalityUtils.EXTROVERTED_FEELER_TIP),
-            onChanged: (val) {
-              setSelectedRadioTile(val, 2);
-            },
-            activeColor: AppColors.soulPrimary,
-            selected:
-                selectedExtroversionType == PersonalityUtils.EXTROVERTED_FEELER,
-          ),
-          Divider(
-            indent: ScreenUtil().setWidth(64.0),
-          ),
-          RadioListTile(
-            value: PersonalityUtils.EXTROVERTED_SENSORS,
-            groupValue: selectedExtroversionType,
-            title: Text(PersonalityUtils.EXTROVERTED_SENSORS_TITLE),
-            subtitle: Text(PersonalityUtils.EXTROVERTED_SENSORS_TIP),
-            onChanged: (val) {
-              setSelectedRadioTile(val, 2);
-            },
-            activeColor: AppColors.soulPrimary,
-            selected: selectedExtroversionType ==
-                PersonalityUtils.EXTROVERTED_SENSORS,
-          ),
-          Divider(
-            indent: ScreenUtil().setWidth(64.0),
-          ),
-          RadioListTile(
-            value: PersonalityUtils.EXTROVERTED_THINKERS,
-            groupValue: selectedExtroversionType,
-            title: Text(PersonalityUtils.EXTROVERTED_THINKERS_TITLE),
-            subtitle: Text(PersonalityUtils.EXTROVERTED_THINKERS_TIP),
-            onChanged: (val) {
-              setSelectedRadioTile(val, 2);
-            },
-            activeColor: AppColors.soulPrimary,
-            selected: selectedExtroversionType ==
-                PersonalityUtils.EXTROVERTED_THINKERS,
-          ),
-          Divider(
-            indent: ScreenUtil().setWidth(64.0),
-          ),
-          RadioListTile(
-            value: PersonalityUtils.EXTROVERTED_INTUITORS,
-            groupValue: selectedExtroversionType,
-            title: Text(PersonalityUtils.EXTROVERTED_INTUITORS_TITLE),
-            subtitle: Text(PersonalityUtils.EXTROVERTED_INTUITORS_TIP),
-            onChanged: (val) {
-              setSelectedRadioTile(val, 2);
-            },
-            activeColor: AppColors.soulPrimary,
-            selected: selectedExtroversionType ==
-                PersonalityUtils.EXTROVERTED_INTUITORS,
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _returnORFail(BuildContext context) {
+  void _returnOrFail(BuildContext context) {
     if (_isValid(context)) {
       widget.personality.extroversion = selectedExtroversion;
-      widget.personality.extroversionType = selectedExtroversionType;
       widget.personality.loveExpression = selectedLoveExpression;
       Navigator.pop(context, widget.personality);
     } else {
@@ -395,29 +235,10 @@ class PersonalityDetailsState extends State<PersonalityDetails> {
 
   bool _isValid(BuildContext context) {
     bool isValid = true;
-
-    if (selectedExtroversionType == null) {
-      //setError
-      errorMessage = "select a type of introvert/extrovert";
-      isValid = false;
-    } else if (isExtrovert && (selectedExtroversionType % 2 != 0)) {
-      //extro selected intro-type
-      errorMessage = "select a type of extrovert";
-      isValid = false;
-    } else if (!isExtrovert && (selectedExtroversionType % 2 != 1)) {
-      //introvert selected extro-type
-      errorMessage = "select a type of introvert";
+    if (selectedLoveExpression < 0) {
+      errorMessage = "please select an affection trait";
       isValid = false;
     }
-    if (selectedLoveExpression == null) {
-      if (!isValid) {
-        errorMessage = errorMessage + "\nselect a love expression";
-      } else {
-        errorMessage = "select a love expression";
-        isValid = false;
-      }
-    }
-
     return isValid;
   }
 

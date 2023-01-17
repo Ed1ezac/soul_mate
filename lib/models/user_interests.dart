@@ -1,8 +1,8 @@
-class UserHabitsAndInterests {
+class UserInterests {
   List<String> habits;
   List<String> interests;
 
-  UserHabitsAndInterests({
+  UserInterests({
     required this.habits,
     required this.interests,
   });

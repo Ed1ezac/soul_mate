@@ -68,7 +68,7 @@ class UserSignIn extends State<SignIn> {
                                 vertical: 18.h, horizontal: 4.w),
                             prefixIcon: Icon(
                               Icons.mail_outline,
-                              color: AppColors.soulPrimaryLight,
+                              color: AppColors.soulPrimary,
                             ),
                           ),
                         ),
@@ -85,7 +85,7 @@ class UserSignIn extends State<SignIn> {
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 18.h, horizontal: 4.w),
                             prefixIcon: Icon(Icons.vpn_key,
-                                color: AppColors.soulPrimaryLight),
+                                color: AppColors.soulPrimary),
                           ),
                         ),
                         Container(

@@ -17,19 +17,27 @@ class BasicDetails extends StatefulWidget {
 
 class BasicDetailsState extends State<BasicDetails> {
   bool _heightIsEmpty = true, _heightHasError = false;
-  late String _height;
+  bool _isDateSelected = false, _birthDayHasError = false;
   int defaultHeight = 157;
-  bool isDateSelected = false;
-  DateTime birthDate = DateTime.now();
+  late String _height, _birthday;
+  late DateTime _birthDate = DateTime.now();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _bithdayErrorText = "";
   //late Future<List<String>> _gendersList;
 
   @override
   void initState() {
     super.initState();
     //_gendersList = _getAllGenders();
-    _height = widget.details.height.toString();
-    _heightIsEmpty = widget.details.isEmpty();
+    _height = widget.details.height < 0 ? "" : widget.details.height.toString();
+    _heightIsEmpty = widget.details.height < 0;
+    _birthday = widget.details.birthday;
+    _isDateSelected = widget.details.birthday.isNotEmpty;
+    if (_birthday.isNotEmpty) {
+      List<String> pieces = _birthday.split('/');
+      _birthDate = new DateTime(
+          int.parse(pieces[2]), int.parse(pieces[1]), int.parse(pieces[0]));
+    }
   }
 
   @override
@@ -37,10 +45,8 @@ class BasicDetailsState extends State<BasicDetails> {
     final EdgeInsets _formFieldMargin = EdgeInsets.symmetric(vertical: 8.h);
 
     return Scaffold(
-      //backgroundColor: AppColor.soulPrimaryLight,
       appBar: AppBar(
         title: Text("Basics"),
-        backgroundColor: AppColors.soulPrimary,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.check),
@@ -95,57 +101,24 @@ class BasicDetailsState extends State<BasicDetails> {
                       ),
                       _gap(),
                       //Birthday / AGE
-                      TextFormField(
-                        autofocus: false,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        initialValue: widget.details.age == 0
-                            ? ''
-                            : widget.details.age.toString(),
-                        enableInteractiveSelection: false,
-                        validator: (age) => _validateAge(age!),
-                        onSaved: (age) =>
-                            {widget.details.age = int.tryParse(age!)!},
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          helperText:
-                              "Your age is shown beside your name on your profile. It is public by default.",
-                          labelText: "Age",
-                          prefixIcon: Icon(
-                            Icons.cake,
-                            color: AppColors.soulPrimaryLight,
-                          ),
-                        ),
+                      GestureDetector(
+                        onTap: () {
+                          FocusScope.of(context).requestFocus(new FocusNode());
+                          _showBirthdatePickerDialog(context);
+                        },
+                        child: _buildBirthdayWidget(_birthDayHasError),
                       ),
-                      /*Container(
-                        padding: _formFieldPadding,
-                        margin: EdgeInsets.only(
-                            bottom: ScreenUtil().setHeight(10.0)),
-                        height: ScreenUtil().setHeight(24.0),
-                        child: Row(
-                          children: <Widget>[
-                            Checkbox(
-                              value: _shouldHideAge,
-                              onChanged: (bool? newValue) {
-                                setState(() {
-                                  _shouldHideAge = newValue!;
-                                });
-                              },
-                            ),
-                            Text(
-                              "Make my age private.",
-                            ),
-                          ],
-                        ),
-                      ),*/
                       _gap(),
                       //GENDER
                       DropdownButtonFormField<String>(
-                        value: widget.details.gender,
+                        value: widget.details.gender.isEmpty
+                            ? null
+                            : widget.details.gender,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         onTap: () {
                           FocusScope.of(context).requestFocus(new FocusNode());
                         },
-                        validator: (gender) => _validateGender(gender!),
+                        validator: (gender) => _validateGender(gender),
                         onSaved: (gender) => {widget.details.gender = gender!},
                         decoration: InputDecoration(
                           helperText: "This is private.",
@@ -182,13 +155,14 @@ class BasicDetailsState extends State<BasicDetails> {
                       _gap(),
                       //SEXUALITY
                       DropdownButtonFormField<String>(
-                        value: widget.details.sexuality,
+                        value: widget.details.sexuality.isEmpty
+                            ? null
+                            : widget.details.sexuality,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         onTap: () {
                           FocusScope.of(context).requestFocus(new FocusNode());
                         },
-                        validator: (sexuality) =>
-                            _validateSexuality(sexuality!),
+                        validator: (sexuality) => _validateSexuality(sexuality),
                         onSaved: (sexuality) =>
                             {widget.details.sexuality = sexuality!},
                         decoration: InputDecoration(
@@ -255,15 +229,28 @@ class BasicDetailsState extends State<BasicDetails> {
     );
   }
 
+  void _showHeightPickerDialog(BuildContext context) async {
+    int pickedHeight = await showDialog(
+        context: context,
+        builder: (BuildContext context) => HeightPickerDialog(
+              height: _height == "" ? defaultHeight : int.tryParse(_height)!,
+            ));
+    if (pickedHeight > 0) {
+      setState(() {
+        _heightIsEmpty = false;
+        _heightHasError = false;
+        _height = pickedHeight.toString();
+      });
+    }
+  }
+
   Widget _buildHeightWidget(bool hasError) {
     if (hasError) {
       return InputDecorator(
-        //style: TextStyle(color: Colors.black),
-        //isFocused: heightFocused,
         isEmpty: _heightIsEmpty,
         child: getHeightText(),
         decoration: InputDecoration(
-          errorText: "height is required",
+          errorText: "your height is required",
           labelText: "Height",
           contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 4.w),
           prefixIcon: Icon(
@@ -274,12 +261,10 @@ class BasicDetailsState extends State<BasicDetails> {
       );
     } else {
       return InputDecorator(
-        //style: TextStyle(color: Colors.black),
-        //isFocused: heightFocused,
         isEmpty: _heightIsEmpty,
         child: getHeightText(),
         decoration: InputDecoration(
-          helperText: "This is shown publicly on your profile.",
+          helperText: "This is shown on your profile.",
           labelText: "Height",
           contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 4.w),
           prefixIcon: Icon(
@@ -291,47 +276,70 @@ class BasicDetailsState extends State<BasicDetails> {
     }
   }
 
-  Widget _buildBirthDateWidget() {
-    return GestureDetector(
-      child: Container(),
-      onTap: () async {
-        final pickedDate = await showDatePicker(
-          context: context,
-          initialDate: new DateTime.now(),
-          firstDate: new DateTime(1920),
-          lastDate: new DateTime(2100),
-        );
-        if (pickedDate != null && pickedDate != birthDate) {
-          setState(() {
-            birthDate = pickedDate;
-            isDateSelected = true;
-            //
-            String birthDateString =
-                "${birthDate.day}/${birthDate.month}/${birthDate.year}";
-          });
-        }
-      },
-    );
+  Widget? getHeightText() {
+    if (_height.isNotEmpty) {
+      return Text(
+        _height + " cm",
+        style: TextStyle(fontSize: 16.sp),
+      );
+    }
+    return null;
   }
 
-  void _showHeightPickerDialog(BuildContext context) async {
-    int pickedHeight = await showDialog(
-        context: context,
-        builder: (BuildContext context) => HeightPickerDialog(
-              height: _height == "0" ? defaultHeight : int.tryParse(_height)!,
-            ));
-    if (pickedHeight != null) {
+  void _showBirthdatePickerDialog(BuildContext context) async {
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _birthDate,
+      firstDate: new DateTime(1920),
+      lastDate: new DateTime.now(),
+    );
+    if (pickedDate != null && pickedDate != _birthDate) {
       setState(() {
-        _heightIsEmpty = false;
-        _height = pickedHeight.toString();
+        _birthDate = pickedDate;
+        _isDateSelected = true;
+        _birthDayHasError = false;
+        _birthday = "${_birthDate.day}/${_birthDate.month}/${_birthDate.year}";
       });
+      _validateBirthday();
     }
   }
 
-  Widget? getHeightText() {
-    if (!widget.details.isEmpty() || !(_height == "0")) {
+  Widget _buildBirthdayWidget(bool hasError) {
+    if (hasError) {
+      return InputDecorator(
+        isEmpty: !_isDateSelected,
+        child: getBirthdayText(),
+        decoration: InputDecoration(
+          errorText: _bithdayErrorText,
+          labelText: "Birthday",
+          contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 4.w),
+          prefixIcon: Icon(
+            Icons.edit_calendar,
+            color: AppColors.soulPrimaryLight,
+          ),
+        ),
+      );
+    } else {
+      return InputDecorator(
+        isEmpty: !_isDateSelected,
+        child: getBirthdayText(),
+        decoration: InputDecoration(
+          helperText: "Private, only used to determine your age.",
+          labelText: "Birthday",
+          contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 4.w),
+          prefixIcon: Icon(
+            Icons.edit_calendar,
+            color: AppColors.soulPrimaryLight,
+          ),
+        ),
+      );
+    }
+  }
+
+  Widget? getBirthdayText() {
+    if (_birthday.isNotEmpty) {
       return Text(
-        _height + " cm",
+        _birthday,
         style: TextStyle(fontSize: 16.sp),
       );
     }
@@ -344,26 +352,14 @@ class BasicDetailsState extends State<BasicDetails> {
     return value.length < 3 ? "Name is too short" : null;
   }
 
-  String? _validateAge(String value) {
-    //valid number, larger than 18, lower than 100
-    if (value.isEmpty) return "your age is required";
-    int valueAsInteger = int.tryParse(value)!;
-    if (valueAsInteger == null) {
-      return "invalid input for age. Enter numbers only.";
-    } else if (valueAsInteger < 18) {
-      return "you are too young to join, must be 18+";
-    } else if (valueAsInteger > 100) {
-      return "sorry, you are too old to join";
-    }
-    return null;
+  String? _validateGender(String? value) {
+    return (value == null || value.isEmpty) ? "your gender is required" : null;
   }
 
-  String? _validateGender(String value) {
-    return (value.isEmpty) ? "your gender is required" : null;
-  }
-
-  String? _validateSexuality(String value) {
-    return (value.isEmpty) ? "your sexuality is required" : null;
+  String? _validateSexuality(String? value) {
+    return (value == null || value.isEmpty)
+        ? "your sexuality is required"
+        : null;
   }
 
   void _returnOrFail() {
@@ -371,18 +367,17 @@ class BasicDetailsState extends State<BasicDetails> {
       //save the formstate and all
       _formKey.currentState!.save();
       widget.details.height = int.tryParse(_height)!;
-
-      print("${widget.details.name}");
-
+      widget.details.birthday = _birthday;
       Navigator.pop(context, widget.details);
     }
   }
 
   bool formIsValid() {
-    bool form, height; //mutual exclusivity
+    bool form, height, bday; //mutual exclusivity
     form = _formKey.currentState!.validate();
     height = _validateHeight(_height);
-    return form && height;
+    bday = _validateBirthday();
+    return form && height && bday;
   }
 
   bool _validateHeight(String value) {
@@ -395,6 +390,25 @@ class BasicDetailsState extends State<BasicDetails> {
       setState(() {
         _heightHasError = false;
       });
+    }
+    return true;
+  }
+
+  bool _validateBirthday() {
+    DateTime minDate =
+        DateTime.now().subtract(const Duration(days: ((365 * 18) - 5)));
+    if (_birthday.isEmpty) {
+      setState(() {
+        _bithdayErrorText = "your birthday is required";
+        _birthDayHasError = true;
+      });
+      return false;
+    } else if (_birthDate.isAfter(minDate)) {
+      setState(() {
+        _bithdayErrorText = "you are too young to join, must be 18+";
+        _birthDayHasError = true;
+      });
+      return false;
     }
     return true;
   }

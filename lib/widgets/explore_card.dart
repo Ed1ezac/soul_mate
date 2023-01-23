@@ -122,7 +122,7 @@ class ExploreCardState extends State<ExploreCard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Icon(
-                  Icons.near_me,
+                  Icons.person_pin_circle,
                   color: Colors.white,
                   size: 16.w,
                 ),

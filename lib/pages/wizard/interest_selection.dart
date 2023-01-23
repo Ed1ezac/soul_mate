@@ -29,15 +29,9 @@ class _InterestSelectionState extends State<InterestSelection> {
 
   @override
   Widget build(BuildContext context) {
-    final EdgeInsets _formFieldPadding = EdgeInsets.symmetric(
-        vertical: 0.0, horizontal: ScreenUtil().setWidth(32.0));
-    final EdgeInsets _formFieldMargin = EdgeInsets.only(
-        top: ScreenUtil().setHeight(8.0), bottom: ScreenUtil().setHeight(16.0));
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Your Interests"),
-        backgroundColor: AppColors.soulPrimary,
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.check),
@@ -47,15 +41,17 @@ class _InterestSelectionState extends State<InterestSelection> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: EdgeInsets.only(left: 8.w, right: 8.w, bottom: 16.h),
+          padding: EdgeInsets.symmetric(
+            horizontal: 24.w,
+            vertical: 32.h,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: _formFieldPadding,
-                margin: _formFieldMargin,
+                margin: EdgeInsets.only(top: 8.h, bottom: 16.h),
                 child: Text(
-                  "Your interests are shown on your profile.",
+                  "Tap to pick your interests.",
                   style: TextStyle(
                     color: Colors.black54,
                     fontSize: 16.sp,
@@ -64,15 +60,11 @@ class _InterestSelectionState extends State<InterestSelection> {
                 ),
               ),
               Form(
-                child: Container(
-                  padding: _formFieldPadding,
-                  margin: _formFieldMargin,
-                  child: GestureDetector(
-                    onTap: () {
-                      showInterestsPicker(context);
-                    },
-                    child: buildInterestsWidget(),
-                  ),
+                child: GestureDetector(
+                  onTap: () {
+                    showInterestsPicker(context);
+                  },
+                  child: buildInterestsWidget(),
                 ),
               ),
             ],
@@ -85,7 +77,6 @@ class _InterestSelectionState extends State<InterestSelection> {
   void _popOrFail() {
     if (_formIsValid()) {
       widget.interests.interests = _pickedInterests;
-      //pop!
       Navigator.pop(context, widget.interests);
     } else {
       //display errors
@@ -116,7 +107,7 @@ class _InterestSelectionState extends State<InterestSelection> {
         decoration: InputDecoration(
           errorText: interestsErrorText,
           labelText: "Interests",
-          contentPadding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 4.w),
+          contentPadding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 4.w),
           prefixIcon: Icon(
             Icons.beach_access,
             color: AppColors.soulPrimary,
@@ -129,8 +120,9 @@ class _InterestSelectionState extends State<InterestSelection> {
         child: _getInterestsText(),
         decoration: InputDecoration(
           helperMaxLines: 2,
-          helperText: "Shown on your profile. Choose 6",
+          helperText: "These are shown on your profile.",
           labelText: "Interests",
+          contentPadding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 4.w),
           prefixIcon: Icon(
             Icons.beach_access,
             color: AppColors.soulPrimary,
@@ -156,19 +148,6 @@ class _InterestSelectionState extends State<InterestSelection> {
 
     return null;
   }
-
-  //------Dialogs
-  /*void showHabitsPicker(BuildContext context) async {
-    bool hasItems = await showDialog(
-        context: context,
-        builder: (context) => HabitPicker(pickedHabits: _pickedHabits));
-
-    if (hasItems != null) {
-      setState(() {
-        _habitsIsEmpty = !hasItems;
-      });
-    }
-  }*/
 
   void showInterestsPicker(BuildContext context) async {
     bool hasItems = await showDialog(

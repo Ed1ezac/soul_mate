@@ -1,9 +1,10 @@
-import 'package:Soulmate_App/pages/app/notifications.dart';
-import 'package:Soulmate_App/styles.dart';
-import 'package:Soulmate_App/widgets/filter_dialog_content.dart';
 import 'package:flutter/material.dart';
-import 'package:Soulmate_App/utils/widget_utils.dart';
+import 'package:Soulmate_App/styles.dart';
+import 'package:Soulmate_App/pages/app/notifications.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:Soulmate_App/widgets/filter_dialog_content.dart';
 
+import '../../widgets/nav_drawer/drawer.dart';
 import 'chats_list.dart';
 import 'explore.dart';
 import 'my_profile.dart';
@@ -25,21 +26,23 @@ class _HomeState extends State<Home> {
     _pagesList.add(ChatsList());
     _pagesList.add(Notifications());
     _pagesList.add(Profile());
+    _currentPage = _pagesList[0];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: NavDrawer(),
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
         title: Text(
           "Soulmate",
-          style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24.0),
+          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 24.sp),
         ),
         actions: <Widget>[
           if (_currentIndex == 0)
             IconButton(
-              icon: Icon(Icons.tune),
+              icon: Icon(Icons.filter_alt_outlined),
               onPressed: () => _openFilterDialog(),
             ),
           if (_currentIndex == 1)
@@ -55,13 +58,7 @@ class _HomeState extends State<Home> {
       ),
       backgroundColor: Color(0xfafafaff),
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: screenAwareSizeH(8.0, context),
-            vertical: screenAwareSizeV(8.0, context),
-          ),
-          child: _currentPage,
-        ),
+        child: _currentPage,
       ),
       bottomNavigationBar: bottomNavBar(context),
     );
@@ -85,7 +82,7 @@ class _HomeState extends State<Home> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.notifications),
-          label: "notifications",
+          label: "activity",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.account_circle),
@@ -111,24 +108,23 @@ class _HomeState extends State<Home> {
             child: Opacity(
               opacity: anim1.value,
               child: Dialog(
-                insetPadding: EdgeInsets.fromLTRB(
-                  screenAwareSizeH(16.0, context), //left
-                  screenAwareSizeV(16.0, context), //top
-                  screenAwareSizeH(16.0, context), //right
-                  screenAwareSizeV(24.0, context), //bottom
+                alignment: Alignment.center,
+                insetPadding: EdgeInsets.symmetric(
+                  vertical: 12.h,
+                  horizontal: 12.w,
                 ),
                 shape: RoundedRectangleBorder(
                     borderRadius:
-                        BorderRadius.circular(16.0)), //this right here,
+                        BorderRadius.circular(12.w)), //this right here,
                 child: FilterDialog(),
               ),
             ),
           );
         },
-        transitionDuration: Duration(milliseconds: 900),
+        transitionDuration: Duration(milliseconds: 450),
         barrierDismissible: true,
         context: context,
-        barrierLabel: 'filter',
+        barrierLabel: 'Quick Options',
         barrierColor: Colors.black87,
         pageBuilder: (context, animation1, animation2) {
           return Container();

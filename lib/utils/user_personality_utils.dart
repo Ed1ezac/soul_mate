@@ -18,13 +18,13 @@ class PersonalityUtils {
   static final String GIFTING_TIP =
       "Shows love by giving thoughtful gifts to their partner.";
   static final String HELPFULNESS_TIP =
-      "Shows love by performing duties, e.g. laundry, and being resourceful to their partner.";
+      "Shows love by performing duties and being resourceful to their partner.";
   static final String VERBAL_AFFECTION_TIP =
       "Shows love by using words to reassert their fondness and longing to their partner.";
   static final String BODILY_AFFECTION_TIP =
       "Shows love through body language e.g. hugging, holding hands or any kind of physical affection.";
   static final String PRIORITIZING_TIME_TIP =
-      "Shows love by prioritizing time alone with their partner, e.g. walks, weekend getaways, long phone calls," +
+      "Shows love by prioritizing time alone with their partner" +
           " to create and share special moments together.";
 
   String? getLoveExpressionTitle(int loveExpression) {

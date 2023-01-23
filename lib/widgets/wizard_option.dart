@@ -40,15 +40,14 @@ class WizardOptionState extends State<WizardOption>
   late double _widgetHeight;
 
   @override
-  void dispose() {
-    _elevationAnimationController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _widgetHeight = 110.h;
+    configureAnimations();
   }
 
   @override
   Widget build(BuildContext context) {
-    _widgetHeight = 110.h;
-    configureAnimations();
     return optionCard(context);
   }
 
@@ -313,7 +312,7 @@ class WizardOptionState extends State<WizardOption>
           ),
         );
       case OptionState.INACTIVE:
-        return Icon(Icons.lock, size: 8.w, color: Colors.grey);
+        return Icon(Icons.lock, size: 16.w, color: Colors.grey);
       default:
         throw new Exception("invalid state for this option.");
     }
@@ -322,14 +321,18 @@ class WizardOptionState extends State<WizardOption>
   void executeAction() {
     switch (widget.position) {
       case 1:
-        openForm(BasicDetails(
-          details: widget.wizardObject,
-        ));
+        openForm(
+          BasicDetails(
+            details: widget.wizardObject,
+          ),
+        );
         break;
       case 2:
-        openForm(PersonalityDetails(
-          personality: widget.wizardObject,
-        ));
+        openForm(
+          PersonalityDetails(
+            personality: widget.wizardObject,
+          ),
+        );
         break;
       case 3:
         openForm(InterestSelection(widget.wizardObject));
@@ -357,6 +360,12 @@ class WizardOptionState extends State<WizardOption>
     widget.onObjectChange(result);
     widget.onStateChange(OptionState.COMPLETE);
     widget.notifyParent(widget.position);
+  }
+
+  @override
+  void dispose() {
+    _elevationAnimationController.dispose();
+    super.dispose();
   }
 }
 

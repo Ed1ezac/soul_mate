@@ -70,7 +70,7 @@ class _HeightPickerState extends State<HeightPicker> {
 
   Widget _drawBackgroundDoor() {
     return Align(
-      alignment: Alignment.center, //TODO
+      alignment: Alignment.center,
       child: Image(
         image: AssetImage("assets/images/height_door.png"),
         fit: BoxFit.contain,

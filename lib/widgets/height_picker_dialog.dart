@@ -25,7 +25,7 @@ class HeightPickerDialogState extends State<HeightPickerDialog> {
           borderRadius: BorderRadius.all(Radius.circular(12.0))),
       child: Container(
         height: 0.75.sh,
-        width: 0.75.sw,
+        width: 1.sw < 600 ? 0.64.sw : 380.w,
         decoration: BoxDecoration(
             color: Colors.grey[200],
             borderRadius: BorderRadius.all(Radius.circular(10.0))),

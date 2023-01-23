@@ -19,7 +19,7 @@ class WizardState extends State<ProfileWizard>
   User details =
       User(name: "", birthday: "", sexuality: "", height: -1, gender: "");
   UserPersonality personality = UserPersonality(-1, -1);
-  UserInterests interests = UserInterests(habits: [], interests: []);
+  UserInterests interests = UserInterests(interests: []);
   late FormProgressObserver _observer;
   late AnimationController _fabFloatUpController;
   late Animation<double> _fabFloatUpAnimation;
@@ -34,9 +34,9 @@ class WizardState extends State<ProfileWizard>
   initState() {
     super.initState();
     _observer = FormProgressObserver();
-    _fabFloatUpController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 3));
-    //_fabFloatUpController.forward();
+    _fabFloatUpController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 600));
+    _fabFloatUpController.forward();
   }
 
   @override
@@ -117,7 +117,6 @@ class WizardState extends State<ProfileWizard>
                           onStateChange: (state) => basicsState = state,
                           wizardObject: details,
                           onObjectChange: (infoObject) =>
-                              //TODO
                               details = infoObject as User,
                         );
                       },
@@ -195,10 +194,8 @@ class WizardState extends State<ProfileWizard>
 
   void _flagProfileCreationComplete() {
     _observer.registerProgess();
-    //TODO
-    _fabFloatUpController.forward();
 
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(milliseconds: 400), () {
       setState(() {
         _isWizardComplete = true;
       });
@@ -207,30 +204,39 @@ class WizardState extends State<ProfileWizard>
 
   Widget _showFab(BuildContext context) {
     _fabFloatUpAnimation = Tween<double>(
-      begin: 1.sh + 56.h,
-      end: 0.0,
+      begin: 1.sh,
+      end: 1.sh - 56.h,
     ).animate(
-      CurvedAnimation(parent: _fabFloatUpController, curve: Curves.bounceInOut),
+      CurvedAnimation(parent: _fabFloatUpController, curve: Curves.ease),
     );
 
-    return Transform(
-      transform:
-          Matrix4.translationValues(0.0, _fabFloatUpAnimation.value, 0.0),
+    return advanceFab();
+    /*Transform(
+      transform: Matrix4.translationValues(
+        0,
+        _fabFloatUpAnimation.value,
+        0,
+      ),
       child: advanceFab(),
     );
+    */
   }
 
   Widget advanceFab() {
     return Container(
+      margin: EdgeInsets.only(top: _fabFloatUpAnimation.value),
       child: FloatingActionButton.extended(
         onPressed: () {
-          MaterialPageRoute(
-            builder: (context) => Home(),
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Home(),
+            ),
           );
         },
         label: Text(
           "Create",
-          style: TextStyle(fontSize: 18.sp),
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
         ),
       ),
     );

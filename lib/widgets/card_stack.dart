@@ -28,7 +28,7 @@ class CardStack extends StatefulWidget {
     required this.potentials,
     required int cardCount,
     int maxStackNum = 3,
-    int animDuration = 700,
+    int animDuration = 350,
     double swipeEdge = 3,
     double swipeEdgeVertical = 8.0,
     bool swipeUp = false,

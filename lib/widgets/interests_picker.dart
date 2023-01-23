@@ -73,7 +73,7 @@ class _InterestsPickerState extends State<InterestsPicker> {
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.5,
+                width: 0.5.sw,
                 child: RaisedButton(
                   child: Text(
                     "DONE",
